@@ -11,8 +11,8 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 		<!--end::Fonts-->
 		<!--begin::Global Stylesheets Bundle(used by all pages)-->
-		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
 	</head>
 	<!--end::Head-->
@@ -26,7 +26,9 @@
 				<div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
 					<!--begin::Logo-->
 					<a href="{{ route('home') }}" class="mb-12">
+                        <h1 class="d-flex align-items-center text-dark fw-bolder fs-1 my-1">
 						<img alt="Logo" src="{{ asset('home/assets/images/logo/favourite_icon.png')}}" class="h-40px" />
+                        &nbsp;&nbsp;Luxuary Car</h1>
 					</a>
 					<!--end::Logo-->
 					<!--begin::Wrapper-->
@@ -36,12 +38,9 @@
                             @csrf
 							<!--begin::Heading-->
 							<div class="text-center mb-10">
-								<!--begin::Title-->
-								<h1 class="text-dark mb-3">Sign In to Metronic</h1>
-								<!--end::Title-->
 								<!--begin::Link-->
 								<div class="text-gray-400 fw-bold fs-4">New Here?
-								<a href="../../demo1/dist/authentication/flows/basic/sign-up.html" class="link-primary fw-bolder">Create an Account</a></div>
+								<a href="{{ route('register') }}" class="link-primary fw-bolder">Create an Account</a></div>
 								<!--end::Link-->
 							</div>
 							<!--begin::Heading-->
