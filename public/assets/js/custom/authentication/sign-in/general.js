@@ -47,7 +47,7 @@ var KTSigninGeneral = function() {
                         var formData = new FormData(t);
 
                         // Send POST request to server
-                        fetch('/api/login', {
+                        fetch('/auto/api/login', {
                             method: 'POST',
                             body: formData
                         })

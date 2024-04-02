@@ -41,7 +41,7 @@ var KTPasswordResetGeneral = function() {
                         var formData = new FormData(t);
 
                         // Send POST request to server
-                        fetch('/api/forget-password', {
+                        fetch('/auto/api/forget-password', {
                             method: 'POST',
                             body: formData
                         })
