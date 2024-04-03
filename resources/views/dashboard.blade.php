@@ -25,6 +25,11 @@
                             <!--end::Header-->
                             <!--begin::Body-->
                             <div class="card-body py-3">
+                                @if (session('success'))
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
                                 <!--begin::Table container-->
                                 <div class="table-responsive">
                                     <!--begin::Table-->
@@ -37,7 +42,8 @@
                                                         <div
                                                             class="form-check form-check-sm form-check-custom form-check-solid">
                                                             <input class="form-check-input" type="checkbox" value="1"
-                                                                data-kt-check="true" data-kt-check-target=".widget-9-check" />
+                                                                data-kt-check="true"
+                                                                data-kt-check-target=".widget-9-check" />
                                                         </div>
                                                     </th>
                                                     <th class="min-w-150px">Name</th>
@@ -51,7 +57,11 @@
                                             <tbody>
                                                 @if ($drivers->isEmpty())
                                                     <tr>
-                                                        <td colspan="5"><h3 class="text-dark fw-bolder text-hover-primary fs-6 text-center">No Data Found</h3></td>
+                                                        <td colspan="5">
+                                                            <h3
+                                                                class="text-dark fw-bolder text-hover-primary fs-6 text-center">
+                                                                No Data Found</h3>
+                                                        </td>
                                                         <!-- Add more columns if needed -->
                                                     </tr>
                                                 @else
@@ -67,7 +77,8 @@
                                                             <td>
                                                                 <div class="d-flex align-items-center">
                                                                     <div class="d-flex justify-content-start flex-column">
-                                                                        <h3 class="text-dark fw-bolder text-hover-primary fs-6">
+                                                                        <h3
+                                                                            class="text-dark fw-bolder text-hover-primary fs-6">
                                                                             {{ $driver->name }}</h3>
                                                                     </div>
                                                                 </div>
@@ -87,7 +98,8 @@
                                                                         method="POST">
                                                                         @csrf
                                                                         @method('DELETE')
-                                                                        <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                                        <button type="submit"
+                                                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                                                                             <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                                                                             <span class="svg-icon svg-icon-3">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -118,94 +130,101 @@
                                             <!--end::Table body-->
                                         </table>
                                     @else
-                                    <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
-                                        <!--begin::Table head-->
-                                        <thead>
-                                            <tr class="fw-bolder text-muted">
-                                                <th class="w-25px">
-                                                    <div
-                                                        class="form-check form-check-sm form-check-custom form-check-solid">
-                                                        <input class="form-check-input" type="checkbox" value="1"
-                                                            data-kt-check="true" data-kt-check-target=".widget-9-check" />
-                                                    </div>
-                                                </th>
-                                                <th class="min-w-150px">Name</th>
-                                                <th class="min-w-140px">Email</th>
-                                                <th class="min-w-120px">Phone</th>
-                                                <th class="min-w-100px text-end">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <!--end::Table head-->
-                                        <!--begin::Table body-->
-                                        <tbody>
-                                            @if ($drivers->isEmpty())
-                                                <tr>
-                                                    <td colspan="5"><h3 class="text-dark fw-bolder text-hover-primary fs-6 text-center">No Data Found</h3></td>
-                                                    <!-- Add more columns if needed -->
+                                        <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                                <tr class="fw-bolder text-muted">
+                                                    <th class="w-25px">
+                                                        <div
+                                                            class="form-check form-check-sm form-check-custom form-check-solid">
+                                                            <input class="form-check-input" type="checkbox" value="1"
+                                                                data-kt-check="true"
+                                                                data-kt-check-target=".widget-9-check" />
+                                                        </div>
+                                                    </th>
+                                                    <th class="min-w-150px">Name</th>
+                                                    <th class="min-w-140px">Email</th>
+                                                    <th class="min-w-120px">Phone</th>
+                                                    <th class="min-w-100px text-end">Actions</th>
                                                 </tr>
-                                            @else
-                                                @foreach ($drivers as $driver)
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody>
+                                                @if ($drivers->isEmpty())
                                                     <tr>
-                                                        <td>
-                                                            <div
-                                                                class="form-check form-check-sm form-check-custom form-check-solid">
-                                                                <input class="form-check-input widget-9-check"
-                                                                    type="checkbox" value="1" />
-                                                            </div>
+                                                        <td colspan="5">
+                                                            <h3
+                                                                class="text-dark fw-bolder text-hover-primary fs-6 text-center">
+                                                                No Data Found</h3>
                                                         </td>
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="d-flex justify-content-start flex-column">
-                                                                    <h3 class="text-dark fw-bolder text-hover-primary fs-6">
-                                                                        {{ $driver->name }}</h3>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <h3 class="text-dark fw-bolder text-hover-primary fs-6">
-                                                                {{ $driver->email }}</h3>
-                                                        </td>
-                                                        <td>
-                                                            <h3 class="text-dark fw-bolder text-hover-primary fs-6">
-                                                                {{ $driver->phone ?? 'N/A' }}</h3>
-                                                        </td>
-                                                        <td>
-                                                            <div class="d-flex justify-content-end flex-shrink-0">
-                                                                <form
-                                                                    action="{{ route('users.softdelete', ['id' => $driver->id]) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
-                                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                                                        <span class="svg-icon svg-icon-3">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                width="24" height="24"
-                                                                                viewBox="0 0 24 24" fill="none">
-                                                                                <path
-                                                                                    d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z"
-                                                                                    fill="black" />
-                                                                                <path opacity="0.5"
-                                                                                    d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
-                                                                                    fill="black" />
-                                                                                <path opacity="0.5"
-                                                                                    d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
-                                                                                    fill="black" />
-                                                                            </svg>
-                                                                        </span>
-                                                                        <!--end::Svg Icon-->
-                                                                    </button>
-                                                                </form>
-                                                                <a href="#">
-                                                                </a>
-                                                            </div>
-                                                        </td>
+                                                        <!-- Add more columns if needed -->
                                                     </tr>
-                                                @endforeach
-                                            @endif
-                                        </tbody>
-                                        <!--end::Table body-->
-                                    </table>
+                                                @else
+                                                    @foreach ($drivers as $driver)
+                                                        <tr>
+                                                            <td>
+                                                                <div
+                                                                    class="form-check form-check-sm form-check-custom form-check-solid">
+                                                                    <input class="form-check-input widget-9-check"
+                                                                        type="checkbox" value="1" />
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="d-flex justify-content-start flex-column">
+                                                                        <h3
+                                                                            class="text-dark fw-bolder text-hover-primary fs-6">
+                                                                            {{ $driver->name }}</h3>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <h3 class="text-dark fw-bolder text-hover-primary fs-6">
+                                                                    {{ $driver->email }}</h3>
+                                                            </td>
+                                                            <td>
+                                                                <h3 class="text-dark fw-bolder text-hover-primary fs-6">
+                                                                    {{ $driver->phone ?? 'N/A' }}</h3>
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex justify-content-end flex-shrink-0">
+                                                                    <form
+                                                                        action="{{ route('users.softdelete', ['id' => $driver->id]) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+                                                                            <span class="svg-icon svg-icon-3">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="24" height="24"
+                                                                                    viewBox="0 0 24 24" fill="none">
+                                                                                    <path
+                                                                                        d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z"
+                                                                                        fill="black" />
+                                                                                    <path opacity="0.5"
+                                                                                        d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
+                                                                                        fill="black" />
+                                                                                    <path opacity="0.5"
+                                                                                        d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
+                                                                                        fill="black" />
+                                                                                </svg>
+                                                                            </span>
+                                                                            <!--end::Svg Icon-->
+                                                                        </button>
+                                                                    </form>
+                                                                    <a href="#">
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
                                     @endif
                                     <!--end::Table-->
                                 </div>

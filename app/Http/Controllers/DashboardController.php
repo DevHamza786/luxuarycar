@@ -35,6 +35,10 @@ class DashboardController extends Controller
         $user->delete();
 
         // Optionally, you can redirect back with a success message
-        return redirect()->back()->with('success', 'User soft deleted successfully');
+        session()->flash('success', 'User soft deleted successfully');
+
+        // Redirect back
+        return redirect()->back();
+
     }
 }
