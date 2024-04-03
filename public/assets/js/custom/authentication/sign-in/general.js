@@ -1,5 +1,4 @@
 "use strict";
-
 var KTSigninGeneral = function() {
     var t, e, i;
 
@@ -47,7 +46,8 @@ var KTSigninGeneral = function() {
                         var formData = new FormData(t);
 
                         // Send POST request to server
-                        fetch('/auto/api/login', {
+                        console.log(appUrl);
+                        fetch(appUrl + '/api/login', {
                             method: 'POST',
                             body: formData
                         })
