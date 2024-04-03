@@ -16,19 +16,7 @@
                         <div class="card-header border-0 pt-5">
                             <h3 class="card-title align-items-start flex-column">
                                 <span class="card-label fw-bolder fs-3 mb-1">Members Statistics</span>
-                                <span class="text-muted mt-1 fw-bold fs-7">Over 500 members</span>
                             </h3>
-                            <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="Click to add a user">
-                                <a href="#" class="btn btn-sm btn-light btn-active-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_invite_friends">
-                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                                <span class="svg-icon svg-icon-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black" />
-                                        <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black" />
-                                    </svg>
-                                </span>
-                                <!--end::Svg Icon-->New Member</a>
-                            </div>
                         </div>
                         <!--end::Header-->
                         <!--begin::Body-->
@@ -63,7 +51,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="symbol symbol-45px me-5">
-                                                        <img src="assets/media/avatars/150-11.jpg" alt="" />
+                                                        <img src="{{ asset('assets/media/avatars/150-11.jp')}}g" alt="" />
                                                     </div>
                                                     <div class="d-flex justify-content-start flex-column">
                                                         <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">Ana Simmons</a>
@@ -130,7 +118,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="symbol symbol-45px me-5">
-                                                        <img src="assets/media/avatars/150-3.jpg" alt="" />
+                                                        <img src="{{ asset('assets/media/avatars/150-3.jpg')}}" alt="" />
                                                     </div>
                                                     <div class="d-flex justify-content-start flex-column">
                                                         <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">Jessie Clarcson</a>
@@ -197,7 +185,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="symbol symbol-45px me-5">
-                                                        <img src="assets/media/avatars/150-4.jpg" alt="" />
+                                                        <img src="{{ asset('assets/media/avatars/150-4.jpg')}}" alt="" />
                                                     </div>
                                                     <div class="d-flex justify-content-start flex-column">
                                                         <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">Lebron Wayde</a>
@@ -264,7 +252,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="symbol symbol-45px me-5">
-                                                        <img src="assets/media/avatars/150-5.jpg" alt="" />
+                                                        <img src="{{ asset('assets/media/avatars/150-5.jpg')}}" alt="" />
                                                     </div>
                                                     <div class="d-flex justify-content-start flex-column">
                                                         <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">Natali Goodwin</a>
@@ -331,7 +319,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="symbol symbol-45px me-5">
-                                                        <img src="assets/media/avatars/150-6.jpg" alt="" />
+                                                        <img src="{{ asset('assets/media/avatars/150-6.jpg')}}" alt="" />
                                                     </div>
                                                     <div class="d-flex justify-content-start flex-column">
                                                         <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">Kevin Leonard</a>
