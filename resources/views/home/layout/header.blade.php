@@ -8,7 +8,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title>Luxuary Car</title>
-    <link rel="shortcut icon" href="{{ asset('home/assets/images/logo/favourite_icon.png')}}">
+    <link rel="shortcut icon" href="{{ asset('home/assets/images/logo.png')}}">
 
     <!-- fraimwork - css include -->
     <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/bootstrap.min.css')}}">
@@ -64,10 +64,10 @@
                     <div class="col-lg-2 col-md-6 col-sm-6 col-6">
                         <div class="brand_logo">
                             <a href="index.php">
-                                <img class="img-fluid" src="{{ asset('home/assets/images/logo/logo_01_1x.png')}}"
-                                    srcset="{{ asset('home/assets/images/logo/logo_01_2x.png')}} 2x" alt="logo_not_found">
-                                <img class="img-fluid" src="{{ asset('home/assets/images/logo/logo_02_1x.png')}}"
-                                    srcset="{{ asset('home/assets/images/logo/logo_02_2x.png')}} 2x" alt="logo_not_found">
+                                <img class="img-fluid" src="{{ asset('home/assets/images/logo.png')}}"
+                                    srcset="{{ asset('home/assets/images/logo.png')}} 2x" alt="logo_not_found" style="width:100px;">
+                                <img class="img-fluid" src="{{ asset('home/assets/images/logo.png')}}"
+                                    srcset="{{ asset('home/assets/images/logo.png')}} 2x" alt="logo_not_found" style="width:100px;">
                             </a>
                         </div>
                     </div>
