@@ -10,7 +10,7 @@
         content="Metronic, bootstrap, bootstrap 5, Angular, VueJs, React, Laravel, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
-    <link rel="shortcut icon" href="{{ asset('home/assets/images/logo/favourite_icon.png') }}" />
+    <link rel="shortcut icon" href="{{ asset('home/assets/images/logo.png') }}" />
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <!--end::Fonts-->
@@ -32,11 +32,8 @@
             <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
                 <!--begin::Logo-->
                 <a href="{{ route('home') }}" class="mb-12">
-                    <h1 class="d-flex align-items-center text-dark fw-bolder fs-1 my-1">
-                        <img alt="Logo" src="{{ asset('home/assets/images/logo/favourite_icon.png') }}"
-                            class="h-40px" />
-                        &nbsp;&nbsp;Luxuary Car
-                    </h1>
+                    <img alt="Logo" src="{{ asset('home/assets/images/main-logo.jpg') }}"
+                        class="h-100px" />
                 </a>
                 <!--end::Logo-->
                 <!--begin::Wrapper-->

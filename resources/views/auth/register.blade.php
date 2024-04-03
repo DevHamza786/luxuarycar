@@ -40,17 +40,15 @@
                     <div class="w-lg-600px p-10 p-lg-15 mx-auto">
                         <!--begin::Form-->
                         {{-- id="kt_sign_in_form" --}}
-                        <form class="form w-100" novalidate="novalidate" method="POST" action="{{ route('register') }}">
+                        <form class="form w-100" novalidate="novalidate" method="POST"
+                            action="{{ route('register') }}">
                             @csrf
                             <!--begin::Heading-->
                             <div class="text-center mb-10">
                                 <!--begin::Title-->
                                 <a href="{{ route('home') }}" class="mb-12">
-                                    <h1 class="d-flex align-items-center text-dark fw-bolder fs-1 my-1">
-                                        <img alt="Logo" src="{{ asset('home/assets/images/logo/favourite_icon.png') }}"
-                                            class="h-40px" />
-                                        &nbsp;&nbsp;Luxuary Car
-                                    </h1>
+                                    <img alt="Logo" src="{{ asset('home/assets/images/main-logo.jpg') }}"
+                                        class="h-100px" />
                                 </a>
                                 <!--end::Title-->
                             </div>
@@ -185,7 +183,8 @@
                                 <!--begin::Input-->
                                 <input
                                     class="form-control form-control-lg form-control-solid @error('password') is-invalid @enderror"
-                                    type="password" name="password_confirmation" required autocomplete="current-password" />
+                                    type="password" name="password_confirmation" required
+                                    autocomplete="current-password" />
 
                                 @error('password')
                                     <!--begin::Alert-->
