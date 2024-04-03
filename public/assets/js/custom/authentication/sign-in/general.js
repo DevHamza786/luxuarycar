@@ -1,4 +1,5 @@
 "use strict";
+console.log(appUrl);
 var KTSigninGeneral = function() {
     var t, e, i;
 
@@ -86,7 +87,7 @@ var KTSigninGeneral = function() {
                             }
                         })
                         .catch(function(error) {
-                            console.error('Error:', error);
+                            console.log('Error:', error);
                         })
                         .finally(function() {
                             // Reset button state
