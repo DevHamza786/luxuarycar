@@ -28,8 +28,8 @@
         <!--begin::Authentication - Sign-in -->
         <div class="d-flex flex-column flex-lg-row flex-column-fluid">
             <!--begin::Aside-->
-            <div class="d-flex flex-column flex-lg-row-auto w-xl-1000px positon-xl-relative"
-                style="background-image: url('home/assets/images/bg.jpeg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
+            <div class="d-flex flex-column flex-lg-row-auto w-xl-900px positon-xl-relative"
+                style="background-image: url('auto/public/home/assets/images/bg.jpeg'); background-repeat: no-repeat; background-position: center; background-size: cover;">
             </div>
             <!--end::Aside-->
             <!--begin::Body-->
