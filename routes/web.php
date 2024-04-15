@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 
@@ -16,6 +17,8 @@ Route::get('/refund-policy', function () { return view('home.refund-policy');});
 Route::get('/single-service', function () { return view('home.single-service');});
 Route::get('/vehicle', function () { return view('home.vehicle');});
 Route::get('/privacy-policy', function () { return view('home.privacy-policy');});
+
+Route::post('/booking', [HomeController::class, 'store'])->name('booking.store');
 
 
 // Route::get('/dashboard', function () {

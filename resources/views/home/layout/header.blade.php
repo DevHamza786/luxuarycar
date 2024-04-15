@@ -8,33 +8,33 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title>Luxuary Car</title>
-    <link rel="shortcut icon" href="{{ asset('home/assets/images/logo.png')}}">
+    <link rel="shortcut icon" href="{{ asset('home/assets/images/logo.png') }}">
 
     <!-- fraimwork - css include -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/bootstrap.min.css') }}">
 
     <!-- icon - css include -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/fontawesome.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/fontawesome.css') }}">
 
     <!-- animation - css include -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/aos.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/animate.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/aos.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/animate.css') }}">
 
     <!-- carousel - css include -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/slick.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/slick-theme.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/slick.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/slick-theme.css') }}">
 
     <!-- popup - css include -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/magnific-popup.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/magnific-popup.css') }}">
 
     <!-- select options - css include -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/nice-select.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/nice-select.css') }}">
 
     <!-- pricing range - css include -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/jquery-ui.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/jquery-ui.css') }}">
 
     <!-- custom - css include -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/style.css') }}">
 
 </head>
 
@@ -64,10 +64,12 @@
                     <div class="col-lg-2 col-md-6 col-sm-6 col-6">
                         <div class="brand_logo">
                             <a href="index.php">
-                                <img class="img-fluid" src="{{ asset('home/assets/images/logo.png')}}"
-                                    srcset="{{ asset('home/assets/images/logo.png')}} 2x" alt="logo_not_found" style="width:100px;">
-                                <img class="img-fluid" src="{{ asset('home/assets/images/logo.png')}}"
-                                    srcset="{{ asset('home/assets/images/logo.png')}} 2x" alt="logo_not_found" style="width:100px;">
+                                <img class="img-fluid" src="{{ asset('home/assets/images/logo.png') }}"
+                                    srcset="{{ asset('home/assets/images/logo.png') }} 2x" alt="logo_not_found"
+                                    style="width:100px;">
+                                <img class="img-fluid" src="{{ asset('home/assets/images/logo.png') }}"
+                                    srcset="{{ asset('home/assets/images/logo.png') }} 2x" alt="logo_not_found"
+                                    style="width:100px;">
                             </a>
                         </div>
                     </div>
@@ -82,7 +84,16 @@
                                 </button>
                             </li>
                             <li class="dropdown">
-                                <a class="logi_btn" href="{{ route('login')}}">LOGIN</a>
+                                @if (Auth::check())
+                            <li class="dropdown">
+                                <span class="logi_btn"><i class="icon-user"></i>{{ Auth::user()->name }}</span>
+                            </li>
+                        @else
+                            <li class="dropdown">
+                                <a class="logi_btn" href="{{ route('login') }}">LOGIN</a>
+                            </li>
+                            @endif
+                            {{-- <a class="logi_btn" href="{{ route('login') }}">LOGIN</a> --}}
                             </li>
                             <li>
                                 <button type="button" class="mobile_sidebar_btn"><i
@@ -94,11 +105,11 @@
                     <div class="col-lg-7 col-md-12">
                         <nav class="main_menu clearfix">
                             <ul class="ul_li_center clearfix">
-                                <li class="active"><a href="{{ route('home')}}">Home</a></li>
-                                <li><a href="{{ url('/about')}}">About</a></li>
-                                <li><a href="{{ url('/vehicle')}}">Vehicle</a></li>
-                                <li><a href="{{ url('/blog')}}">Blog</a></li>
-                                <li><a href="{{ url('/contact')}}">Contact</a></li>
+                                <li class="active"><a href="{{ route('home') }}">Home</a></li>
+                                <li><a href="{{ url('/about') }}">About</a></li>
+                                <li><a href="{{ url('/vehicle') }}">Vehicle</a></li>
+                                <li><a href="{{ url('/blog') }}">Blog</a></li>
+                                <li><a href="{{ url('/contact') }}">Contact</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -137,7 +148,8 @@
                 <div class="about_content mb_60">
                     <div class="brand_logo mb_15">
                         <a href="index.html">
-                            <img src="{{ asset('home/assets/images/logo/logo_01_1x.png')}}" srcset="{{ asset('home/assets/images/logo/logo_01_2x.png')}} 2x"
+                            <img src="{{ asset('home/assets/images/logo/logo_01_1x.png') }}"
+                                srcset="{{ asset('home/assets/images/logo/logo_01_2x.png') }} 2x"
                                 alt="logo_not_found">
                         </a>
                     </div>
@@ -146,11 +158,11 @@
                 <div class="menu_list mb_60 clearfix">
                     <h3 class="title_text text-white">Menu List</h3>
                     <ul class="ul_li_center clearfix">
-                        <li class="active"><a href="{{ route('home')}}">Home</a></li>
-                        <li><a href="{{ url('/about')}}">About</a></li>
-                        <li><a href="{{ url('/vehicle')}}">Vehicle</a></li>
-                        <li><a href="{{ url('/blog')}}">Blog</a></li>
-                        <li><a href="{{ url('/contact')}}">Contact</a></li>
+                        <li class="active"><a href="{{ route('home') }}">Home</a></li>
+                        <li><a href="{{ url('/about') }}">About</a></li>
+                        <li><a href="{{ url('/vehicle') }}">Vehicle</a></li>
+                        <li><a href="{{ url('/blog') }}">Blog</a></li>
+                        <li><a href="{{ url('/contact') }}">Contact</a></li>
                     </ul>
                 </div>
             </div>
@@ -167,7 +179,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="links_box">
-                        <img src="{{ asset('home/assets/images/location.png')}}" alt="">
+                        <img src="{{ asset('home/assets/images/location.png') }}" alt="">
                         <div class="right">
                             <p>Luxury Car Chauffeur Service
                                 5000 Riverdale road, suite 312
@@ -177,7 +189,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="links_box">
-                        <img src="{{ asset('home/assets/images/fohead.png')}}" alt="">
+                        <img src="{{ asset('home/assets/images/fohead.png') }}" alt="">
                         <div class="right">
                             <a href="">Phone: (862) 666-4329</a>
                             <a href="">Email: info@luxuryccs.com</a>
@@ -186,7 +198,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="links_box">
-                        <img src="{{ asset('home/assets/images/time.png')}}" alt="">
+                        <img src="{{ asset('home/assets/images/time.png') }}" alt="">
                         <div class="right">
                             <p>Monday-Friday 9a.m. -5p.m.
                                 Saturday Sunday is closed.</p>
@@ -205,8 +217,10 @@
                         <div class="footer_about" data-aos="fade-up" data-aos-delay="100">
                             <div class="brand_logo mb_30">
                                 <a href="index.html">
-                                    <img width="54px" class="img-fluid" src="{{ asset('home/assets/images/logo/logo_02_1x.png')}}"
-                                        srcset="{{ asset('home/assets/images/logo/logo_02_2x.png')}} 2x" alt="logo_not_found">
+                                    <img width="54px" class="img-fluid"
+                                        src="{{ asset('home/assets/images/logo/logo_02_1x.png') }}"
+                                        srcset="{{ asset('home/assets/images/logo/logo_02_2x.png') }} 2x"
+                                        alt="logo_not_found">
                                 </a>
                             </div>
                             <p class="mb_15">
@@ -227,12 +241,12 @@
                         <div class="footer_useful_links" data-aos="fade-up" data-aos-delay="300">
                             <h3 class="footer_widget_title">Quick links</h3>
                             <ul class="ul_li_block clearfix">
-                                <li><a href="{{url('/how-we-work')}}"> How we work</a></li>
-                                <li><a href="{{url('/faq')}}"> Faq</a></li>
-                                <li><a href="{{url('/services')}}"> Services</a></li>
-                                <li><a href="{{url('/contact')}}"> Contact</a></li>
-                                <li><a href="{{url('/privacy-policy')}}"> Privacy Policy</a></li>
-                                <li><a href="{{url('/refund-policy')}}"> Refund Policy</a></li>
+                                <li><a href="{{ url('/how-we-work') }}"> How we work</a></li>
+                                <li><a href="{{ url('/faq') }}"> Faq</a></li>
+                                <li><a href="{{ url('/services') }}"> Services</a></li>
+                                <li><a href="{{ url('/contact') }}"> Contact</a></li>
+                                <li><a href="{{ url('/privacy-policy') }}"> Privacy Policy</a></li>
+                                <li><a href="{{ url('/refund-policy') }}"> Refund Policy</a></li>
                             </ul>
                         </div>
                     </div>
@@ -241,10 +255,10 @@
                         <div class="footer_useful_links" data-aos="fade-up" data-aos-delay="300">
                             <h3 class="footer_widget_title">Our Services</h3>
                             <ul class="ul_li_block clearfix">
-                                <li><a href="{{url('/single-service')}}"> Corporate travels</a></li>
-                                <li><a href="{{url('/single-service')}}"> Special events</a></li>
-                                <li><a href="{{url('/single-service')}}"> Airport transport</a></li>
-                                <li><a href="{{url('/single-service')}}"> Wedding limousine</a></li>
+                                <li><a href="{{ url('/single-service') }}"> Corporate travels</a></li>
+                                <li><a href="{{ url('/single-service') }}"> Special events</a></li>
+                                <li><a href="{{ url('/single-service') }}"> Airport transport</a></li>
+                                <li><a href="{{ url('/single-service') }}"> Wedding limousine</a></li>
                             </ul>
                         </div>
                     </div>
@@ -275,47 +289,47 @@
 
 
     <!-- fraimwork - jquery include -->
-    <script src="{{ asset('home/assets/js/jquery-3.5.1.min.js')}}"></script>
-    <script src="{{ asset('home/assets/js/popper.min.js')}}"></script>
-    <script src="{{ asset('home/assets/js/bootstrap.min.js')}}"></script>
+    <script src="{{ asset('home/assets/js/jquery-3.5.1.min.js') }}"></script>
+    <script src="{{ asset('home/assets/js/popper.min.js') }}"></script>
+    <script src="{{ asset('home/assets/js/bootstrap.min.js') }}"></script>
 
     <!-- animation - jquery include -->
-    <script src="{{ asset('home/assets/js/aos.js')}}"></script>
-    <script src="{{ asset('home/assets/js/parallaxie.js')}}"></script>
+    <script src="{{ asset('home/assets/js/aos.js') }}"></script>
+    <script src="{{ asset('home/assets/js/parallaxie.js') }}"></script>
 
     <!-- carousel - jquery include -->
-    <script src="{{ asset('home/assets/js/slick.min.js')}}"></script>
+    <script src="{{ asset('home/assets/js/slick.min.js') }}"></script>
 
     <!-- popup - jquery include -->
-    <script src="{{ asset('home/assets/js/magnific-popup.min.js')}}"></script>
+    <script src="{{ asset('home/assets/js/magnific-popup.min.js') }}"></script>
 
     <!-- select ontions - jquery include -->
-    <script src="{{ asset('home/assets/js/nice-select.min.js')}}"></script>
+    <script src="{{ asset('home/assets/js/nice-select.min.js') }}"></script>
 
     <!-- isotope - jquery include -->
-    <script src="{{ asset('home/assets/js/isotope.pkgd.js')}}"></script>
-    <script src="{{ asset('home/assets/js/imagesloaded.pkgd.min.js')}}"></script>
-    <script src="{{ asset('home/assets/js/masonry.pkgd.min.js')}}"></script>
+    <script src="{{ asset('home/assets/js/isotope.pkgd.js') }}"></script>
+    <script src="{{ asset('home/assets/js/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ asset('home/assets/js/masonry.pkgd.min.js') }}"></script>
 
     <!-- google map - jquery include -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk2HrmqE4sWSei0XdKGbOMOHN3Mm2Bf-M&ver=2.1.6"></script>
-    <script src="{{ asset('home/assets/js/gmaps.min.js')}}"></script>
+    <script src="{{ asset('home/assets/js/gmaps.min.js') }}"></script>
 
     <!-- pricing range - jquery include -->
-    <script src="{{ asset('home/assets/js/jquery-ui.js')}}"></script>
+    <script src="{{ asset('home/assets/js/jquery-ui.js') }}"></script>
 
     <!-- counter - jquery include -->
-    <script src="{{ asset('home/assets/js/waypoint.js')}}"></script>
-    <script src="{{ asset('home/assets/js/counterup.min.js')}}"></script>
+    <script src="{{ asset('home/assets/js/waypoint.js') }}"></script>
+    <script src="{{ asset('home/assets/js/counterup.min.js') }}"></script>
 
     <!-- contact form - jquery include -->
-    <script src="{{ asset('home/assets/js/validate.js')}}"></script>
+    <script src="{{ asset('home/assets/js/validate.js') }}"></script>
 
     <!-- mobile menu - jquery include -->
-    <script src="{{ asset('home/assets/js/mCustomScrollbar.js')}}"></script>
+    <script src="{{ asset('home/assets/js/mCustomScrollbar.js') }}"></script>
 
     <!-- custom - jquery include -->
-    <script src="{{ asset('home/assets/js/custom.js')}}"></script>
+    <script src="{{ asset('home/assets/js/custom.js') }}"></script>
 
 
 </body>

@@ -15,5 +15,6 @@ class RolesAndPermissionsSeeder extends Seeder
     {
         Role::create(['name' => 'admin', 'guard_name' => 'web']);
         Role::create(['name' => 'driver', 'guard_name' => 'web']);
+        Role::create(['name' => 'customer', 'guard_name' => 'web']);
     }
 }

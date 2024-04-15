@@ -75,7 +75,8 @@
         <div class="element-item sedan" data-category="sedan">
             <div class="container-fluid p-0" data-bg-color="#1E1E1E" data-aos="fade-up" data-aos-delay="100">
                 <div class="advance_search_form2">
-                    <form action="#">
+                    <form action="{{ route('booking.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="row">
                             <div class="row-wrap col-md-10">
                                 <div class="row">
@@ -98,13 +99,13 @@
                                     <div class="col-md-3 col-sm-12 col-xs-12">
                                         <div class="form_item">
                                             <h4 class="input_title text-white">First Name</h4>
-                                            <input type="text" name="text" placeholder="Micheal">
+                                            <input type="text" name="fname" placeholder="Micheal">
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-12 col-xs-12">
                                         <div class="form_item">
                                             <h4 class="input_title text-white">Last Name</h4>
-                                            <input type="text" name="text" placeholder="Turner">
+                                            <input type="text" name="lname" placeholder="Turner">
                                         </div>
                                     </div>
                                 </div>
@@ -120,7 +121,7 @@
                                         <div class="form_item">
                                             <h4 class="input_title text-white">Pick Up Address</h4>
                                             <div class="position-relative">
-                                                <input id="location_two" type="text" name="location"
+                                                <input id="location_two" type="text" name="pick_location"
                                                     placeholder="26817 Lodge Close">
                                                 <!-- <label for="location_two" class="input_icon"><i class="fas fa-map-marker-alt"></i></label> -->
                                             </div>
@@ -130,7 +131,7 @@
                                     <div class="col-md-4 col-sm-12 col-xs-12">
                                         <div class="form_item">
                                             <h4 class="input_title text-white">Drop Off Address</h4>
-                                            <input type="text" id="location_two" name="location"
+                                            <input type="text" id="location_two" name="drop_location"
                                                 placeholder="1642 N Jackson Street">
                                         </div>
                                     </div>
@@ -151,7 +152,8 @@
             data-category="minhatten">
             <div class="container-fluid p-0" data-bg-color="#1E1E1E" data-aos="fade-up" data-aos-delay="100">
                 <div class="advance_search_form2">
-                    <form action="#">
+                    <form action="{{ route('booking.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="row">
                             <div class="row-wrap col-md-10">
                                 <div class="row">
@@ -174,13 +176,13 @@
                                     <div class="col-md-3 col-sm-12 col-xs-12">
                                         <div class="form_item">
                                             <h4 class="input_title text-white">First Name</h4>
-                                            <input type="text" name="text" placeholder="Micheal">
+                                            <input type="text" name="fname" placeholder="Micheal">
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-12 col-xs-12">
                                         <div class="form_item">
                                             <h4 class="input_title text-white">Last Name</h4>
-                                            <input type="text" name="text" placeholder="Turner">
+                                            <input type="text" name="lname" placeholder="Turner">
                                         </div>
                                     </div>
                                 </div>
@@ -196,7 +198,7 @@
                                         <div class="form_item">
                                             <h4 class="input_title text-white">Pick Up Address</h4>
                                             <div class="position-relative">
-                                                <input id="location_two" type="text" name="location"
+                                                <input id="location_two" type="text" name="pick_location"
                                                     placeholder="26817 Lodge Close">
                                                 <!-- <label for="location_two" class="input_icon"><i class="fas fa-map-marker-alt"></i></label> -->
                                             </div>
@@ -206,7 +208,7 @@
                                     <div class="col-md-4 col-sm-12 col-xs-12">
                                         <div class="form_item">
                                             <h4 class="input_title text-white">Drop Off Address</h4>
-                                            <input type="text" id="location_two" name="location"
+                                            <input type="text" id="location_two" name="drop_location"
                                                 placeholder="1642 N Jackson Street">
                                         </div>
                                     </div>
@@ -227,7 +229,8 @@
             data-category="hourly">
             <div class="container-fluid p-0" data-bg-color="#1E1E1E" data-aos="fade-up" data-aos-delay="100">
                 <div class="advance_search_form2">
-                    <form action="#">
+                    <form action="{{ route('booking.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="row">
                             <div class="row-wrap col-md-10">
                                 <div class="row">
@@ -250,13 +253,13 @@
                                     <div class="col-md-3 col-sm-12 col-xs-12">
                                         <div class="form_item">
                                             <h4 class="input_title text-white">First Name</h4>
-                                            <input type="text" name="text" placeholder="Micheal">
+                                            <input type="text" name="lname" placeholder="Micheal">
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-12 col-xs-12">
                                         <div class="form_item">
                                             <h4 class="input_title text-white">Last Name</h4>
-                                            <input type="text" name="text" placeholder="Turner">
+                                            <input type="text" name="fname" placeholder="Turner">
                                         </div>
                                     </div>
                                 </div>
@@ -272,7 +275,7 @@
                                         <div class="form_item">
                                             <h4 class="input_title text-white">Pick Up Address</h4>
                                             <div class="position-relative">
-                                                <input id="location_two" type="text" name="location"
+                                                <input id="location_two" type="text" name="pick_location"
                                                     placeholder="26817 Lodge Close">
                                                 <!-- <label for="location_two" class="input_icon"><i class="fas fa-map-marker-alt"></i></label> -->
                                             </div>
@@ -282,7 +285,7 @@
                                     <div class="col-md-4 col-sm-12 col-xs-12">
                                         <div class="form_item">
                                             <h4 class="input_title text-white">Drop Off Address</h4>
-                                            <input type="text" id="location_two" name="location"
+                                            <input type="text" id="location_two" name="drop_location"
                                                 placeholder="1642 N Jackson Street">
                                         </div>
                                     </div>
@@ -303,7 +306,8 @@
             data-category="monthly">
             <div class="container-fluid p-0" data-bg-color="#1E1E1E" data-aos="fade-up" data-aos-delay="100">
                 <div class="advance_search_form2">
-                    <form action="#">
+                    <form action="{{ route('booking.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="row">
                             <div class="row-wrap col-md-10">
                                 <div class="row">
@@ -326,13 +330,13 @@
                                     <div class="col-md-3 col-sm-12 col-xs-12">
                                         <div class="form_item">
                                             <h4 class="input_title text-white">First Name</h4>
-                                            <input type="text" name="text" placeholder="Micheal">
+                                            <input type="text" name="fname" placeholder="Micheal">
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-12 col-xs-12">
                                         <div class="form_item">
                                             <h4 class="input_title text-white">Last Name</h4>
-                                            <input type="text" name="text" placeholder="Turner">
+                                            <input type="text" name="lanme" placeholder="Turner">
                                         </div>
                                     </div>
                                 </div>
@@ -348,7 +352,7 @@
                                         <div class="form_item">
                                             <h4 class="input_title text-white">Pick Up Address</h4>
                                             <div class="position-relative">
-                                                <input id="location_two" type="text" name="location"
+                                                <input id="location_two" type="text" name="pick_location"
                                                     placeholder="26817 Lodge Close">
                                                 <!-- <label for="location_two" class="input_icon"><i class="fas fa-map-marker-alt"></i></label> -->
                                             </div>
@@ -358,7 +362,7 @@
                                     <div class="col-md-4 col-sm-12 col-xs-12">
                                         <div class="form_item">
                                             <h4 class="input_title text-white">Drop Off Address</h4>
-                                            <input type="text" id="location_two" name="location"
+                                            <input type="text" id="location_two" name="drop_location"
                                                 placeholder="1642 N Jackson Street">
                                         </div>
                                     </div>
@@ -379,7 +383,8 @@
             data-category="monthly">
             <div class="container-fluid p-0" data-bg-color="#1E1E1E" data-aos="fade-up" data-aos-delay="100">
                 <div class="advance_search_form2">
-                    <form action="#">
+                    <form action="{{ route('booking.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="row">
                             <div class="row-wrap col-md-10">
                                 <div class="row">
@@ -402,13 +407,13 @@
                                     <div class="col-md-3 col-sm-12 col-xs-12">
                                         <div class="form_item">
                                             <h4 class="input_title text-white">First Name</h4>
-                                            <input type="text" name="text" placeholder="Micheal">
+                                            <input type="text" name="lanme" placeholder="Micheal">
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-12 col-xs-12">
                                         <div class="form_item">
                                             <h4 class="input_title text-white">Last Name</h4>
-                                            <input type="text" name="text" placeholder="Turner">
+                                            <input type="text" name="fname" placeholder="Turner">
                                         </div>
                                     </div>
                                 </div>
@@ -424,7 +429,7 @@
                                         <div class="form_item">
                                             <h4 class="input_title text-white">Pick Up Address</h4>
                                             <div class="position-relative">
-                                                <input id="location_two" type="text" name="location"
+                                                <input id="location_two" type="text" name="pick_location"
                                                     placeholder="26817 Lodge Close">
                                                 <!-- <label for="location_two" class="input_icon"><i class="fas fa-map-marker-alt"></i></label> -->
                                             </div>
@@ -434,7 +439,7 @@
                                     <div class="col-md-4 col-sm-12 col-xs-12">
                                         <div class="form_item">
                                             <h4 class="input_title text-white">Drop Off Address</h4>
-                                            <input type="text" id="location_two" name="location"
+                                            <input type="text" id="location_two" name="drop_location"
                                                 placeholder="1642 N Jackson Street">
                                         </div>
                                     </div>
