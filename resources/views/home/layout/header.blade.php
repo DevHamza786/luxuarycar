@@ -83,18 +83,15 @@
                                     <i class="fal fa-search"></i>
                                 </button>
                             </li>
-                            <li class="dropdown">
-                                @if (Auth::check())
-                            <li class="dropdown">
-                                <span class="logi_btn"><i class="icon-user"></i>{{ Auth::user()->name }}</span>
-                            </li>
-                        @else
-                            <li class="dropdown">
-                                <a class="logi_btn" href="{{ route('login') }}">LOGIN</a>
-                            </li>
+                            @if (Auth::check())
+                                <li class="dropdown">
+                                    <span class="logi_btn"><i class="icon-user"></i><a class="logi_btn" href="{{ route('dashboard') }}">Home</a></span>
+                                </li>
+                                    @else
+                                <li class="dropdown">
+                                    <a class="logi_btn" href="{{ route('login') }}">LOGIN</a>
+                                </li>
                             @endif
-                            {{-- <a class="logi_btn" href="{{ route('login') }}">LOGIN</a> --}}
-                            </li>
                             <li>
                                 <button type="button" class="mobile_sidebar_btn"><i
                                         class="fal fa-align-right"></i></button>

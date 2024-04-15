@@ -10,6 +10,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $pagePrefix = 'home';
+
         // Get the authenticated user
         $user = Auth::user();
 
@@ -23,7 +25,7 @@ class DashboardController extends Controller
         }
 
         // Pass the drivers data to the dashboard view
-        return view('dashboard', compact('drivers'));
+        return view('dashboard', compact('drivers' , 'pagePrefix'));
     }
 
     public function softDelete($id)

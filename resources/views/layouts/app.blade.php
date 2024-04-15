@@ -79,7 +79,7 @@
                             </div>
                             @if (Auth::user()->hasrole('admin'))
                                 <div class="menu-item">
-                                    <a class="menu-link active" href="#">
+                                    <a class="menu-link {{ ($pagePrefix == 'home') ? 'active' : '' }}" href="{{ route('dashboard') }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                                             <span class="svg-icon svg-icon-2">
@@ -101,7 +101,7 @@
                                     </a>
                                 </div>
                                 <div class="menu-item">
-                                    <a class="menu-link" href="#">
+                                    <a class="menu-link {{ ($pagePrefix == 'driver') ? 'active' : '' }}" href="{{ route('all.drivers') }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/art/art002.svg-->
                                             <span class="svg-icon svg-icon-2">
@@ -117,7 +117,7 @@
                                             </span>
                                             <!--end::Svg Icon-->
                                         </span>
-                                        <span class="menu-title">Driver</span>
+                                        <span class="menu-title">Drivers</span>
                                     </a>
                                 </div>
                                 <div class="menu-item">
@@ -141,7 +141,7 @@
                                     </a>
                                 </div>
                                 <div class="menu-item">
-                                    <a class="menu-link" href="#">
+                                    <a class="menu-link {{ ($pagePrefix == 'booking') ? 'active' : '' }}" href="{{ route('all.bookings') }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/layouts/lay010.svg-->
                                             <span class="svg-icon svg-icon-2">
@@ -185,7 +185,7 @@
                                 </div>
                             @else
                                 <div class="menu-item">
-                                    <a class="menu-link active" href="#">
+                                    <a class="menu-link {{ ($pagePrefix == 'home') ? 'active' : '' }}" href="{{ route('dashboard') }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                                             <span class="svg-icon svg-icon-2">
@@ -207,7 +207,7 @@
                                     </a>
                                 </div>
                                 <div class="menu-item">
-                                    <a class="menu-link" href="#">
+                                    <a class="menu-link {{ ($pagePrefix == 'booking') ? 'active' : '' }}" href="{{ route('all.bookings') }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/art/art002.svg-->
                                             <span class="svg-icon svg-icon-2">
@@ -491,6 +491,7 @@
     <script src="{{ asset('assets/js/custom/modals/create-app.js') }}"></script>
     <script src="{{ asset('assets/js/custom/modals/upgrade-plan.js') }}"></script>
     <!--end::Page Custom Javascript-->
+    @yield('script')
     <!--end::Javascript-->
 </body>
 <!--end::Body-->

@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DriverController;
 
 Route::get('/', function () { return view('home.index');})->name('home');
 Route::get('/about', function () { return view('home.about');});
@@ -28,6 +30,14 @@ Route::post('/booking', [HomeController::class, 'store'])->name('booking.store')
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::delete('/dashboard/users/{id}', [DashboardController::class, 'softDelete'])->name('users.softdelete');
+
+    Route::get('/all-bookings', [BookingController::class, 'index'])->name('all.bookings');
+    Route::post('/assgin-driver', [BookingController::class, 'assginDriver'])->name('assgin-driver');
+    Route::delete('/dashboard/booking/{id}', [BookingController::class, 'softDelete'])->name('booking.softdelete');
+
+    Route::get('/all-drivers', [DriverController::class, 'index'])->name('all.drivers');
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
