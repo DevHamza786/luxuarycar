@@ -6,6 +6,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () { return view('home.index');})->name('home');
 Route::get('/about', function () { return view('home.about');});
@@ -37,6 +38,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/all-drivers', [DriverController::class, 'index'])->name('all.drivers');
 
+    Route::get('/all-users', [UserController::class, 'index'])->name('all.users');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

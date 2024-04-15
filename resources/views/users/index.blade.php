@@ -15,7 +15,7 @@
                             <!--begin::Header-->
                             <div class="card-header border-0 pt-5">
                                 <p class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bolder fs-3 mb-1">All Driver</span>
+                                    <span class="card-label fw-bolder fs-3 mb-1">All Users</span>
                                 </p>
                             </div>
                             <!--end::Header-->
@@ -44,14 +44,14 @@
                                                 <th class="min-w-150px">Name</th>
                                                 <th class="min-w-140px">Email</th>
                                                 <th class="min-w-120px">Phone</th>
-                                                <th class="min-w-120px">Total Assigned Bookings</th>
+                                                <th class="min-w-120px">Total Booked Rides</th>
                                                 <th class="min-w-100px text-end">Actions</th>
                                             </tr>
                                         </thead>
                                         <!--end::Table head-->
                                         <!--begin::Table body-->
                                         <tbody>
-                                            @if ($drivers->isEmpty())
+                                            @if ($users->isEmpty())
                                                 <tr>
                                                     <td colspan="5">
                                                         <p
@@ -61,7 +61,7 @@
                                                     <!-- Add more columns if needed -->
                                                 </tr>
                                             @else
-                                                @foreach ($drivers as $driver)
+                                                @foreach ($users as $user)
                                                     <tr>
                                                         <td>
                                                             <div
@@ -75,26 +75,26 @@
                                                                 <div class="d-flex justify-content-start flex-column">
                                                                     <p
                                                                         class="text-hover-primary fs-7">
-                                                                        {{ $driver->name }}</p>
+                                                                        {{ $user->name }}</p>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <p class="text-hover-primary fs-7">
-                                                                {{ $driver->email }}</p>
+                                                                {{ $user->email }}</p>
                                                         </td>
                                                         <td>
                                                             <p class="text-hover-primary fs-7">
-                                                                {{ $driver->phone ?? 'N/A' }}</p>
+                                                                {{ $user->phone ?? 'N/A' }}</p>
                                                         </td>
                                                         <td>
                                                             <p class="text-hover-primary fs-7">
-                                                                {{ $driver->bookings_count ?? 'N/A' }}</p>
+                                                                {{ $user->user_rides_count ?? 'N/A' }}</p>
                                                         </td>
                                                         <td>
                                                             <div class="d-flex justify-content-end flex-shrink-0">
                                                                 <form
-                                                                    action="{{ route('users.softdelete', ['id' => $driver->id]) }}"
+                                                                    action="{{ route('users.softdelete', ['id' => $user->id]) }}"
                                                                     method="POST">
                                                                     @csrf
                                                                     @method('DELETE')
