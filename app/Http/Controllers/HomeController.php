@@ -9,11 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends Controller
 {
     public function store(Request $request){
-        // dd($request->all());
+        dd($request->all());
 
         $user = User::create([
             'name' => $request->fname.' '.$request->lname,

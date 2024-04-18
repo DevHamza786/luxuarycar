@@ -309,8 +309,8 @@
     <script src="{{ asset('home/assets/js/masonry.pkgd.min.js') }}"></script>
 
     <!-- google map - jquery include -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk2HrmqE4sWSei0XdKGbOMOHN3Mm2Bf-M&ver=2.1.6"></script>
-    <script src="{{ asset('home/assets/js/gmaps.min.js') }}"></script>
+    {{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk2HrmqE4sWSei0XdKGbOMOHN3Mm2Bf-M&ver=2.1.6"></script>
+    <script src="{{ asset('home/assets/js/gmaps.min.js') }}"></script> --}}
 
     <!-- pricing range - jquery include -->
     <script src="{{ asset('home/assets/js/jquery-ui.js') }}"></script>
@@ -327,6 +327,8 @@
 
     <!-- custom - jquery include -->
     <script src="{{ asset('home/assets/js/custom.js') }}"></script>
+
+    @yield('script')
 
 
 </body>

@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /* table of content - start
 ==================================================================================================== */
-/* 
+/*
 
 
 01 - global gettings
@@ -394,7 +394,7 @@ hr {
   padding: 5px;
   color: #6E7684;
   position: absolute;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   transform: translateY(-50%);
 }
 .form_item input::placeholder, .form_item textarea::placeholder {
@@ -435,7 +435,7 @@ hr {
   color: #bf9c60;
 }
 
-.register_card 
+.register_card
 label {
   font-size: 14px;
 }
@@ -762,7 +762,7 @@ label {
 
 /* slick slider settings - end
 ================================================== */
-/* list style settings - start 
+/* list style settings - start
 ================================================== */
 .ul_li,
 .ul_li_right,
@@ -912,7 +912,7 @@ label {
 
 /* filters button group - end
 ================================================== */
-/* padding & margin setting - start 
+/* padding & margin setting - start
 ================================================== */
 .sec_ptb_150 {
   padding: 150px 0px;
@@ -2013,7 +2013,7 @@ button {
   font-size: 14px;
 }
 
-.service_section 
+.service_section
 .item_icon i {
   font-size: 50px;
   padding-bottom: 20px;
@@ -2156,7 +2156,7 @@ button {
 /* 07 - about page - end
 ==================================================================================================== */
 /*
-================================================== 
+==================================================
 *	Project Name 	:  Rotors – Car Rental HTML5 Template
 *	File 			:  CSS Base
 *	Version 		:  1.0.0
@@ -2442,7 +2442,7 @@ button {
 
   /* global - end */
   /* home 1 - start */
-  
+
   .banner_section .card .card-header button {
     font-size: 20px;
   }
