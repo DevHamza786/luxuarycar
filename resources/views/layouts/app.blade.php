@@ -14,6 +14,8 @@
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <!--end::Fonts-->
+    <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
@@ -141,7 +143,7 @@
                                     </a>
                                 </div>
                                 <div class="menu-item">
-                                    <a class="menu-link {{ ($pagePrefix == 'booking') ? 'active' : '' }}" href="{{ route('all.bookings') }}">
+                                    <a class="menu-link {{ ($pagePrefix == 'booking') ? 'active' : '' }}" href="{{ route('bookings') }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/layouts/lay010.svg-->
                                             <span class="svg-icon svg-icon-2">
@@ -207,7 +209,7 @@
                                     </a>
                                 </div>
                                 <div class="menu-item">
-                                    <a class="menu-link {{ ($pagePrefix == 'booking') ? 'active' : '' }}" href="{{ route('all.bookings') }}">
+                                    <a class="menu-link {{ ($pagePrefix == 'booking') ? 'active' : '' }}" href="{{ route('bookings') }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/art/art002.svg-->
                                             <span class="svg-icon svg-icon-2">
@@ -485,6 +487,8 @@
     <!--begin::Page Vendors Javascript(used by this page)-->
     <script src="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
     <!--end::Page Vendors Javascript-->
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
     <!--begin::Page Custom Javascript(used by this page)-->
     <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
     <script src="{{ asset('assets/js/custom/apps/chat/chat.js') }}"></script>

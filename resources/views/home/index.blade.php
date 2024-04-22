@@ -101,29 +101,27 @@
                                         <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">First Name</h4>
-                                                <input type="text" name="fname" placeholder="Enter your name">
+                                                <input type="text" name="fname" placeholder="Enter your name" value="{{ Auth::check() ? Auth::user()->name : '' }}">
                                             </div>
                                         </div>
                                         <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="form_item">
-                                                <h4 class="input_title text-white">Car Category</h4>
-                                                <select name="car_category">
-                                                    <option value="">Please Select Car Category</option>
-                                                    <option value="Ultra Luxury">Ultra Luxury</option>
-                                                    <option value="Black Luxury">Black Luxury</option>
-                                                    <option value="SUV Luxury">SUV Luxury</option>
-                                                </select>
-                                                {{-- <input type="text" name="lname" placeholder="Turner"> --}}
+                                                <h4 class="input_title text-white">Email</h4>
+                                                <input type="email" name="email" placeholder="Enter your email" value="{{ Auth::check() ? Auth::user()->email : '' }}">
                                             </div>
+
                                         </div>
                                     </div>
                                     <br>
                                     <div class="row">
                                         <div class="col-md-4 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Email</h4>
-                                                <input type="email" name="email" placeholder="Enter your email">
-                                            </div>
+                                            <h4 class="input_title text-white">Car Category</h4>
+                                            <select class="form-control" name="car_category">
+                                                <option value="">Please Select Car Category</option>
+                                                <option value="Ultra Luxury">Ultra Luxury</option>
+                                                <option value="Black Luxury">Black Luxury</option>
+                                                <option value="SUV Luxury">SUV Luxury</option>
+                                            </select>
                                         </div>
                                         <div class="col-md-4 col-sm-12 col-xs-12">
                                             <div class="form_item">
@@ -188,7 +186,7 @@
                     </div>
                 </div>
             </div>
-            <div style="position: absolute; left: 0px; top: 0px; display: none;" class="element-item minhatten "
+            {{-- <div style="position: absolute; left: 0px; top: 0px; display: none;" class="element-item minhatten "
                 data-category="minhatten">
                 <div class="container-fluid p-0" data-bg-color="#1E1E1E" data-aos="fade-up" data-aos-delay="100">
                     <div class="advance_search_form2">
@@ -499,7 +497,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </section>
     <!-- search_section - end
@@ -869,7 +867,7 @@
             dropoffautocomplete.addListener('place_changed', function() {
                 var place = dropoffautocomplete.getPlace();
                 $('#dropoff_latitude').val(place.geometry['location'].lat());
-                $('#dropoff_latitude').val(place.geometry['location'].lng());
+                $('#dropoff_longitude').val(place.geometry['location'].lng());
             });
 
         }

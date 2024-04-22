@@ -26,6 +26,19 @@
 /* 01 - global gettings - start
 ==================================================================================================== */
 
+.nice-select.form-control {
+    line-height: 28px;
+}
+
+::placeholder {
+    color: red !important;
+    opacity: 1; /* Firefox */
+  }
+
+  ::-ms-input-placeholder { /* Edge 12-18 */
+    color: red !important;
+  }
+
 header.header_section.secondary_header .logi_btn {
   color:#fff !important;
 }

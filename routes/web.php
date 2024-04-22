@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::delete('/dashboard/users/{id}', [DashboardController::class, 'softDelete'])->name('users.softdelete');
 
-    Route::get('/all-bookings', [BookingController::class, 'index'])->name('all.bookings');
+    Route::get('/bookings', [BookingController::class, 'index'])->name('bookings');
     Route::post('/assgin-driver', [BookingController::class, 'assginDriver'])->name('assgin-driver');
     Route::delete('/dashboard/booking/{id}', [BookingController::class, 'softDelete'])->name('booking.softdelete');
 

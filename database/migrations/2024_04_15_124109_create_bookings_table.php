@@ -16,8 +16,13 @@ return new class extends Migration
             $table->bigInteger('user_id')->nullable();
             $table->string('date')->nullable();
             $table->string('time')->nullable();
+            $table->string('car_category')->nullable();
             $table->string('pick_location')->nullable();
+            $table->string('pickup_latitude')->nullable();
+            $table->string('pickup_longitude')->nullable();
             $table->string('drop_location')->nullable();
+            $table->string('dropoff_latitude')->nullable();
+            $table->string('dropoff_longitude')->nullable();
             $table->string('distance')->nullable();
             $table->string('price')->nullable();
             $table->string('status')->nullable();

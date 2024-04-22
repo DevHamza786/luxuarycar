@@ -7,6 +7,74 @@
             <!--begin::Container-->
             <div id="kt_content_container" class="container-xxl">
                 <!--begin::Row-->
+                <div class="row g-5 g-xl-8">
+                    <div class="col-xl-4">
+                        <!--begin: Statistics Widget 6-->
+                        <div class="card bg-light-success card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body my-3">
+                                <a href="#" class="card-title fw-bold text-success fs-5 mb-3 d-block">
+                                    Complete Rides </a>
+
+                                <div class="py-1">
+                                    <span class="text-gray-900 fs-1 fw-bold me-2">50%</span>
+                                </div>
+
+                                <div class="progress h-7px bg-success bg-opacity-50 mt-7">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 50%"
+                                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <!--end:: Body-->
+                        </div>
+                        <!--end: Statistics Widget 6-->
+                    </div>
+
+                    <div class="col-xl-4">
+                        <!--begin: Statistics Widget 6-->
+                        <div class="card bg-light-warning card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body my-3">
+                                <a href="#" class="card-title fw-bold text-warning fs-5 mb-3 d-block">
+                                    Pending Rides </a>
+
+                                <div class="py-1">
+                                    <span class="text-gray-900 fs-1 fw-bold me-2">15%</span>
+                                </div>
+
+                                <div class="progress h-7px bg-warning bg-opacity-50 mt-7">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 15%"
+                                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <!--end:: Body-->
+                        </div>
+                        <!--end: Statistics Widget 6-->
+                    </div>
+
+                    <div class="col-xl-4">
+                        <!--begin: Statistics Widget 6-->
+                        <div class="card bg-light-primary card-xl-stretch mb-5 mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body my-3">
+                                <a href="#" class="card-title fw-bold text-primary fs-5 mb-3 d-block">
+                                    New Rides </a>
+
+                                <div class="py-1">
+                                    <span class="text-gray-900 fs-1 fw-bold me-2">76%</span>
+                                </div>
+
+                                <div class="progress h-7px bg-primary bg-opacity-50 mt-7">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 76%"
+                                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <!--end:: Body-->
+                        </div>
+                        <!--end: Statistics Widget 6-->
+                    </div>
+                </div>
+
                 <div class="row gy-5 g-xl-8">
                     <!--begin::Col-->
                     <div class="col-xl-12">
@@ -15,11 +83,7 @@
                             <!--begin::Header-->
                             <div class="card-header border-0 pt-5">
                                 <h3 class="card-title align-items-start flex-column">
-                                    @if (Auth::user()->hasrole('admin'))
-                                        <span class="card-label fw-bolder fs-3 mb-1">Registered Driver</span>
-                                    @else
-                                        <span class="card-label fw-bolder fs-3 mb-1">New Booking</span>
-                                    @endif
+                                    <span class="card-label fw-bolder fs-3 mb-1">New Booking</span>
                                 </h3>
                             </div>
                             <!--end::Header-->
@@ -30,205 +94,27 @@
                                         {{ session('success') }}
                                     </div>
                                 @endif
-                                <!--begin::Table container-->
-                                <div class="table-responsive">
-                                    <!--begin::Table-->
-                                    @if (Auth::user()->hasrole('admin'))
-                                        <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
-                                            <!--begin::Table head-->
-                                            <thead>
-                                                <tr class="fw-bolder text-muted">
-                                                    <th class="w-25px">
-                                                        <div
-                                                            class="form-check form-check-sm form-check-custom form-check-solid">
-                                                            <input class="form-check-input" type="checkbox" value="1"
-                                                                data-kt-check="true"
-                                                                data-kt-check-target=".widget-9-check" />
-                                                        </div>
-                                                    </th>
-                                                    <th class="min-w-150px">Name</th>
-                                                    <th class="min-w-140px">Email</th>
-                                                    <th class="min-w-120px">Phone</th>
-                                                    <th class="min-w-100px text-end">Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <!--end::Table head-->
-                                            <!--begin::Table body-->
-                                            <tbody>
-                                                @if ($drivers->isEmpty())
-                                                    <tr>
-                                                        <td colspan="5">
-                                                            <h3
-                                                                class="text-dark fw-bolder text-hover-primary fs-6 text-center">
-                                                                No Data Found</h3>
-                                                        </td>
-                                                        <!-- Add more columns if needed -->
-                                                    </tr>
-                                                @else
-                                                    @foreach ($drivers as $driver)
-                                                        <tr>
-                                                            <td>
-                                                                <div
-                                                                    class="form-check form-check-sm form-check-custom form-check-solid">
-                                                                    <input class="form-check-input widget-9-check"
-                                                                        type="checkbox" value="1" />
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="d-flex justify-content-start flex-column">
-                                                                        <h3
-                                                                            class="text-dark fw-bolder text-hover-primary fs-6">
-                                                                            {{ $driver->name }}</h3>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <h3 class="text-dark fw-bolder text-hover-primary fs-6">
-                                                                    {{ $driver->email }}</h3>
-                                                            </td>
-                                                            <td>
-                                                                <h3 class="text-dark fw-bolder text-hover-primary fs-6">
-                                                                    {{ $driver->phone ?? 'N/A' }}</h3>
-                                                            </td>
-                                                            <td>
-                                                                <div class="d-flex justify-content-end flex-shrink-0">
-                                                                    <form
-                                                                        action="{{ route('users.softdelete', ['id' => $driver->id]) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit"
-                                                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
-                                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                                                            <span class="svg-icon svg-icon-3">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                    width="24" height="24"
-                                                                                    viewBox="0 0 24 24" fill="none">
-                                                                                    <path
-                                                                                        d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z"
-                                                                                        fill="black" />
-                                                                                    <path opacity="0.5"
-                                                                                        d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
-                                                                                        fill="black" />
-                                                                                    <path opacity="0.5"
-                                                                                        d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
-                                                                                        fill="black" />
-                                                                                </svg>
-                                                                            </span>
-                                                                            <!--end::Svg Icon-->
-                                                                        </button>
-                                                                    </form>
-                                                                    <a href="#">
-                                                                    </a>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                @endif
-                                            </tbody>
-                                            <!--end::Table body-->
-                                        </table>
-                                    @else
-                                        <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
-                                            <!--begin::Table head-->
-                                            <thead>
-                                                <tr class="fw-bolder text-muted">
-                                                    <th class="w-25px">
-                                                        <div
-                                                            class="form-check form-check-sm form-check-custom form-check-solid">
-                                                            <input class="form-check-input" type="checkbox" value="1"
-                                                                data-kt-check="true"
-                                                                data-kt-check-target=".widget-9-check" />
-                                                        </div>
-                                                    </th>
-                                                    <th class="min-w-150px">Name</th>
-                                                    <th class="min-w-140px">Email</th>
-                                                    <th class="min-w-120px">Phone</th>
-                                                    <th class="min-w-100px text-end">Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <!--end::Table head-->
-                                            <!--begin::Table body-->
-                                            <tbody>
-                                                @if ($drivers->isEmpty())
-                                                    <tr>
-                                                        <td colspan="5">
-                                                            <h3
-                                                                class="text-dark fw-bolder text-hover-primary fs-6 text-center">
-                                                                No Data Found</h3>
-                                                        </td>
-                                                        <!-- Add more columns if needed -->
-                                                    </tr>
-                                                @else
-                                                    @foreach ($drivers as $driver)
-                                                        <tr>
-                                                            <td>
-                                                                <div
-                                                                    class="form-check form-check-sm form-check-custom form-check-solid">
-                                                                    <input class="form-check-input widget-9-check"
-                                                                        type="checkbox" value="1" />
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="d-flex justify-content-start flex-column">
-                                                                        <h3
-                                                                            class="text-dark fw-bolder text-hover-primary fs-6">
-                                                                            {{ $driver->name }}</h3>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <h3 class="text-dark fw-bolder text-hover-primary fs-6">
-                                                                    {{ $driver->email }}</h3>
-                                                            </td>
-                                                            <td>
-                                                                <h3 class="text-dark fw-bolder text-hover-primary fs-6">
-                                                                    {{ $driver->phone ?? 'N/A' }}</h3>
-                                                            </td>
-                                                            <td>
-                                                                <div class="d-flex justify-content-end flex-shrink-0">
-                                                                    <form
-                                                                        action="{{ route('users.softdelete', ['id' => $driver->id]) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit"
-                                                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
-                                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                                                            <span class="svg-icon svg-icon-3">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                    width="24" height="24"
-                                                                                    viewBox="0 0 24 24" fill="none">
-                                                                                    <path
-                                                                                        d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z"
-                                                                                        fill="black" />
-                                                                                    <path opacity="0.5"
-                                                                                        d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
-                                                                                        fill="black" />
-                                                                                    <path opacity="0.5"
-                                                                                        d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
-                                                                                        fill="black" />
-                                                                                </svg>
-                                                                            </span>
-                                                                            <!--end::Svg Icon-->
-                                                                        </button>
-                                                                    </form>
-                                                                    <a href="#">
-                                                                    </a>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                @endif
-                                            </tbody>
-                                            <!--end::Table body-->
-                                        </table>
-                                    @endif
-                                    <!--end::Table-->
-                                </div>
-                                <!--end::Table container-->
+                                <!--begin::Datatable-->
+                                <table id="bookingtable" class="table align-middle table-row-dashed fs-6 gy-5">
+                                    <thead>
+                                        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                            <th class="min-w-120px">Name</th>
+                                            <th class="min-w-120px">Email</th>
+                                            <th class="min-w-120px">Date</th>
+                                            <th class="min-w-120px">Time</th>
+                                            <th class="min-w-120px">Car Category</th>
+                                            <th class="min-w-120px">Pickup Location</th>
+                                            <th class="min-w-120px">Drop Location</th>
+                                            <th class="min-w-120px">Driver</th>
+                                            <th class="min-w-120px">Status</th>
+                                            {{-- <th class="min-w-120px">Create At</th> --}}
+                                            <th class="min-w-120px">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-gray-600 fw-semibold">
+                                    </tbody>
+                                </table>
+                                <!--end::Datatable-->
                             </div>
                             <!--begin::Body-->
                         </div>
@@ -243,4 +129,61 @@
         <!--end::Post-->
     </div>
     <!--end::Content-->
+@endsection
+@section('script')
+    <script type="text/javascript">
+        $(function() {
+            var table = $('#bookingtable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('dashboard.booking') }}",
+                columns: [
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'date',
+                        name: 'date'
+                    },
+                    {
+                        data: 'time',
+                        name: 'time'
+                    },
+                    {
+                        data: 'car_category',
+                        name: 'car_category'
+                    },
+                    {
+                        data: 'pick_location',
+                        name: 'pick_location'
+                    },
+                    {
+                        data: 'drop_location',
+                        name: 'drop_location'
+                    },
+                    {
+                        data: 'driver',
+                        name: 'driver'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status'
+                    },
+                    // {
+                    //     data: 'created_at',
+                    //     name: 'created_at'
+                    // },
+                    {
+                        data: 'action',
+                        name: 'action'
+                    },
+                ]
+            });
+        });
+    </script>
 @endsection
