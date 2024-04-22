@@ -86,7 +86,7 @@
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">Pick Up Time</h4>
                                                 <div class="position-relative">
-                                                    <input type="time" name="time" placeholder="12:00am">
+                                                    <input type="time" name="time" placeholder="12:00am" required>
                                                     {{-- <label for="location_two" class="input_icon"><i class="fas fa-map-marker-alt"></i></label> --}}
                                                 </div>
                                             </div>
@@ -95,19 +95,19 @@
                                         <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">Date</h4>
-                                                <input type="date" placeholder="20/Feb/2024" name="date" id="date">
+                                                <input type="date" placeholder="20/Feb/2024" name="date" id="date" required>
                                             </div>
                                         </div>
                                         <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">First Name</h4>
-                                                <input type="text" name="fname" placeholder="Enter your name" value="{{ Auth::check() ? Auth::user()->name : '' }}">
+                                                <input type="text" name="fname" placeholder="Enter your name" value="{{ Auth::check() ? Auth::user()->name : '' }}" required>
                                             </div>
                                         </div>
                                         <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">Email</h4>
-                                                <input type="email" name="email" placeholder="Enter your email" value="{{ Auth::check() ? Auth::user()->email : '' }}">
+                                                <input type="email" name="email" placeholder="Enter your email" value="{{ Auth::check() ? Auth::user()->email : '' }}" required>
                                             </div>
 
                                         </div>
@@ -116,7 +116,7 @@
                                     <div class="row">
                                         <div class="col-md-4 col-sm-12 col-xs-12">
                                             <h4 class="input_title text-white">Car Category</h4>
-                                            <select class="form-control" name="car_category">
+                                            <select class="form-control" name="car_category" required>
                                                 <option value="">Please Select Car Category</option>
                                                 <option value="Ultra Luxury">Ultra Luxury</option>
                                                 <option value="Black Luxury">Black Luxury</option>
@@ -128,7 +128,7 @@
                                                 <h4 class="input_title text-white">Pick Up Address</h4>
                                                 <div class="position-relative">
                                                     <input id="pickupautocomplete" type="text" name="pick_location"
-                                                        placeholder="Chose Location">
+                                                        placeholder="Chose Location" required>
                                                     <label for="location_two" class="input_icon"><i
                                                             class="fas fa-map-marker-alt"></i></label>
                                                 </div>
@@ -138,13 +138,13 @@
                                         <div class="form-group" id="Pickup_latitudeArea">
                                             <label>Latitude</label>
                                             <input type="text" id="pickup_latitude" name="pickup_latitude"
-                                                class="form-control">
+                                                class="form-control" required>
                                         </div>
 
                                         <div class="form-group" id="Pickup_longtitudeArea">
                                             <label>Longitude</label>
                                             <input type="text" name="pickup_longitude" id="pickup_longitude"
-                                                class="form-control">
+                                                class="form-control" required>
                                         </div>
 
                                         <div class="col-md-4 col-sm-12 col-xs-12">
@@ -152,7 +152,7 @@
                                                 <h4 class="input_title text-white">Drop Off Address</h4>
                                                 <div class="position-relative">
                                                     <input type="text" id="dropoffautocomplete" name="drop_location"
-                                                        placeholder="Chose Location">
+                                                        placeholder="Chose Location" required>
                                                     <label for="location_two" class="input_icon"><i
                                                             class="fas fa-map-marker-alt"></i></label>
                                                 </div>
@@ -163,13 +163,13 @@
                                         <div class="form-group" id="dropoff_latitudeArea">
                                             <label>Latitude</label>
                                             <input type="text" id="dropoff_latitude" name="dropoff_latitude"
-                                                class="form-control">
+                                                class="form-control" required>
                                         </div>
 
                                         <div class="form-group" id="dropoff_longtitudeArea">
                                             <label>Longitude</label>
                                             <input type="text" name="dropoff_longitude" id="dropoff_longitude"
-                                                class="form-control">
+                                                class="form-control" required>
                                         </div>
 
                                     </div>
