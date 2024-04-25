@@ -242,7 +242,7 @@
                                     <!--begin::Col-->
                                     <div class="col-lg-4 fv-row">
                                         <input type="tel" name="phone" class="form-control form-control-lg"
-                                            placeholder="Enter your phone number" value="{{ $user->phone }}" required />
+                                            placeholder="Enter your phone number" value="{{ isset($user->phone) ? $user->phone: '' }}" required />
                                     </div>
                                     <!--end::Col-->
                                     <!--begin::Label-->
@@ -269,7 +269,7 @@
                                     <!--begin::Col-->
                                     <div class="col-lg-4 fv-row">
                                         <input type="text" name="Town" class="form-control form-control-lg"
-                                            placeholder="Enter your town" value="{{ $driver->city }}" required />
+                                            placeholder="Enter your town" value="{{ isset($driver->city) ? $dirver->city : '' }}" required />
                                     </div>
                                     <!--end::Col-->
                                     <!--begin::Label-->
@@ -306,7 +306,7 @@
                                     <div class="col-lg-4 fv-row">
                                         <input type="text" name="register_no" class="form-control form-control-lg"
                                             placeholder="Enter your car register number"
-                                            value="{{ $driver->register_no }}" required />
+                                            value="{{ isset($driver->register_no) ? $driver->register_no : ''}}" required />
                                     </div>
                                     <!--end::Col-->
                                     <!--begin::Label-->
@@ -317,7 +317,7 @@
                                     <!--begin::Col-->
                                     <div class="col-lg-4 fv-row">
                                         <input type="text" name="model" class="form-control form-control-lg"
-                                            placeholder="Enter your car model" value="{{ $driver->model }}" required />
+                                            placeholder="Enter your car model" value="{{ isset($driver->model) ? $driver->model : '' }}" required />
                                     </div>
                                     <!--end::Col-->
                                 </div>
