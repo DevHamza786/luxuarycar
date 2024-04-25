@@ -14,7 +14,7 @@
                             <div class="me-7 mb-4">
                                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
                                     <img class="border border-dark rounded"
-                                        src="{{ isset(auth()->user()->avatar) ? asset('storage/' . auth()->user()->avatar) : asset('panel/assets/media/avatars/150-26.jpg') }}"
+                                        src="{{ isset(auth()->user()->avatar) ? asset('storage/' . auth()->user()->avatar) : asset('assets/media/avatars/blank.png') }}"
                                         alt="Avatar" />
                                 </div>
                             </div>
@@ -198,7 +198,7 @@
                                         <label for="profile-image-input" id="profile-image-label"
                                             class="profile-image-label">
                                             <img id="profile-image-preview" class="profile-image"
-                                                src="{{ isset($user->avatar) ? asset('storage/' . $user->avatar) : asset('assets/media/avatars/150-26.jpg') }}"
+                                                src="{{ isset($user->avatar) ? asset('storage/' . $user->avatar) : asset('assets/media/avatars/blank.png') }}"
                                                 alt="profile picture" height="200">
                                         </label>
                                         <!--end::Image input-->
@@ -260,7 +260,6 @@
                                 </div>
                                 <!--end::Input group-->
                                 <!--begin::Input group-->
-                                @dd($driver)
                                 <div class="row mb-6">
                                     <!--begin::Label-->
                                     <label class="col-lg-2 col-form-label fw-bold fs-6">
@@ -326,7 +325,7 @@
                                 <!--begin::Input group-->
                                 <div class="row mb-6">
                                     <!--begin::Label-->
-                                    <label class="col-lg-2 col-form-label text-lg-right">Nationa ID Card:</label>
+                                    <label class="col-lg-2 col-form-label text-lg-right">Upload Documents:</label>
                                     <!--end::Label-->
 
                                     <!--begin::Col-->

@@ -363,7 +363,7 @@
                                         <div class="cursor-pointer symbol symbol-30px symbol-md-40px"
                                             data-kt-menu-trigger="click" data-kt-menu-attach="parent"
                                             data-kt-menu-placement="bottom-end">
-                                            <img alt="Avatar" src="{{ (isset(auth()->user()->avatar)) ? asset('storage/' . auth()->user()->avatar) : asset('panel/assets/media/avatars/150-26.jpg')  }}" />
+                                            <img alt="Avatar" src="{{ (isset(auth()->user()->avatar)) ? asset('storage/' . auth()->user()->avatar) : asset('assets/media/avatars/blank.png')  }}" />
 
                                         </div>
                                         <!--begin::Menu-->
@@ -374,7 +374,7 @@
                                                 <div class="menu-content d-flex align-items-center px-3">
                                                     <!--begin::Avatar-->
                                                     <div class="symbol symbol-50px me-5">
-                                                        <img alt="Avatar" src="{{ (isset(auth()->user()->avatar)) ? asset('storage/' . auth()->user()->avatar) : asset('panel/assets/media/avatars/150-26.jpg')  }}" />
+                                                        <img alt="Avatar" src="{{ (isset(auth()->user()->avatar)) ? asset('storage/' . auth()->user()->avatar) : asset('assets/media/avatars/blank.png')  }}" />
                                                     </div>
                                                     <!--end::Avatar-->
                                                     <!--begin::Username-->
