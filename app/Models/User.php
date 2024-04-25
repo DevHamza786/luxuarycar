@@ -24,6 +24,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'avatar',
+        'status',
     ];
 
     /**
@@ -45,6 +48,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function profileSetupComplete()
+    {
+        if ($this->status === 'incomplete') {
+            return false;
+        }
+
+        return true;
+    }
 
     public function bookings()
     {

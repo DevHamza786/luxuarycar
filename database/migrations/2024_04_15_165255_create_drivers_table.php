@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('city');
+            $table->string('model')->nullable();
+            $table->string('register_no')->nullable();
+            $table->string('category')->nullable();
+            $table->string('active')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

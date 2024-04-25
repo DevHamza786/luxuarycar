@@ -25,18 +25,25 @@ Route::get('/privacy-policy', function () { return view('home.privacy-policy');}
 Route::post('/booking', [HomeController::class, 'store'])->name('booking.store');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // check driver profile setup
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('check.driver.profile.setup');
     Route::delete('/dashboard/users/{id}', [DashboardController::class, 'softDelete'])->name('users.softdelete');
 
-    Route::get('/bookings', [BookingController::class, 'index'])->name('bookings');
-    Route::get('/map/{id}', [BookingController::class, 'showMap'])->name('map.show');
+    // Booking
+    Route::get('/bookings', [BookingController::class, 'index'])->name('bookings')->middleware('check.driver.profile.setup');
+    Route::get('/map/{id}', [BookingController::class, 'showMap'])->name('map.show')->middleware('check.driver.profile.setup');
     Route::post('/assgin-driver', [BookingController::class, 'assginDriver'])->name('assgin-driver');
     Route::delete('/dashboard/booking/{id}', [BookingController::class, 'softDelete'])->name('booking.softdelete');
 
+    // Driver
     Route::get('/all-drivers', [DriverController::class, 'index'])->name('all.drivers');
+    Route::get('/profile-setup', [DriverController::class, 'profileSetup'])->name('driver.profile');
+    Route::post('/profile-update', [DriverController::class, 'profileUpdate'])->name('driver.update');
 
+    // User
     Route::get('/all-users', [UserController::class, 'index'])->name('all.users');
 
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/updatepassword', [HomeController::class, 'passwordUpdate'])->name('passwordUpdate');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

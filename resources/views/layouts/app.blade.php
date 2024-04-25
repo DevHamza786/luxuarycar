@@ -19,6 +19,7 @@
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css"/>
     <!--end::Global Stylesheets Bundle-->
 </head>
 <!--begin::Body-->
@@ -248,26 +249,49 @@
                                         <span class="menu-title">History</span>
                                     </a>
                                 </div>
-                                <div class="menu-item">
-                                    <a class="menu-link" href="#">
-                                        <span class="menu-icon">
-                                            <!--begin::Svg Icon | path: icons/duotune/layouts/lay010.svg-->
-                                            <span class="svg-icon svg-icon-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none">
-                                                    <path opacity="0.3"
-                                                        d="M20 21H3C2.4 21 2 20.6 2 20V10C2 9.4 2.4 9 3 9H20C20.6 9 21 9.4 21 10V20C21 20.6 20.6 21 20 21Z"
-                                                        fill="black" />
-                                                    <path
-                                                        d="M20 7H3C2.4 7 2 6.6 2 6V3C2 2.4 2.4 2 3 2H20C20.6 2 21 2.4 21 3V6C21 6.6 20.6 7 20 7Z"
-                                                        fill="black" />
-                                                </svg>
+                                @if (Auth::user()->hasrole('driver'))
+                                    <div class="menu-item">
+                                        <a class="menu-link {{ ($pagePrefix == 'profileSetup') ? 'active' : '' }}" href="{{ route('driver.profile') }}">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/layouts/lay010.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none">
+                                                        <path opacity="0.3"
+                                                            d="M20 21H3C2.4 21 2 20.6 2 20V10C2 9.4 2.4 9 3 9H20C20.6 9 21 9.4 21 10V20C21 20.6 20.6 21 20 21Z"
+                                                            fill="black" />
+                                                        <path
+                                                            d="M20 7H3C2.4 7 2 6.6 2 6V3C2 2.4 2.4 2 3 2H20C20.6 2 21 2.4 21 3V6C21 6.6 20.6 7 20 7Z"
+                                                            fill="black" />
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
                                             </span>
-                                            <!--end::Svg Icon-->
-                                        </span>
-                                        <span class="menu-title">Payment Setting</span>
-                                    </a>
-                                </div>
+                                            <span class="menu-title">Profile Setup</span>
+                                        </a>
+                                    </div>
+                                @else
+                                    <div class="menu-item">
+                                        <a class="menu-link" href="#">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/layouts/lay010.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none">
+                                                        <path opacity="0.3"
+                                                            d="M20 21H3C2.4 21 2 20.6 2 20V10C2 9.4 2.4 9 3 9H20C20.6 9 21 9.4 21 10V20C21 20.6 20.6 21 20 21Z"
+                                                            fill="black" />
+                                                        <path
+                                                            d="M20 7H3C2.4 7 2 6.6 2 6V3C2 2.4 2.4 2 3 2H20C20.6 2 21 2.4 21 3V6C21 6.6 20.6 7 20 7Z"
+                                                            fill="black" />
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">Payment Setting</span>
+                                        </a>
+                                    </div>
+                                @endif
                             @endif
                         </div>
                         <!--end::Menu-->
@@ -339,8 +363,8 @@
                                         <div class="cursor-pointer symbol symbol-30px symbol-md-40px"
                                             data-kt-menu-trigger="click" data-kt-menu-attach="parent"
                                             data-kt-menu-placement="bottom-end">
-                                            <img src="{{ asset('/assets/media/avatars/150-26.jpg') }}"
-                                                alt="user" />
+                                            <img alt="Avatar" src="{{ (isset(auth()->user()->avatar)) ? asset('storage/' . auth()->user()->avatar) : asset('panel/assets/media/avatars/150-26.jpg')  }}" />
+
                                         </div>
                                         <!--begin::Menu-->
                                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
@@ -350,8 +374,7 @@
                                                 <div class="menu-content d-flex align-items-center px-3">
                                                     <!--begin::Avatar-->
                                                     <div class="symbol symbol-50px me-5">
-                                                        <img alt="Logo"
-                                                            src="{{ asset('/assets/media/avatars/150-26.jpg') }}" />
+                                                        <img alt="Avatar" src="{{ (isset(auth()->user()->avatar)) ? asset('storage/' . auth()->user()->avatar) : asset('panel/assets/media/avatars/150-26.jpg')  }}" />
                                                     </div>
                                                     <!--end::Avatar-->
                                                     <!--begin::Username-->
