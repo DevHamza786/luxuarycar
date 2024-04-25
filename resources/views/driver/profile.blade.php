@@ -282,13 +282,13 @@
                                         <select class="form-control form-control-lg" name="car_category" required>
                                             <option value="">Please Select Car Category</option>
                                             <option value="Ultra Luxury"
-                                                {{ $driver->category == 'Ultra Luxury' ? 'selected' : '' }}>Ultra Luxury
+                                                {{ isset($driver->category) == 'Ultra Luxury' ? 'selected' : '' }}>Ultra Luxury
                                             </option>
                                             <option value="Black Luxury"
-                                                {{ $driver->category == 'Black Luxury' ? 'selected' : '' }}>Black Luxury
+                                                {{ isset($driver->category) == 'Black Luxury' ? 'selected' : '' }}>Black Luxury
                                             </option>
                                             <option value="SUV Luxury"
-                                                {{ $driver->category == 'SUV Luxury' ? 'selected' : '' }}>SUV Luxury
+                                                {{ isset($driver->category) == 'SUV Luxury' ? 'selected' : '' }}>SUV Luxury
                                             </option>
                                         </select>
                                     </div>
