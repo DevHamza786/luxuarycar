@@ -14,7 +14,6 @@ class CheckDriverProfileSetup
         $user = $request->user();
         if ($user && $user->hasRole('driver')) {
             if ($user->status != null && $user->status == 'incomplete') {
-                // dd('dasds');
                 return redirect('profile-setup');
             }
         }

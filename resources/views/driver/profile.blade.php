@@ -260,6 +260,7 @@
                                 </div>
                                 <!--end::Input group-->
                                 <!--begin::Input group-->
+                                @dd($driver)
                                 <div class="row mb-6">
                                     <!--begin::Label-->
                                     <label class="col-lg-2 col-form-label fw-bold fs-6">
@@ -269,7 +270,7 @@
                                     <!--begin::Col-->
                                     <div class="col-lg-4 fv-row">
                                         <input type="text" name="Town" class="form-control form-control-lg"
-                                            placeholder="Enter your town" value="{{ isset($driver->city) ? $dirver->city : '' }}" required />
+                                            placeholder="Enter your town" value="{{ isset($driver->city) ? $driver->city : '' }}" required />
                                     </div>
                                     <!--end::Col-->
                                     <!--begin::Label-->
