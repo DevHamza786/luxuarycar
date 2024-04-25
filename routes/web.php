@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\PasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookingController;
@@ -23,16 +24,12 @@ Route::get('/privacy-policy', function () { return view('home.privacy-policy');}
 
 Route::post('/booking', [HomeController::class, 'store'])->name('booking.store');
 
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::delete('/dashboard/users/{id}', [DashboardController::class, 'softDelete'])->name('users.softdelete');
 
     Route::get('/bookings', [BookingController::class, 'index'])->name('bookings');
+    Route::get('/map/{id}', [BookingController::class, 'showMap'])->name('map.show');
     Route::post('/assgin-driver', [BookingController::class, 'assginDriver'])->name('assgin-driver');
     Route::delete('/dashboard/booking/{id}', [BookingController::class, 'softDelete'])->name('booking.softdelete');
 
@@ -41,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/all-users', [UserController::class, 'index'])->name('all.users');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/updatepassword', [HomeController::class, 'passwordUpdate'])->name('passwordUpdate');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

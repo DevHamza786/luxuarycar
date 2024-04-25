@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rules\Password;
 
 class HomeController extends Controller
 {
@@ -73,4 +74,20 @@ class HomeController extends Controller
             }
         }
     }
+
+    public function passwordUpdate(Request $request){
+
+        $user = $request->user();
+
+        if (!Hash::check($request->currentpassword, $user->password)) {
+            return response()->json(['success' => false, 'message' => 'Current password is incorrect.'], 422);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->newpassword),
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Password updated successfully.'], 200);
+    }
+
 }

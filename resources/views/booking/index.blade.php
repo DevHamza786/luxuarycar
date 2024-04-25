@@ -40,8 +40,7 @@
                                             <th class="min-w-120px">Drop Location</th>
                                             <th class="min-w-120px">Driver</th>
                                             <th class="min-w-120px">Status</th>
-                                            {{-- <th class="min-w-120px">Create At</th> --}}
-                                            <th class="min-w-120px">Actions</th>
+                                            <th class="min-w-150px">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-gray-600 fw-semibold">

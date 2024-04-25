@@ -1,1 +1,120 @@
-"use strict";var KTAccountSettingsSigninMethods={init:function(){var t,e;!function(){var t=document.getElementById("kt_signin_email"),e=document.getElementById("kt_signin_email_edit"),n=document.getElementById("kt_signin_password"),i=document.getElementById("kt_signin_password_edit"),o=document.getElementById("kt_signin_email_button"),s=document.getElementById("kt_signin_cancel"),r=document.getElementById("kt_signin_password_button"),a=document.getElementById("kt_password_cancel");o.querySelector("button").addEventListener("click",(function(){l()})),s.addEventListener("click",(function(){l()})),r.querySelector("button").addEventListener("click",(function(){d()})),a.addEventListener("click",(function(){d()}));var l=function(){t.classList.toggle("d-none"),o.classList.toggle("d-none"),e.classList.toggle("d-none")},d=function(){n.classList.toggle("d-none"),r.classList.toggle("d-none"),i.classList.toggle("d-none")}}(),e=document.getElementById("kt_signin_change_email"),t=FormValidation.formValidation(e,{fields:{emailaddress:{validators:{notEmpty:{message:"Email is required"},emailAddress:{message:"The value is not a valid email address"}}},confirmemailpassword:{validators:{notEmpty:{message:"Password is required"}}}},plugins:{trigger:new FormValidation.plugins.Trigger,bootstrap:new FormValidation.plugins.Bootstrap5({rowSelector:".fv-row"})}}),e.querySelector("#kt_signin_submit").addEventListener("click",(function(e){e.preventDefault(),console.log("click"),t.validate().then((function(t){"Valid"==t?swal.fire({text:"Sent password reset. Please check your email",icon:"success",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn font-weight-bold btn-light-primary"}}):swal.fire({text:"Sorry, looks like there are some errors detected, please try again.",icon:"error",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn font-weight-bold btn-light-primary"}})}))})),function(t){var e,n=document.getElementById("kt_signin_change_password");e=FormValidation.formValidation(n,{fields:{currentpassword:{validators:{notEmpty:{message:"Current Password is required"}}},newpassword:{validators:{notEmpty:{message:"New Password is required"}}},confirmpassword:{validators:{notEmpty:{message:"Confirm Password is required"},identical:{compare:function(){return n.querySelector('[name="newpassword"]').value},message:"The password and its confirm are not the same"}}}},plugins:{trigger:new FormValidation.plugins.Trigger,bootstrap:new FormValidation.plugins.Bootstrap5({rowSelector:".fv-row"})}}),n.querySelector("#kt_password_submit").addEventListener("click",(function(t){t.preventDefault(),console.log("click"),e.validate().then((function(t){"Valid"==t?swal.fire({text:"Sent password reset. Please check your email",icon:"success",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn font-weight-bold btn-light-primary"}}):swal.fire({text:"Sorry, looks like there are some errors detected, please try again.",icon:"error",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn font-weight-bold btn-light-primary"}})}))}))}()}};KTUtil.onDOMContentLoaded((function(){KTAccountSettingsSigninMethods.init()}));
+"use strict";
+
+var KTAccountSettingsSigninMethods = {
+    init: function () {
+        var t, e;
+
+        // Function to toggle between email and password change forms
+        var toggleEmailForm = function () {
+            var passwordForm = document.getElementById("kt_signin_change_password");
+            passwordForm.classList.toggle("d-none");
+        };
+
+        // Function to handle form submission with AJAX for changing password
+        var submitPasswordForm = function () {
+            var form = document.getElementById("kt_signin_change_password");
+            var validator = FormValidation.formValidation(form, {
+                fields: {
+                    currentpassword: {
+                        validators: {
+                            notEmpty: {
+                                message: "Current Password is required"
+                            }
+                        }
+                    },
+                    newpassword: {
+                        validators: {
+                            notEmpty: {
+                                message: "New Password is required"
+                            }
+                        }
+                    },
+                    confirmpassword: {
+                        validators: {
+                            notEmpty: {
+                                message: "Confirm Password is required"
+                            },
+                            identical: {
+                                compare: function () {
+                                    return form.querySelector('[name="newpassword"]').value;
+                                },
+                                message: "The password and its confirm are not the same"
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger,
+                    bootstrap: new FormValidation.plugins.Bootstrap5({
+                        rowSelector: ".fv-row"
+                    })
+                }
+            });
+
+            form.querySelector("#kt_password_submit").addEventListener("click", function (event) {
+                event.preventDefault();
+                validator.validate().then(function (status) {
+                    if (status === "Valid") {
+                        // Form is valid, proceed with AJAX request
+                        var formData = new FormData(form);
+                        fetch(passwordUpdateRoute, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                             },
+                            body: formData
+                        })
+                        .then(function(response) {
+                            // console.log(response);
+                            return response.json();
+                        })
+                        .then(function(data) {
+                            // console.log(data);
+                            if (data.success) {
+                                // Password updated successfully
+                                swal.fire({
+                                    text: data.message,
+                                    icon: "success",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Ok, got it!",
+                                    customClass: {
+                                        confirmButton: "btn font-weight-bold btn-light-primary"
+                                    }
+                                }).then(function() {
+                                    // Clear input fields
+                                    document.getElementById("currentpassword").value = "";
+                                    document.getElementById("newpassword").value = "";
+                                    document.getElementById("confirmpassword").value = "";
+                                });
+                            } else {
+                                // Error updating password
+                                swal.fire({
+                                    text: data.message,
+                                    icon: "error",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Ok, got it!",
+                                    customClass: {
+                                        confirmButton: "btn font-weight-bold btn-light-primary"
+                                    }
+                                });
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log('Error:', error);
+                        });
+                    }
+                });
+            });
+        };
+        document.getElementById("kt_signin_password_button").addEventListener("click", function () {
+            toggleEmailForm();
+        });
+
+        submitPasswordForm();
+    }
+};
+
+// Initialize the methods when the DOM content is loaded
+KTUtil.onDOMContentLoaded((function () {
+    KTAccountSettingsSigninMethods.init();
+}));
