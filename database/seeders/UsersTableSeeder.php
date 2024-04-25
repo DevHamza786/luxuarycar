@@ -27,6 +27,7 @@ class UsersTableSeeder extends Seeder
                 'name' => 'Driver User',
                 'email' => 'driver@example.com',
                 'password' => bcrypt('password'),
+                'status' => 'incomplete'
             ]);
             $driver->assignRole('driver');
         }
