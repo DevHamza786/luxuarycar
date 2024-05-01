@@ -149,12 +149,13 @@
                     trafficModel: 'optimistic' // alternative: 'pessimistic', 'optimistic'
                 }
             }, function(response, status) {
-                if (status == google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setDirections(response);
-                    updateInfo(response);
-                } else {
-                    alert('Directions request failed due to ' + status);
-                }
+                console.log(status);
+                // if (status == google.maps.DirectionsStatus.OK) {
+                //     directionsDisplay.setDirections(response);
+                //     updateInfo(response);
+                // } else {
+                //     alert('Directions request failed due to ' + status);
+                // }
             });
         }
 
@@ -170,7 +171,7 @@
             var totalDistanceInMiles = totalDistance * 0.000621371; // Convert meters to miles
             var totalDurationInMinutes = Math.round(totalDuration / 60);
             var arrivalTime = new Date(Date.now() + totalDuration * 1000);
-            var price = totalDistanceInMiles * 2;
+            var price = totalDistanceInMiles * 15;
             // Formatting the content with bold labels and different colors
             var infoContent = '<span style="color: blue; font-weight: bold;">Total Distance:</span> ' + totalDistanceInMiles
                 .toFixed(2) + ' miles, ';
