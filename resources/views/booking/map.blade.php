@@ -91,7 +91,7 @@
             });
 
             // Start watching user's position
-            watchUserPosition();
+            // watchUserPosition();
 
         }
 
