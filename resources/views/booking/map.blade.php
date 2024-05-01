@@ -167,16 +167,18 @@
                 totalDistance += legs[i].distance.value;
                 totalDuration += legs[i].duration.value;
             }
-            var totalDistanceInKm = totalDistance / 1000;
+            var totalDistanceInMiles = totalDistance * 0.000621371; // Convert meters to miles
             var totalDurationInMinutes = Math.round(totalDuration / 60);
             var arrivalTime = new Date(Date.now() + totalDuration * 1000);
+            var price = totalDistanceInMiles * 2;
             // Formatting the content with bold labels and different colors
-            var infoContent = '<span style="color: blue; font-weight: bold;">Total Distance:</span> ' + totalDistanceInKm
-                .toFixed(2) + ' km, ';
+            var infoContent = '<span style="color: blue; font-weight: bold;">Total Distance:</span> ' + totalDistanceInMiles
+                .toFixed(2) + ' miles, ';
             infoContent += '<span style="color: green; font-weight: bold;">Total Duration:</span> ' +
                 totalDurationInMinutes + ' mins, ';
             infoContent += '<span style="color: red; font-weight: bold;">Arrival Time:</span> ' + arrivalTime
-                .toLocaleString();
+                .toLocaleString()+', ';
+            infoContent += '<span style="color: purple; font-weight: bold;">Price:</span> $' + price.toFixed(2);
 
             // Update the info div with the formatted content
             document.getElementById('info').innerHTML = infoContent;
