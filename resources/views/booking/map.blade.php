@@ -228,33 +228,33 @@
             }
 
             // Update navigation instructions
-            updateNavigation(userLocation);
+            // updateNavigation(userLocation);
         }
 
-        function updateNavigation(userLocation) {
-            // Get route directions
-            console.log(userLocation);
-            var request = {
-                origin: userLocation,
-                destination: 'New York City, NY', // Replace with your destination
-                travelMode: 'DRIVING'
-            };
+        // function updateNavigation(userLocation) {
+        //     // Get route directions
+        //     console.log(userLocation);
+        //     var request = {
+        //         origin: userLocation,
+        //         destination: 'New York City, NY', // Replace with your destination
+        //         travelMode: 'DRIVING'
+        //     };
 
-            directionsService.route(request, function(response, status) {
-                if (status === 'OK') {
-                    directionsRenderer.setDirections(response);
-                    var route = response.routes[0];
-                    var distanceToNextWaypoint = route.legs[0].steps[0].distance.value;
-                    var bearingToNextWaypoint = bearing(userLocation, route.legs[0].steps[0].end_location);
-                    // Provide navigation instructions based on distance and bearing
-                    // You can implement this based on your specific requirements
-                    console.log('Distance to next waypoint: ' + distanceToNextWaypoint + ' meters');
-                    console.log('Bearing to next waypoint: ' + bearingToNextWaypoint);
-                } else {
-                    console.log('Directions request failed due to ' + status);
-                }
-            });
-        }
+        //     directionsService.route(request, function(response, status) {
+        //         if (status === 'OK') {
+        //             directionsRenderer.setDirections(response);
+        //             var route = response.routes[0];
+        //             var distanceToNextWaypoint = route.legs[0].steps[0].distance.value;
+        //             var bearingToNextWaypoint = bearing(userLocation, route.legs[0].steps[0].end_location);
+        //             // Provide navigation instructions based on distance and bearing
+        //             // You can implement this based on your specific requirements
+        //             console.log('Distance to next waypoint: ' + distanceToNextWaypoint + ' meters');
+        //             console.log('Bearing to next waypoint: ' + bearingToNextWaypoint);
+        //         } else {
+        //             console.log('Directions request failed due to ' + status);
+        //         }
+        //     });
+        // }
 
         function bearing(start, end) {
             var startLat = toRadians(start.lat);
