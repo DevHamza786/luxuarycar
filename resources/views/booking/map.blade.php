@@ -150,12 +150,12 @@
                 }
             }, function(response, status) {
                 console.log(status);
-                // if (status == google.maps.DirectionsStatus.OK) {
-                //     directionsDisplay.setDirections(response);
-                //     updateInfo(response);
-                // } else {
-                //     alert('Directions request failed due to ' + status);
-                // }
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(response);
+                    updateInfo(response);
+                } else {
+                    alert('Directions request failed due to ' + status);
+                }
             });
         }
 
