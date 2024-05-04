@@ -1,7 +1,7 @@
 @extends('home.layout.header')
 @section('content')
     <!-- slider_section - start
-           ================================================== -->
+                           ================================================== -->
     <section class="slider_section text-white text-center position-relative clearfix">
         <div class="main_slider clearfix">
             <div class="item has_overlay d-flex align-items-center" data-bg-image="{{ asset('home/assets/images/bg.jpeg') }}">
@@ -60,11 +60,11 @@
         </div>
     </section>
     <!-- slider_section - end
-           ================================================== -->
+                           ================================================== -->
 
 
     <!-- search_section - start
-           ================================================== -->
+                           ================================================== -->
     <section class="search_section clearfix">
         <ul class="button-group filters-button-group ul_li_center mb_30 clearfix" data-aos="fade-up" data-aos-delay="300">
             <li><button class="button" data-filter=".sedan">Distance from Manhattin</button></li>
@@ -95,26 +95,29 @@
                                         <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">Date</h4>
-                                                <input type="date" placeholder="20/Feb/2024" name="date" id="date" required>
+                                                <input type="date" placeholder="20/Feb/2024" name="date"
+                                                    id="date" required>
                                             </div>
                                         </div>
                                         <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">First Name</h4>
-                                                <input type="text" name="fname" placeholder="Enter your name" value="{{ Auth::check() ? Auth::user()->name : '' }}" required>
+                                                <input type="text" name="fname" placeholder="Enter your name"
+                                                    value="{{ Auth::check() && Auth::user()->role === 'customer' ? Auth::user()->name : '' }}" required>
                                             </div>
                                         </div>
                                         <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">Email</h4>
-                                                <input type="email" name="email" placeholder="Enter your email" value="{{ Auth::check() ? Auth::user()->email : '' }}" required>
+                                                <input type="email" name="email" placeholder="Enter your email"
+                                                    value="{{ Auth::check() && Auth::user()->role === 'customer' ? Auth::user()->email : '' }}" required>
                                             </div>
 
                                         </div>
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <div class="col-md-4 col-sm-12 col-xs-12">
+                                        <div class="col-md-3 col-sm-12 col-xs-12">
                                             <h4 class="input_title text-white">Car Category</h4>
                                             <select class="form-control" name="car_category" required>
                                                 <option value="">Please Select Car Category</option>
@@ -123,14 +126,23 @@
                                                 <option value="SUV Luxury">SUV Luxury</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-4 col-sm-12 col-xs-12">
+                                        <div class="col-md-3 col-sm-12 col-xs-12">
+                                            <h4 class="input_title text-white">No. of Pessenger</h4>
+                                            <select class="form-control" name="no_pessenger" required>
+                                                <option value="">Please Select No. of Pessenger</option>
+                                                <option value="4">4</option>
+                                                <option value="6">6</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">Pick Up Address</h4>
                                                 <div class="position-relative">
                                                     <input id="pickupautocomplete" type="text" name="pick_location"
-                                                        placeholder="Chose Location" required>
-                                                    <label for="location_two" class="input_icon"><i
-                                                            class="fas fa-map-marker-alt"></i></label>
+                                                        placeholder="choose your location" required>
+                                                    <label for="location_two" class="input_icon">
+                                                        <i id="pickupIcon" class="fas fa-map-marker-alt text-white"></i>
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -138,23 +150,23 @@
                                         <div class="form-group" id="Pickup_latitudeArea">
                                             <label>Latitude</label>
                                             <input type="text" id="pickup_latitude" name="pickup_latitude"
-                                                class="form-control" required>
+                                                class="form-control" value="">
                                         </div>
 
                                         <div class="form-group" id="Pickup_longtitudeArea">
                                             <label>Longitude</label>
                                             <input type="text" name="pickup_longitude" id="pickup_longitude"
-                                                class="form-control" required>
+                                                class="form-control" value="">
                                         </div>
 
-                                        <div class="col-md-4 col-sm-12 col-xs-12">
+                                        <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">Drop Off Address</h4>
                                                 <div class="position-relative">
                                                     <input type="text" id="dropoffautocomplete" name="drop_location"
-                                                        placeholder="Chose Location" required>
+                                                        placeholder="choose your location" required>
                                                     <label for="location_two" class="input_icon"><i
-                                                            class="fas fa-map-marker-alt"></i></label>
+                                                            class="fas fa-map-marker-alt text-white"></i></label>
                                                 </div>
 
                                             </div>
@@ -500,12 +512,6 @@
             </div> --}}
         </div>
     </section>
-    <!-- search_section - end
-           ================================================== -->
-
-
-    <!-- feature_section - start
-           ================================================== -->
     <section class="section about_us clearfix">
         <div class="container">
             <div class="row align-items-end">
@@ -634,11 +640,6 @@
             </div>
         </div>
     </section>
-    <!-- feature_section - end
-           ================================================== -->
-
-
-    <!-- service we provide  -->
     <section class="services_we_provide section" data-bg-image="{{ asset('home/assets/images/bg.jpeg') }}">
         <div class="container">
             <div class="row">
@@ -674,7 +675,6 @@
             </div>
         </div>
     </section>
-    <!-- service we provide  -->
     <section class="left_right">
         <div class="container-fluid p-0">
             <div class="row align-items-center">
@@ -871,6 +871,39 @@
             });
 
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get the map icon element
+            var pickupIcon = document.getElementById("pickupIcon");
+
+            // Add click event listener to the map icon
+            pickupIcon.addEventListener("click", function() {
+                // Check if Geolocation is supported by the browser
+                if (navigator.geolocation) {
+                    // Get the current position
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        // Retrieve the latitude and longitude
+                        var latitude = position.coords.latitude;
+                        var longitude = position.coords.longitude;
+                        $('#input[name="pickup_latitude"]').val(latitude);
+                        $('#input[name="pickup_longitude"]').val("hamza");
+
+                        $('#pickup_latitude').val(latitude);
+                        $('#pickup_longitude').val(longitude);
+
+                        // Use the latitude and longitude as needed
+                        console.log("Latitude:", latitude);
+                        console.log("Longitude:", longitude);
+                    });
+                } else {
+                    // Geolocation is not supported by this browser
+                    console.log("Geolocation is not supported");
+                }
+            });
+        });
+
+
+
 
         // Get the input field
         var dateInput = document.getElementById('date');

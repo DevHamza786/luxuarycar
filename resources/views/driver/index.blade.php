@@ -29,103 +29,23 @@
                                 <!--begin::Table container-->
                                 <div class="table-responsive">
                                     <!--begin::Table-->
-                                    <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                                    <table id="drivertable"
+                                        class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
                                         <!--begin::Table head-->
                                         <thead>
                                             <tr class="fw-bolder text-muted">
-                                                <th class="w-25px">
-                                                    <div
-                                                        class="form-check form-check-sm form-check-custom form-check-solid">
-                                                        <input class="form-check-input" type="checkbox" value="1"
-                                                            data-kt-check="true"
-                                                            data-kt-check-target=".widget-9-check" />
-                                                    </div>
-                                                </th>
-                                                <th class="min-w-150px">Name</th>
-                                                <th class="min-w-140px">Email</th>
+                                                <th class="min-w-120px">Name</th>
+                                                <th class="min-w-120px">Email</th>
                                                 <th class="min-w-120px">Phone</th>
-                                                <th class="min-w-120px">Total Assigned Bookings</th>
-                                                <th class="min-w-100px text-end">Actions</th>
+                                                <th class="min-w-120px">Car Category</th>
+                                                <th class="min-w-120px">Total Bookings</th>
+                                                <th class="min-w-120px">Status</th>
+                                                <th class="min-w-120px">Actions</th>
                                             </tr>
                                         </thead>
                                         <!--end::Table head-->
                                         <!--begin::Table body-->
-                                        <tbody>
-                                            @if ($drivers->isEmpty())
-                                                <tr>
-                                                    <td colspan="5">
-                                                        <p
-                                                            class="text-hover-primary fs-7 text-center">
-                                                            No Data Found</p>
-                                                    </td>
-                                                    <!-- Add more columns if needed -->
-                                                </tr>
-                                            @else
-                                                @foreach ($drivers as $driver)
-                                                    <tr>
-                                                        <td>
-                                                            <div
-                                                                class="form-check form-check-sm form-check-custom form-check-solid">
-                                                                <input class="form-check-input widget-9-check"
-                                                                    type="checkbox" value="1" />
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="d-flex justify-content-start flex-column">
-                                                                    <p
-                                                                        class="text-hover-primary fs-7">
-                                                                        {{ $driver->name }}</p>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <p class="text-hover-primary fs-7">
-                                                                {{ $driver->email }}</p>
-                                                        </td>
-                                                        <td>
-                                                            <p class="text-hover-primary fs-7">
-                                                                {{ $driver->phone ?? 'N/A' }}</p>
-                                                        </td>
-                                                        <td>
-                                                            <p class="text-hover-primary fs-7">
-                                                                {{ $driver->bookings_count ?? 'N/A' }}</p>
-                                                        </td>
-                                                        <td>
-                                                            <div class="d-flex justify-content-end flex-shrink-0">
-                                                                <form
-                                                                    action="{{ route('users.softdelete', ['id' => $driver->id]) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit"
-                                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
-                                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                                                        <span class="svg-icon svg-icon-3">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                width="24" height="24"
-                                                                                viewBox="0 0 24 24" fill="none">
-                                                                                <path
-                                                                                    d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z"
-                                                                                    fill="black" />
-                                                                                <path opacity="0.5"
-                                                                                    d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
-                                                                                    fill="black" />
-                                                                                <path opacity="0.5"
-                                                                                    d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
-                                                                                    fill="black" />
-                                                                            </svg>
-                                                                        </span>
-                                                                        <!--end::Svg Icon-->
-                                                                    </button>
-                                                                </form>
-                                                                <a href="#">
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
+                                        <tbody class="text-gray-600 fw-semibold">
                                         </tbody>
                                         <!--end::Table body-->
                                     </table>
@@ -146,4 +66,209 @@
         <!--end::Post-->
     </div>
     <!--end::Content-->
+    {{-- Modal --}}
+    <div class="modal fade" tabindex="-1" id="driverDetailsModal">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Drive Profile</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <div class="modal-body" id="driverDetailsBody">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+@section('script')
+    <script>
+        $(function() {
+            var table = $('#drivertable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('all.drivers') }}",
+                columns: [{
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'phone',
+                        name: 'phone'
+                    },
+                    {
+                        data: 'car_category',
+                        name: 'car_category'
+                    },
+                    {
+                        data: 'bookingCount',
+                        name: 'bookingCount'
+                    },
+                    {
+                        label: "status",
+                        name: "status",
+                    },
+                    {
+                        data: 'action',
+                        name: 'action'
+                    },
+                ],
+                columnDefs: [{
+                    targets: 5, // Target the 6th column (0-based index)
+                    render: function(data, type, full, meta) {
+                        // Define options for the status dropdown
+                        var options = ['Incomplete', 'Complete', 'Inactive', 'Active'];
+                        // Construct the dropdown with options
+                        var select = '<select class="form-control">';
+                        options.forEach(function(option) {
+                            var selected = (full.status === option) ? 'selected' : '';
+                            select += '<option value="' + option + '" ' + selected +
+                                '>' + option + '</option>';
+                        });
+                        select += '</select>';
+                        // Return the dropdown
+                        return select;
+                    }
+                }]
+            });
+
+            $(document).on('change', '#drivertable select', function() {
+                var newValue = $(this).val(); // Get the new status value from the dropdown
+                var rowData = table.row($(this).closest('tr')).data(); // Get the data for the row
+                var driverId = rowData.id; // Assuming the driver ID is stored in the 'id' column
+                // console.log(newValue);
+                // console.log(driverId);
+
+                // Send an AJAX request to update the status
+                $.ajax({
+                    url: "{{ route('driver.status') }}", // Replace with your backend endpoint
+                    method: 'POST',
+                    data: {
+                        id: driverId,
+                        status: newValue
+                    },
+                    success: function(response) {
+                        // Update the UI if necessary
+                        // For example, you can update the status column in the DataTables table
+                        table.cell({
+                            row: table.row($(this).closest('tr')).index(),
+                            column: 5
+                        }).data(newValue).draw();
+                        toastr.success(response.message);
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                        toastr.error(error);
+                    }
+                });
+            });
+        });
+
+
+
+        $(document).on('click', '.show-driver-details', function() {
+            var driverId = $(this).data('driver-id');
+            // console.log(driverId);
+            // AJAX request to fetch driver details
+            $.ajax({
+                url: "{{ route('driver.data', ['id' => ':driverId']) }}".replace(':driverId', driverId),
+                type: 'GET',
+                success: function(response) {
+                    var html = '';
+
+                    if (response.avatar) {
+                        html += '<img src="{{ asset('storage/') }}' + '/' + response.avatar +
+                            '" alt="Avatar" height="200">';
+                    }
+
+                    html += '<p><strong>Name:</strong> ' + response.name + '</p>';
+                    html += '<p><strong>Email:</strong> ' + response.email + '</p>';
+                    html += '<p><strong>Phone:</strong> ' + response.phone + '</p>';
+                    html += '<p><strong>Status:</strong> ' + response.status + '</p>';
+
+                    if (response.driver_data) {
+                        html += '<p><strong>City:</strong> ' + response.driver_data.city + '</p>';
+                        html += '<p><strong>Model:</strong> ' + response.driver_data.model + '</p>';
+                        html += '<p><strong>Register No:</strong> ' + response.driver_data.register_no +
+                            '</p>';
+                        html += '<p><strong>Category:</strong> ' + response.driver_data.category +
+                            '</p>';
+                        html += '<p><strong>Passenger:</strong> ' + response.driver_data.passenger +
+                            '</p>';
+                        html += '<p><strong>Active:</strong> ' + response.driver_data.active + '</p>';
+                    }
+
+                    if (response.driver_doc && response.driver_doc.length > 0) {
+                        // Separate files based on type
+                        var licenseDocs = [];
+                        var carDocs = [];
+
+
+                        response.driver_doc.forEach(function(doc) {
+                            if (doc.type === 'license') {
+                                licenseDocs.push(doc);
+                            } else {
+                                carDocs.push(doc);
+                            }
+                        });
+
+                        // Append license documents
+                        if (licenseDocs.length > 0) {
+                            html += '<h4>License Documents</h4>';
+                            licenseDocs.forEach(function(doc) {
+                                html += '<p><strong>Name:</strong> ' + doc.name + '</p>';
+                                // Append image if available
+                                if (doc.path) {
+                                    var imagePath = doc.path.replace('public/', '');
+                                    html += '<img src="{{ asset('storage/') }}' + '/' +
+                                        imagePath + '" alt="' + doc.name + '" height="200">';
+                                }
+                                // Add more details as needed
+                            });
+                        }
+
+                        // Append car documents
+                        if (carDocs.length > 0) {
+                            html += '<h4>Car Documents</h4>';
+                            carDocs.forEach(function(doc) {
+                                html += '<p><strong>Name:</strong> ' + doc.name + '</p>';
+                                // Append image if available
+                                if (doc.path) {
+                                    var imagePath = doc.path.replace('public/', '');
+                                    html += '<img src="{{ asset('storage/') }}' + '/' +
+                                        imagePath + '" alt="' + doc.name + '" height="200">';
+                                }
+                                // Add more details as needed
+                            });
+                        }
+                    } else {
+                        // If driverDoc is not defined or empty, display a message
+                        html += '<p>No documents found.</p>';
+                    }
+
+
+                    $('#driverDetailsBody').html(html);
+                    // Show the modal
+                    $('#driverDetailsModal').modal('show');
+                },
+                error: function(xhr, status, error) {
+                    toastr.error('An error occurred while fetching driver details.');
+                }
+            });
+        });
+    </script>
 @endsection

@@ -2,13 +2,7 @@
 <html lang="en">
 
 <head>
-    <base href="../../../">
     <title>Luxuary Car Potral</title>
-    <meta name="description"
-        content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 94,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue &amp; Laravel versions. Grab your copy now and get life-time updates for free." />
-    <meta name="keywords"
-        content="Metronic, bootstrap, bootstrap 5, Angular, VueJs, React, Laravel, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="{{ asset('home/assets/images/logo.png') }}" />
     <!--begin::Fonts-->
@@ -104,7 +98,7 @@
                                     </a>
                                 </div>
                                 <div class="menu-item">
-                                    <a class="menu-link {{ ($pagePrefix == 'driver') ? 'active' : '' }}" href="{{ route('all.drivers') }}">
+                                    <a class="menu-link {{ ($pagePrefix == 'driver') ? 'active' : '' }}" href="{{ route('drivers') }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/art/art002.svg-->
                                             <span class="svg-icon svg-icon-2">

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Driver;
 use App\Models\User;
+use App\Models\Driver;
+use App\Models\DriveDoc;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,27 +17,91 @@ class DriverController extends Controller
     {
         $pagePrefix = 'driver';
 
-        $user = Auth::user();
-        $drivers = User::role('driver')->withCount('bookings')->get();
-
-        return view('driver.index', compact('drivers', 'pagePrefix'));
+        return view('driver.index', compact('pagePrefix'));
     }
 
-    public function profileSetup(){
+    public function alldriver()
+    {
+        $drivers = User::role('driver')->With('driverData')->withCount('bookings');
+        return DataTables::of($drivers)
+            ->addColumn('name', function ($row) {
+                return $row->name;
+            })
+            ->addColumn('email', function ($row) {
+                return $row->email;
+            })
+            ->addColumn('phone', function ($row) {
+                return $row->phone ?? 'N/A';
+            })
+            ->addColumn('bookingCount', function ($row) {
+                return $row->bookings_count;
+            })
+            ->addColumn('car_category', function ($row) {
+                if ($row->driverData) {
+                    return $row->driverData->category;
+                } else {
+                    return 'N/A';
+                }
+            })
+            ->editColumn('status', function ($row) {
+                return ucfirst($row->status);
+            })
+            ->addColumn('action', function ($row) {
+                $actionBtn = '<a href="javascript:void(0)" class="btn btn-primary btn-sm show-driver-details"  data-driver-id="' . $row->id . '">
+                <span class="svg-icon svg-icon-3" style="margin-right:0px;"><i class="fa fa-eye" aria-hidden="true" style="padding-right:0px !important;"></i>
+                </i>
+                </span>
+            </a>';
+                $actionBtn .= '&nbsp;&nbsp;<a href="' . route('driver.delete', ['id' => $row->id]) . '" class="delete btn btn-danger btn-sm">
+                <span class="svg-icon svg-icon-3" style="margin-right:0px;"><i class="fa fa-trash" aria-hidden="true" style="padding-right:0px !important;"></i>
+                </span>
+            </a>';
+                return $actionBtn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    public function driverStatus(Request $request){
+        $user = User::find($request->id);
+
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => 'User not found'], 404);
+        }
+
+        $user->update([
+            'status' => strtolower($request->status),
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Status updated successfully']);
+    }
+
+    public function getdriverData($id)
+    {
+        $driver = User::with('driverData','driverDoc')->findOrFail($id);
+        // dd($driver);
+        return response()->json($driver);
+    }
+
+    public function profileSetup()
+    {
 
         $user = Auth::user();
         $pagePrefix = 'profileSetup';
         $userStatus = $user->status;
         $phoneNumber = !empty($user->phone);
-        $driver = Driver::where('user_id',$user->id)->first();
+        $driver = Driver::where('user_id', $user->id)->first();
+        $driverDoc = DriveDoc::where('user_id', $user->id)->get();
         $profileCompletionScore = $this->calculateProfileCompletion($userStatus, $phoneNumber);
 
-        return view('driver.profile',compact('user','driver','profileCompletionScore','pagePrefix'));
+        return view('driver.profile', compact('user', 'driver', 'driverDoc', 'profileCompletionScore', 'pagePrefix'));
     }
 
     public function profileUpdate(Request $request)
     {
+        // dd($request->toArray());
         $user = User::find($request->userid);
+        $path = null;
         if ($request->hasFile('profile')) {
             if ($user->avatar) {
                 Storage::delete('public/' . $user->avatar);
@@ -58,11 +124,71 @@ class DriverController extends Controller
                 'register_no' => $request->get('register_no'),
                 'category'    => $request->get("car_category"),
                 'city'   => $request->get('Town'),
+                'pessenger'   => $request->get('pessenger'),
                 'active'       => 'online',
             ],
         );
 
         if ($driveMeta) {
+
+            if ($request->hasFile('license')) {
+
+                $type = 'license';
+
+                DriveDoc::where('user_id', $request->userid)
+                    ->where('type', $type)
+                    ->forceDelete();
+
+                foreach ($request->license as $license) {
+                    $fileName = $license->getClientOriginalName();
+
+                    $filePath = $license->storeAs('public/' . $type . 's', $fileName);
+
+                    DriveDoc::create([
+                        'user_id' => $request->userid,
+                        'type' => $type,
+                        'path' => $filePath,
+                        'name' => $fileName,
+                    ]);
+                }
+            }
+
+            if ($request->hasFile('car')) {
+
+                $type = 'car';
+
+                DriveDoc::where('user_id', $request->userid)
+                    ->where('type', $type)
+                    ->forceDelete();
+
+                foreach ($request->car as $car) {
+                    $fileName = $car->getClientOriginalName();
+
+                    // Store the file in the storage directory
+                    $filePath = $car->storeAs('public/' . $type . 's', $fileName);
+
+
+                    DriveDoc::create([
+                        'user_id' => $request->userid,
+                        'type' => $type,
+                        'path' => $filePath,
+                        'name' => $fileName,
+                    ]);
+                }
+            }
+
+            $hasCarDoc = DriveDoc::where('user_id', $request->userid)
+                ->where('type', 'car')
+                ->exists();
+
+            $hasLicenseDoc = DriveDoc::where('user_id', $request->userid)
+                ->where('type', 'license')
+                ->exists();
+
+            if ($hasCarDoc && $hasLicenseDoc) {
+                $user->status = 'complete';
+                $user->save();
+            }
             return redirect()->back()->with('success', 'Profile Setup Complete successfully.');
         } else {
             return redirect()->back()->with('error', 'Failed to update profile.');
@@ -87,5 +213,20 @@ class DriverController extends Controller
 
         // Ensure the score is not greater than 100
         return min($score, 100);
+    }
+
+    public function softDelete($id)
+    {
+        // Find the user by ID
+        $user = User::findOrFail($id);
+
+        // Soft delete the user
+        $user->delete();
+
+        // Optionally, you can redirect back with a success message
+        session()->flash('success', 'Driver is deleted successfully');
+
+        // Redirect back
+        return redirect()->back();
     }
 }

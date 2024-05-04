@@ -36,9 +36,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dashboard/booking/{id}', [BookingController::class, 'softDelete'])->name('booking.softdelete');
 
     // Driver
-    Route::get('/all-drivers', [DriverController::class, 'index'])->name('all.drivers');
+    Route::get('/drivers', [DriverController::class, 'index'])->name('drivers');
     Route::get('/profile-setup', [DriverController::class, 'profileSetup'])->name('driver.profile');
+    Route::post('/driver-status', [DriverController::class, 'driverStatus'])->name('driver.status');
     Route::post('/profile-update', [DriverController::class, 'profileUpdate'])->name('driver.update');
+    Route::get('/drivers-delete/{id}', [DriverController::class, 'softDelete'])->name('driver.delete');
+    Route::get('/driver-profile/{id}', [DriverController::class, 'getdriverData'])->name('driver.data');
 
     // User
     Route::get('/all-users', [UserController::class, 'index'])->name('all.users');

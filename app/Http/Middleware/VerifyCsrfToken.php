@@ -14,6 +14,7 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         //
         '/assgin-driver',
-        '/updatepassword'
+        '/updatepassword',
+        '/driver-status'
     ];
 }

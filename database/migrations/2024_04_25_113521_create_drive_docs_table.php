@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('drive_docs', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('user_id');
+            $table->string('name')->nullable();
+            $table->string('type')->nullable();
+            $table->string('path')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

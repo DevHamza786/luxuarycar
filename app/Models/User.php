@@ -67,4 +67,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Booking::class, 'user_id', 'id');
     }
+
+    public function driverData()
+    {
+        return $this->belongsTo(Driver::class, 'id', 'user_id');
+    }
+
+    public function driverDoc(){
+        return $this->hasMany(DriveDoc::class,'user_id','id');
+    }
 }
