@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use GuzzleHttp\Client;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use App\Providers\RouteServiceProvider;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -26,6 +28,9 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
+
+        // If authentication is successful, update the location
+        $this->updateUserLocation($request->ip());
 
         $request->session()->regenerate();
 
@@ -58,5 +63,24 @@ class AuthenticatedSessionController extends Controller
             // Authentication failed
             return response()->json(['success' => false, 'message' => 'Invalid email or password'], 401);
         }
+    }
+
+    protected function updateUserLocation($ip)
+    {
+        // Make a request to the Google Maps Geolocation API to get the location based on the IP address
+        $client = new Client();
+        $response = $client->post('https://www.googleapis.com/geolocation/v1/geolocate?key=' . env('GOOGLE_MAP_KEY'), [
+            'json' => ['considerIp' => true],
+        ]);
+
+        // Decode the response
+        $location = json_decode($response->getBody(), true);
+
+        // Assuming you have a User model
+        $user = User::find(Auth::user()->id);
+        // Update the location of the user
+        $user->latitude = $location['location']['lat'];
+        $user->longitude = $location['location']['lng'];
+        $user->save();
     }
 }

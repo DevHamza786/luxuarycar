@@ -20,9 +20,22 @@ class DriverController extends Controller
         return view('driver.index', compact('pagePrefix'));
     }
 
-    public function alldriver()
+    public function alldriver(Request $request)
     {
         $drivers = User::role('driver')->With('driverData')->withCount('bookings');
+
+        // Apply search filter if search query is provided
+        if ($request->has('search') && !empty($request->input('search')['value'])) {
+            $searchValue = $request->input('search')['value'];
+            $drivers->where(function ($query) use ($searchValue) {
+                $query->where('name', 'like', '%' . $searchValue . '%')
+                    ->orWhere('email', 'like', '%' . $searchValue . '%')
+                    ->orWhere('phone', 'like', '%' . $searchValue . '%')
+                    ->orWhereHas('driverData', function ($subQuery) use ($searchValue) {
+                        $subQuery->where('category', 'like', '%' . $searchValue . '%');
+                    });
+            });
+        }
         return DataTables::of($drivers)
             ->addColumn('name', function ($row) {
                 return $row->name;
@@ -33,15 +46,23 @@ class DriverController extends Controller
             ->addColumn('phone', function ($row) {
                 return $row->phone ?? 'N/A';
             })
-            ->addColumn('bookingCount', function ($row) {
-                return $row->bookings_count;
-            })
+
             ->addColumn('car_category', function ($row) {
                 if ($row->driverData) {
                     return $row->driverData->category;
                 } else {
                     return 'N/A';
                 }
+            })
+            ->addColumn('passenger', function ($row) {
+                if ($row->driverData) {
+                    return $row->driverData->pessenger;
+                } else {
+                    return 'N/A';
+                }
+            })
+            ->addColumn('bookingCount', function ($row) {
+                return $row->bookings_count;
             })
             ->editColumn('status', function ($row) {
                 return ucfirst($row->status);
@@ -62,7 +83,8 @@ class DriverController extends Controller
             ->make(true);
     }
 
-    public function driverStatus(Request $request){
+    public function driverStatus(Request $request)
+    {
         $user = User::find($request->id);
 
         if (!$user) {
@@ -78,7 +100,7 @@ class DriverController extends Controller
 
     public function getdriverData($id)
     {
-        $driver = User::with('driverData','driverDoc')->findOrFail($id);
+        $driver = User::with('driverData', 'driverDoc')->findOrFail($id);
         // dd($driver);
         return response()->json($driver);
     }

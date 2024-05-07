@@ -328,6 +328,9 @@
                                             <option value="4"
                                                 {{ isset($driver->category) == '4' ? 'selected' : '' }}>4
                                             </option>
+                                            <option value="5"
+                                                {{ isset($driver->category) == '5' ? 'selected' : '' }}>5
+                                            </option>
                                             <option value="6"
                                                 {{ isset($driver->category) == '6' ? 'selected' : '' }}>6
                                             </option>

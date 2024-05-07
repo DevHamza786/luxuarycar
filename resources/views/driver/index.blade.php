@@ -38,6 +38,7 @@
                                                 <th class="min-w-120px">Email</th>
                                                 <th class="min-w-120px">Phone</th>
                                                 <th class="min-w-120px">Car Category</th>
+                                                <th class="min-w-120px">Passenger</th>
                                                 <th class="min-w-120px">Total Bookings</th>
                                                 <th class="min-w-120px">Status</th>
                                                 <th class="min-w-120px">Actions</th>
@@ -100,35 +101,48 @@
                 ajax: "{{ route('all.drivers') }}",
                 columns: [{
                         data: 'name',
-                        name: 'name'
+                        name: 'name',
+                        searchable: true
                     },
                     {
                         data: 'email',
-                        name: 'email'
+                        name: 'email',
+                        searchable: true
                     },
                     {
                         data: 'phone',
-                        name: 'phone'
+                        name: 'phone',
+                        searchable: true
                     },
                     {
                         data: 'car_category',
-                        name: 'car_category'
+                        name: 'car_category',
+                        searchable: false
+                    },
+                    {
+                        data: 'passenger',
+                        name: 'passenger',
+                        searchable: false
                     },
                     {
                         data: 'bookingCount',
-                        name: 'bookingCount'
+                        name: 'bookingCount',
+                        searchable: false
                     },
                     {
-                        label: "status",
-                        name: "status",
+                        label: 'status',
+                        name: 'status',
+                        searchable: false
                     },
                     {
                         data: 'action',
-                        name: 'action'
+                        name: 'action',
+                        searchable: false
+
                     },
                 ],
                 columnDefs: [{
-                    targets: 5, // Target the 6th column (0-based index)
+                    targets: 6, // Target the 6th column (0-based index)
                     render: function(data, type, full, meta) {
                         // Define options for the status dropdown
                         var options = ['Incomplete', 'Complete', 'Inactive', 'Active'];
@@ -177,8 +191,6 @@
                 });
             });
         });
-
-
 
         $(document).on('click', '.show-driver-details', function() {
             var driverId = $(this).data('driver-id');

@@ -31,6 +31,7 @@ class HomeController extends Controller
                 'drop_location' => $request->drop_location,
                 'dropoff_latitude' => $request->dropoff_latitude,
                 'dropoff_longitude' => $request->dropoff_longitude,
+                'passenger' => $request->no_pessenger,
                 'status' => 'awaiting for driver',
             ]);
 
@@ -61,6 +62,7 @@ class HomeController extends Controller
                     'drop_location' => $request->drop_location,
                     'dropoff_latitude' => $request->dropoff_latitude,
                     'dropoff_longitude' => $request->dropoff_longitude,
+                    'passenger' => $request->no_pessenger,
                     'status' => 'awaiting for driver',
                 ]);
 

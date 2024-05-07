@@ -31,10 +31,10 @@
                                 <table id="bookingtable" class="table align-middle table-row-dashed fs-6 gy-5">
                                     <thead>
                                         <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                                            <th class="min-w-120px">Name</th>
-                                            <th class="min-w-120px">Email</th>
                                             <th class="min-w-120px">Date</th>
                                             <th class="min-w-120px">Time</th>
+                                            <th class="min-w-120px">Name</th>
+                                            <th class="min-w-120px">Email</th>
                                             <th class="min-w-120px">Car Category</th>
                                             <th class="min-w-120px">Pickup Location</th>
                                             <th class="min-w-120px">Drop Location</th>
@@ -70,14 +70,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('all.bookings') }}",
-                columns: [{
-                        data: 'name',
-                        name: 'name'
-                    },
-                    {
-                        data: 'email',
-                        name: 'email'
-                    },
+                columns: [
                     {
                         data: 'date',
                         name: 'date'
@@ -85,6 +78,16 @@
                     {
                         data: 'time',
                         name: 'time'
+                    },
+                    {
+                        data: 'name',
+                        name: 'name',
+                        searchable: false
+                    },
+                    {
+                        data: 'email',
+                        name: 'email',
+                        searchable: false
                     },
                     {
                         data: 'car_category',

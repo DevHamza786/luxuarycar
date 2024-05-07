@@ -7,6 +7,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\PaymentSettingController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () { return view('home.index');})->name('home');
@@ -42,6 +43,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile-update', [DriverController::class, 'profileUpdate'])->name('driver.update');
     Route::get('/drivers-delete/{id}', [DriverController::class, 'softDelete'])->name('driver.delete');
     Route::get('/driver-profile/{id}', [DriverController::class, 'getdriverData'])->name('driver.data');
+
+
+    // Payment Setting
+    Route::get('/payment-setting',[PaymentSettingController::class,'index'])->name('payment.setting');
+    Route::post('/payment-store',[PaymentSettingController::class,'store'])->name('payment.store');
 
     // User
     Route::get('/all-users', [UserController::class, 'index'])->name('all.users');

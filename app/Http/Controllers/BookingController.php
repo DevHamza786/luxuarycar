@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use GuzzleHttp\Client;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -10,9 +11,14 @@ use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
-    public function index()
+
+    public function __construct()
     {
 
+    }
+
+    public function index()
+    {
         $pagePrefix = 'booking';
 
         return view('booking.index', compact('pagePrefix'));
@@ -45,7 +51,19 @@ class BookingController extends Controller
             ->editColumn('driver', function ($row) {
                 if (Auth::user()->hasRole('admin')) {
                     // Render dropdown list for admin to select driver
-                    $drivers = User::role('driver')->pluck('name', 'id')->toArray();
+                    $drivers = User::role('driver')
+                        ->whereHas('driverData', function ($query) use ($row) {
+                            // Filter by car category
+                            $query->where('category', $row->car_category)
+                                ->where('pessenger', $row->passenger);
+                        })
+                        ->where(function ($query) {
+                            // Filter by status (complete or active)
+                            $query->where('status', 'complete')
+                                ->orWhere('status', 'active');
+                        })
+                        ->pluck('name', 'id')
+                        ->toArray();
                     $dropdown = '<select class="form-control fs-8 driver-select">';
                     $dropdown .= '<option value="">Select Driver</option>';
                     foreach ($drivers as $id => $name) {
@@ -63,15 +81,17 @@ class BookingController extends Controller
                 return ucfirst($row->status);
             })
             ->addColumn('action', function ($row) {
-                $actionBtn = '<a href="'.route('map.show', ['id' => $row->id]).'" class="delete btn btn-primary btn-sm">
+                $actionBtn = '<a href="' . route('map.show', ['id' => $row->id]) . '" class="delete btn btn-primary btn-sm">
                     <span class="svg-icon svg-icon-3" style="margin-right:0px;"><i class="fa fa-map-marker" aria-hidden="true" style="padding-right:0px !important;"></i>
                     </i>
                     </span>
                 </a>';
-                $actionBtn .= '&nbsp;&nbsp;<a href="javascript:void(0)" class="delete btn btn-danger btn-sm">
-                <span class="svg-icon svg-icon-3" style="margin-right:0px;"><i class="fa fa-trash" aria-hidden="true" style="padding-right:0px !important;"></i>
-                </span>
-            </a>';
+                if(!Auth::user()->hasRole('customer')){
+                    $actionBtn .= '&nbsp;&nbsp;<a href="javascript:void(0)" class="delete btn btn-danger btn-sm">
+                        <span class="svg-icon svg-icon-3" style="margin-right:0px;"><i class="fa fa-trash" aria-hidden="true" style="padding-right:0px !important;"></i>
+                        </span>
+                    </a>';
+                }
                 return $actionBtn;
             })
             ->rawColumns(['action', 'driver'])
@@ -99,7 +119,7 @@ class BookingController extends Controller
         $pickupLocation = ['lat' => $booking->pickup_latitude, 'lng' => $booking->pickup_longitude];
         $dropoffLocation = ['lat' => $booking->dropoff_latitude, 'lng' => $booking->dropoff_longitude];
 
-        return view('booking.map', compact('pickupLocation', 'dropoffLocation' , 'pagePrefix'));
+        return view('booking.map', compact('pickupLocation', 'dropoffLocation', 'pagePrefix'));
     }
 
     public function softDelete($id)

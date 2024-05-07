@@ -158,7 +158,7 @@
                                     </a>
                                 </div>
                                 <div class="menu-item">
-                                    <a class="menu-link" href="#">
+                                    <a class="menu-link {{ ($pagePrefix == 'payment') ? 'active' : '' }}" href="{{ route('payment.setting') }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/communication/com001.svg-->
                                             <span class="svg-icon svg-icon-2">
@@ -177,7 +177,7 @@
                                             </span>
                                             <!--end::Svg Icon-->
                                         </span>
-                                        <span class="menu-title">Setting</span>
+                                        <span class="menu-title">Payment Setting</span>
                                     </a>
                                 </div>
                             @else
@@ -324,7 +324,7 @@
                         <!--begin::Mobile logo-->
                         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                             <a href="../../demo1/dist/index.html" class="d-lg-none">
-                                <img alt="Logo" src="assets/media/logos/logo-2.svg" class="h-30px" />
+                                <img alt="Logo" src="{{asset('assets/media/logos/logo-2.svg')}}" class="h-30px" />
                             </a>
                         </div>
                         <!--end::Mobile logo-->
