@@ -213,11 +213,10 @@
                     <div class="col-lg-6 col-md-6 col-sm-12 col-sm-12">
                         <div class="footer_about" data-aos="fade-up" data-aos-delay="100">
                             <div class="brand_logo mb_30">
-                                <a href="index.html">
-                                    <img width="54px" class="img-fluid"
-                                        src="{{ asset('home/assets/images/logo/logo_02_1x.png') }}"
-                                        srcset="{{ asset('home/assets/images/logo/logo_02_2x.png') }} 2x"
-                                        alt="logo_not_found">
+                                <a href="{{route('home')}}">
+                                    <img src="{{ asset('home/assets/images/logo.png') }}"
+                                        srcset="{{ asset('home/assets/images/logo.png') }}"
+                                        alt="logo" width="150">
                                 </a>
                             </div>
                             <p class="mb_15">

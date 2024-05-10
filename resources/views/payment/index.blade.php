@@ -45,18 +45,19 @@
 
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade active show" id="kt_vtab_pane_1" role="tabpanel">
-                                            @if (session('success'))
-                                                <div class="alert alert-success mx-4">
-                                                    {{ session('success') }}
-                                                </div>
-                                            @endif
-
-                                            @if (session('error'))
-                                                <div class="alert alert-danger mx-4">
-                                                    {{ session('error') }}
-                                                </div>
-                                            @endif
                                             <form method="POST" action="{{ route('payment.store') }}" style="width: 950px">
+                                                @csrf
+                                                @if (session('success'))
+                                                    <div class="alert alert-success mx-4">
+                                                        {{ session('success') }}
+                                                    </div>
+                                                @endif
+
+                                                @if (session('error'))
+                                                    <div class="alert alert-danger mx-4">
+                                                        {{ session('error') }}
+                                                    </div>
+                                                @endif
                                                 @php
                                                     $payment = $paymentSetting
                                                         ->where('car_category', 'Black Luxury')
@@ -64,17 +65,16 @@
                                                         ->where('no_pessenger', '4')
                                                         ->first();
                                                 @endphp
-                                                @csrf
 
                                                 <h4 class="mt-4 mx-4">Black Luxury 4 Passenger</h4>
                                                 <input type="hidden" name="car_category" value="Black Luxury" />
-                                                <input type="hidden" name="no_passenger" value="4" />
+                                                <input type="hidden" name="no_pessenger" value="4" />
                                                 <input type="hidden" name="mode" value="mr" />
                                                 <div class="row m-4">
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Miles</span></label>
-                                                        <input type="number" name="pricepermiles"
+                                                        <input type="number" name="pricepermiles_4"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" step="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermiles : '' }}"
@@ -83,7 +83,7 @@
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Minutes</span></label>
-                                                        <input type="number" name="pricepermin"
+                                                        <input type="number" name="pricepermin_4"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" min="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermin : '' }}"
@@ -93,13 +93,19 @@
                                                             ride</div>
                                                         <!--end::Hint-->
                                                     </div>
-                                                    <div class="col-4 text-end mt-8">
-                                                        <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                                    <div class="col-4">
+                                                        <label class="fw-bold fs-6"><span class="required">Price Per
+                                                                Hour</span></label>
+                                                        <input type="number" name="priceperhour_4"
+                                                            class="form-control form-control-lg"
+                                                            placeholder="Price per hour" step="any" min="0.1"
+                                                            value="{{ isset($payment) ? $payment->priceperhour : '' }}"
+                                                            required />
+                                                        <div class="form-text">Price per hour will apply on extre time of
+                                                            ride</div>
                                                     </div>
                                                 </div>
-                                            </form>
-                                            <hr>
-                                            <form method="POST" action="{{ route('payment.store') }}" style="width: 950px">
+                                                <hr>
                                                 @php
                                                     $payment = $paymentSetting
                                                         ->where('car_category', 'Black Luxury')
@@ -107,17 +113,14 @@
                                                         ->where('no_pessenger', '5')
                                                         ->first();
                                                 @endphp
-                                                @csrf
                                                 <h4 class="mt-4 mx-4">Black Luxury 5 Passenger</h4>
-                                                <input type="hidden" name="car_category" value="Black Luxury" />
                                                 <input type="hidden" name="no_pessenger" value="5" />
-                                                <input type="hidden" name="mode" value="mr" />
                                                 <div class="row m-4">
 
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Miles</span></label>
-                                                        <input type="number" name="pricepermiles"
+                                                        <input type="number" name="pricepermiles_5"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" step="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermiles : '' }}"
@@ -126,7 +129,7 @@
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Minutes</span></label>
-                                                        <input type="number" name="pricepermin"
+                                                        <input type="number" name="pricepermin_5"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" min="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermin : '' }}"
@@ -137,15 +140,19 @@
                                                             ride</div>
                                                         <!--end::Hint-->
                                                     </div>
-                                                    <div class="col-4 text-end mt-8">
-                                                        <button class="btn btn-primary btn-sm"
-                                                            type="submit">Save</button>
+                                                    <div class="col-4">
+                                                        <label class="fw-bold fs-6"><span class="required">Price Per
+                                                                Hour</span></label>
+                                                        <input type="number" name="priceperhour_5"
+                                                            class="form-control form-control-lg"
+                                                            placeholder="Price per hour" step="any" min="0.1"
+                                                            value="{{ isset($payment) ? $payment->priceperhour : '' }}"
+                                                            required />
+                                                        <div class="form-text">Price per hour will apply on extre time of
+                                                            ride</div>
                                                     </div>
                                                 </div>
-                                            </form>
-                                            <hr>
-                                            <form method="POST" action="{{ route('payment.store') }}"
-                                                style="width: 950px">
+                                                <hr>
                                                 @php
                                                     $payment = $paymentSetting
                                                         ->where('car_category', 'Black Luxury')
@@ -153,17 +160,14 @@
                                                         ->where('no_pessenger', '6')
                                                         ->first();
                                                 @endphp
-                                                @csrf
                                                 <h4 class="mt-4 mx-4">Black Luxury 6 Passenger</h4>
-                                                <input type="hidden" name="car_category" value="Black Luxury" />
                                                 <input type="hidden" name="no_pessenger" value="6" />
-                                                <input type="hidden" name="mode" value="mr" />
                                                 <div class="row m-4">
 
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Miles</span></label>
-                                                        <input type="number" name="pricepermiles"
+                                                        <input type="number" name="pricepermiles_6"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" step="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermiles : '' }}"
@@ -172,7 +176,7 @@
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Minutes</span></label>
-                                                        <input type="number" name="pricepermin"
+                                                        <input type="number" name="pricepermin_6"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" min="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermin : '' }}"
@@ -183,28 +187,39 @@
                                                             ride</div>
                                                         <!--end::Hint-->
                                                     </div>
-                                                    <div class="col-4 text-end mt-8">
-                                                        <button class="btn btn-primary btn-sm"
-                                                            type="submit">Save</button>
+                                                    <div class="col-4">
+                                                        <label class="fw-bold fs-6"><span class="required">Price Per
+                                                                Hour</span></label>
+                                                        <input type="number" name="priceperhour_6"
+                                                            class="form-control form-control-lg"
+                                                            placeholder="Price per hour" step="any" min="0.1"
+                                                            value="{{ isset($payment) ? $payment->priceperhour : '' }}"
+                                                            required />
+                                                        <div class="form-text">Price per hour will apply on extre time of
+                                                            ride</div>
                                                     </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <button class="btn btn-primary btn-sm" type="submit">Update</button>
                                                 </div>
                                             </form>
                                         </div>
 
                                         <div class="tab-pane fade" id="kt_vtab_pane_2" role="tabpanel">
-                                            @if (session('success'))
-                                                <div class="alert alert-success mx-4">
-                                                    {{ session('success') }}
-                                                </div>
-                                            @endif
-
-                                            @if (session('error'))
-                                                <div class="alert alert-danger mx-4">
-                                                    {{ session('error') }}
-                                                </div>
-                                            @endif
                                             <form method="POST" action="{{ route('payment.store') }}"
                                                 style="width: 950px">
+                                                @csrf
+                                                @if (session('success'))
+                                                    <div class="alert alert-success mx-4">
+                                                        {{ session('success') }}
+                                                    </div>
+                                                @endif
+
+                                                @if (session('error'))
+                                                    <div class="alert alert-danger mx-4">
+                                                        {{ session('error') }}
+                                                    </div>
+                                                @endif
                                                 @php
                                                     $payment = $paymentSetting
                                                         ->where('car_category', 'Black Luxury')
@@ -212,11 +227,9 @@
                                                         ->where('no_pessenger', '4')
                                                         ->first();
                                                 @endphp
-                                                @csrf
 
                                                 <h4 class="mt-4 mx-4">Black Luxury 4 Passenger</h4>
                                                 <input type="hidden" name="car_category" value="Black Luxury" />
-                                                <input type="hidden" name="no_passenger" value="4" />
                                                 <input type="hidden" name="mode" value="mrh" />
                                                 <div class="row m-4">
                                                     <div class="col-4">
@@ -241,10 +254,6 @@
                                                             of
                                                             ride</div>
                                                         <!--end::Hint-->
-                                                    </div>
-                                                    <div class="col-4 text-end mt-8">
-                                                        <button class="btn btn-primary btn-sm"
-                                                            type="submit">Save</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -519,19 +528,19 @@
 
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade active show" id="ultratabone" role="tabpanel">
-                                            @if (session('success'))
-                                                <div class="alert alert-success mx-4">
-                                                    {{ session('success') }}
-                                                </div>
-                                            @endif
+                                            <form method="POST" action="{{ route('payment.store') }}" style="width: 950px">
+                                                @csrf
+                                                @if (session('success'))
+                                                    <div class="alert alert-success mx-4">
+                                                        {{ session('success') }}
+                                                    </div>
+                                                @endif
 
-                                            @if (session('error'))
-                                                <div class="alert alert-danger mx-4">
-                                                    {{ session('error') }}
-                                                </div>
-                                            @endif
-                                            <form method="POST" action="{{ route('payment.store') }}"
-                                                style="width: 950px">
+                                                @if (session('error'))
+                                                    <div class="alert alert-danger mx-4">
+                                                        {{ session('error') }}
+                                                    </div>
+                                                @endif
                                                 @php
                                                     $payment = $paymentSetting
                                                         ->where('car_category', 'Ultra Luxury')
@@ -539,17 +548,15 @@
                                                         ->where('no_pessenger', '4')
                                                         ->first();
                                                 @endphp
-                                                @csrf
 
                                                 <h4 class="mt-4 mx-4">Ultra Luxury 4 Passenger</h4>
                                                 <input type="hidden" name="car_category" value="Ultra Luxury" />
-                                                <input type="hidden" name="no_pessenger" value="4" />
                                                 <input type="hidden" name="mode" value="mr" />
                                                 <div class="row m-4">
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Miles</span></label>
-                                                        <input type="number" name="pricepermiles"
+                                                        <input type="number" name="pricepermiles_4"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" step="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermiles : '' }}"
@@ -558,7 +565,7 @@
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Minutes</span></label>
-                                                        <input type="number" name="pricepermin"
+                                                        <input type="number" name="pricepermin_4"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" min="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermin : '' }}"
@@ -569,15 +576,22 @@
                                                             ride</div>
                                                         <!--end::Hint-->
                                                     </div>
-                                                    <div class="col-4 text-end mt-8">
-                                                        <button class="btn btn-primary btn-sm"
-                                                            type="submit">Save</button>
+                                                    <div class="col-4">
+                                                        <label class="fw-bold fs-6"><span class="required">Price Per
+                                                                Hour</span></label>
+                                                        <input type="number" name="priceperhour_4"
+                                                            class="form-control form-control-lg"
+                                                            placeholder="Price per miles" step="any" min="0.1"
+                                                            value="{{ isset($payment) ? $payment->priceperhour : '' }}"
+                                                            required />
+                                                        <!--begin::Hint-->
+                                                        <div class="form-text">Price per hour will apply on extre time
+                                                            of
+                                                            ride</div>
+                                                        <!--end::Hint-->
                                                     </div>
                                                 </div>
-                                            </form>
-                                            <hr>
-                                            <form method="POST" action="{{ route('payment.store') }}"
-                                                style="width: 950px">
+                                                <hr>
                                                 @php
                                                     $payment = $paymentSetting
                                                         ->where('car_category', 'Ultra Luxury')
@@ -585,17 +599,15 @@
                                                         ->where('no_pessenger', '5')
                                                         ->first();
                                                 @endphp
-                                                @csrf
                                                 <h4 class="mt-4 mx-4">Ultra Luxury 5 Passenger</h4>
                                                 <input type="hidden" name="car_category" value="Ultra Luxury" />
-                                                <input type="hidden" name="no_pessenger" value="5" />
                                                 <input type="hidden" name="mode" value="mr" />
                                                 <div class="row m-4">
 
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Miles</span></label>
-                                                        <input type="number" name="pricepermiles"
+                                                        <input type="number" name="pricepermiles_5"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" step="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermiles : '' }}"
@@ -604,7 +616,7 @@
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Minutes</span></label>
-                                                        <input type="number" name="pricepermin"
+                                                        <input type="number" name="pricepermin_5"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" min="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermin : '' }}"
@@ -615,15 +627,22 @@
                                                             ride</div>
                                                         <!--end::Hint-->
                                                     </div>
-                                                    <div class="col-4 text-end mt-8">
-                                                        <button class="btn btn-primary btn-sm"
-                                                            type="submit">Save</button>
+                                                    <div class="col-4">
+                                                        <label class="fw-bold fs-6"><span class="required">Price Per
+                                                                Hour</span></label>
+                                                        <input type="number" name="priceperhour_5"
+                                                            class="form-control form-control-lg"
+                                                            placeholder="Price per hour" step="any" min="0.1"
+                                                            value="{{ isset($payment) ? $payment->priceperhour : '' }}"
+                                                            required />
+                                                        <!--begin::Hint-->
+                                                        <div class="form-text">Price per hour will apply on extre time
+                                                            of
+                                                            ride</div>
+                                                        <!--end::Hint-->
                                                     </div>
                                                 </div>
-                                            </form>
-                                            <hr>
-                                            <form method="POST" action="{{ route('payment.store') }}"
-                                                style="width: 950px">
+                                                <hr>
                                                 @php
                                                     $payment = $paymentSetting
                                                         ->where('car_category', 'Ultra Luxury')
@@ -631,17 +650,15 @@
                                                         ->where('no_pessenger', '6')
                                                         ->first();
                                                 @endphp
-                                                @csrf
                                                 <h4 class="mt-4 mx-4">Ultra Luxury 6 Passenger</h4>
                                                 <input type="hidden" name="car_category" value="Ultra Luxury" />
-                                                <input type="hidden" name="no_pessenger" value="6" />
                                                 <input type="hidden" name="mode" value="mr" />
                                                 <div class="row m-4">
 
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Miles</span></label>
-                                                        <input type="number" name="pricepermiles"
+                                                        <input type="number" name="pricepermiles_6"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" step="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermiles : '' }}"
@@ -650,7 +667,7 @@
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Minutes</span></label>
-                                                        <input type="number" name="pricepermin"
+                                                        <input type="number" name="pricepermin_6"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" min="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermin : '' }}"
@@ -661,9 +678,22 @@
                                                             ride</div>
                                                         <!--end::Hint-->
                                                     </div>
-                                                    <div class="col-4 text-end mt-8">
-                                                        <button class="btn btn-primary btn-sm"
-                                                            type="submit">Save</button>
+                                                    <div class="col-4">
+                                                        <label class="fw-bold fs-6"><span class="required">Price Per
+                                                                Hour</span></label>
+                                                        <input type="number" name="priceperhour_6"
+                                                            class="form-control form-control-lg"
+                                                            placeholder="Price per miles" step="any" min="0.1"
+                                                            value="{{ isset($payment) ? $payment->priceperhour : '' }}"
+                                                            required />
+                                                        <!--begin::Hint-->
+                                                        <div class="form-text">Price per hour will apply on extre time
+                                                            of
+                                                            ride</div>
+                                                        <!--end::Hint-->
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <button type="submit" class="btn btn-primary">Save</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -998,6 +1028,8 @@
 
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade active show" id="suvtabone" role="tabpanel">
+                                            <form method="POST" action="{{ route('payment.store') }}" style="width: 950px">
+                                            @csrf
                                             @if (session('success'))
                                                 <div class="alert alert-success mx-4">
                                                     {{ session('success') }}
@@ -1009,8 +1041,6 @@
                                                     {{ session('error') }}
                                                 </div>
                                             @endif
-                                            <form method="POST" action="{{ route('payment.store') }}"
-                                                style="width: 950px">
                                                 @php
                                                     $payment = $paymentSetting
                                                         ->where('car_category', 'SUV Luxury')
@@ -1018,17 +1048,15 @@
                                                         ->where('no_pessenger', '4')
                                                         ->first();
                                                 @endphp
-                                                @csrf
 
                                                 <h4 class="mt-4 mx-4">SUV Luxury 4 Passenger</h4>
                                                 <input type="hidden" name="car_category" value="SUV Luxury" />
-                                                <input type="hidden" name="no_pessenger" value="4" />
                                                 <input type="hidden" name="mode" value="mr" />
                                                 <div class="row m-4">
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Miles</span></label>
-                                                        <input type="number" name="pricepermiles"
+                                                        <input type="number" name="pricepermiles_4"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" step="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermiles : '' }}"
@@ -1037,7 +1065,7 @@
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Minutes</span></label>
-                                                        <input type="number" name="pricepermin"
+                                                        <input type="number" name="pricepermin_4"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" min="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermin : '' }}"
@@ -1048,15 +1076,22 @@
                                                             ride</div>
                                                         <!--end::Hint-->
                                                     </div>
-                                                    <div class="col-4 text-end mt-8">
-                                                        <button class="btn btn-primary btn-sm"
-                                                            type="submit">Save</button>
+                                                    <div class="col-4">
+                                                        <label class="fw-bold fs-6"><span class="required">Price Per
+                                                                Hour</span></label>
+                                                        <input type="number" name="priceperhour_4"
+                                                            class="form-control form-control-lg"
+                                                            placeholder="Price per miles" step="any" min="0.1"
+                                                            value="{{ isset($payment) ? $payment->priceperhour : '' }}"
+                                                            required />
+                                                        <!--begin::Hint-->
+                                                        <div class="form-text">Price per hour will apply on extre time
+                                                            of
+                                                            ride</div>
+                                                        <!--end::Hint-->
                                                     </div>
                                                 </div>
-                                            </form>
                                             <hr>
-                                            <form method="POST" action="{{ route('payment.store') }}"
-                                                style="width: 950px">
                                                 @php
                                                     $payment = $paymentSetting
                                                         ->where('car_category', 'SUV Luxury')
@@ -1064,17 +1099,15 @@
                                                         ->where('no_pessenger', '5')
                                                         ->first();
                                                 @endphp
-                                                @csrf
                                                 <h4 class="mt-4 mx-4">SUV Luxury 5 Passenger</h4>
                                                 <input type="hidden" name="car_category" value="SUV Luxury" />
-                                                <input type="hidden" name="no_pessenger" value="5" />
                                                 <input type="hidden" name="mode" value="mr" />
                                                 <div class="row m-4">
 
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Miles</span></label>
-                                                        <input type="number" name="pricepermiles"
+                                                        <input type="number" name="pricepermiles_5"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" step="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermiles : '' }}"
@@ -1083,7 +1116,7 @@
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Minutes</span></label>
-                                                        <input type="number" name="pricepermin"
+                                                        <input type="number" name="pricepermin_5"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" min="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermin : '' }}"
@@ -1094,15 +1127,22 @@
                                                             ride</div>
                                                         <!--end::Hint-->
                                                     </div>
-                                                    <div class="col-4 text-end mt-8">
-                                                        <button class="btn btn-primary btn-sm"
-                                                            type="submit">Save</button>
+                                                    <div class="col-4">
+                                                        <label class="fw-bold fs-6"><span class="required">Price Per
+                                                                Minutes</span></label>
+                                                        <input type="number" name="priceperhour_5"
+                                                            class="form-control form-control-lg"
+                                                            placeholder="Price per miles" step="any" min="0.1"
+                                                            value="{{ isset($payment) ? $payment->priceperhour : '' }}"
+                                                            required />
+                                                        <!--begin::Hint-->
+                                                        <div class="form-text">Price per hour will apply on extre time
+                                                            of
+                                                            ride</div>
+                                                        <!--end::Hint-->
                                                     </div>
                                                 </div>
-                                            </form>
                                             <hr>
-                                            <form method="POST" action="{{ route('payment.store') }}"
-                                                style="width: 950px">
                                                 @php
                                                     $payment = $paymentSetting
                                                         ->where('car_category', 'SUV Luxury')
@@ -1110,17 +1150,15 @@
                                                         ->where('no_pessenger', '6')
                                                         ->first();
                                                 @endphp
-                                                @csrf
                                                 <h4 class="mt-4 mx-4">SUV Luxury 6 Passenger</h4>
                                                 <input type="hidden" name="car_category" value="SUV Luxury" />
-                                                <input type="hidden" name="no_pessenger" value="6" />
                                                 <input type="hidden" name="mode" value="mr" />
                                                 <div class="row m-4">
 
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Miles</span></label>
-                                                        <input type="number" name="pricepermiles"
+                                                        <input type="number" name="pricepermiles_6"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" step="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermiles : '' }}"
@@ -1129,7 +1167,7 @@
                                                     <div class="col-4">
                                                         <label class="fw-bold fs-6"><span class="required">Price Per
                                                                 Minutes</span></label>
-                                                        <input type="number" name="pricepermin"
+                                                        <input type="number" name="pricepermin_6"
                                                             class="form-control form-control-lg"
                                                             placeholder="Price per miles" step="any" min="0.1"
                                                             value="{{ isset($payment) ? $payment->pricepermin : '' }}"
@@ -1140,7 +1178,21 @@
                                                             ride</div>
                                                         <!--end::Hint-->
                                                     </div>
-                                                    <div class="col-4 text-end mt-8">
+                                                    <div class="col-4">
+                                                        <label class="fw-bold fs-6"><span class="required">Price Per
+                                                                Hour</span></label>
+                                                        <input type="number" name="priceperhour_6"
+                                                            class="form-control form-control-lg"
+                                                            placeholder="Price per miles" step="any" min="0.1"
+                                                            value="{{ isset($payment) ? $payment->priceperhour : '' }}"
+                                                            required />
+                                                        <!--begin::Hint-->
+                                                        <div class="form-text">Price per hour will apply on extre time
+                                                            of
+                                                            ride</div>
+                                                        <!--end::Hint-->
+                                                    </div>
+                                                    <div class="col-12 text-end mt-8">
                                                         <button class="btn btn-primary btn-sm"
                                                             type="submit">Save</button>
                                                     </div>

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('no_pessenger');
             $table->string('pricepermiles');
             $table->string('pricepermin');
+            $table->string('priceperhour');
             $table->timestamps();
         });
     }
