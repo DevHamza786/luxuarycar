@@ -16,6 +16,7 @@ class HomeController extends Controller
 {
     public function store(Request $request)
     {
+        // dd($request->all());s
         $user = User::where('email', $request->email)->first();
 
         if ($user) {

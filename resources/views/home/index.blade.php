@@ -1,7 +1,5 @@
 @extends('home.layout.header')
 @section('content')
-    <!-- slider_section - start
-                           ================================================== -->
     <section class="slider_section text-white text-center position-relative clearfix">
         <div class="main_slider clearfix">
             <div class="item has_overlay d-flex align-items-center" data-bg-image="{{ asset('home/assets/images/bg.jpeg') }}">
@@ -59,16 +57,10 @@
             <button type="button" class="main_right_arrow"><i class="fal fa-chevron-right"></i></button>
         </div>
     </section>
-    <!-- slider_section - end
-                           ================================================== -->
-
-
-    <!-- search_section - start
-                           ================================================== -->
     <section class="search_section clearfix">
         <ul class="button-group filters-button-group ul_li_center mb_30 clearfix" data-aos="fade-up" data-aos-delay="300">
-            <li><button class="button" data-filter=".sedan">Distance from Manhattin</button></li>
-            <li><button class="button" data-filter=".minhatten">Distance outside of Minhatten</button></li>
+            <li><button class="button" data-filter=".sedan">Manhattan</button></li>
+            <li><button class="button" data-filter=".minhatten">Outside of Manhattan</button></li>
             <li><button class="button" data-filter=".hourly">Hourly</button></li>
             <li><button class="button" data-filter=".weekly">Weekly</button></li>
             <li><button class="button" data-filter=".monthly">monthly/yearly services</button></li>
@@ -82,15 +74,6 @@
                             <div class="row">
                                 <div class="row-wrap col-md-10">
                                     <div class="row">
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Pick Up Time</h4>
-                                                <div class="position-relative">
-                                                    <input type="time" name="time" placeholder="12:00am" required>
-                                                    {{-- <label for="location_two" class="input_icon"><i class="fas fa-map-marker-alt"></i></label> --}}
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="form_item">
@@ -99,18 +82,30 @@
                                                     id="date" required>
                                             </div>
                                         </div>
+
+                                        <div class="col-md-3 col-sm-12 col-xs-12">
+                                            <div class="form_item">
+                                                <h4 class="input_title text-white">Pick Up Time</h4>
+                                                <div class="position-relative">
+                                                    <input type="time" name="time" placeholder="12:00am" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">First Name</h4>
                                                 <input type="text" name="fname" placeholder="Enter your name"
-                                                    value="{{ Auth::check() && Auth::user()->role === 'customer' ? Auth::user()->name : '' }}" required>
+                                                    value="{{ Auth::check() && Auth::user()->role === 'customer' ? Auth::user()->name : '' }}"
+                                                    required>
                                             </div>
                                         </div>
                                         <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">Email</h4>
                                                 <input type="email" name="email" placeholder="Enter your email"
-                                                    value="{{ Auth::check() && Auth::user()->role === 'customer' ? Auth::user()->email : '' }}" required>
+                                                    value="{{ Auth::check() && Auth::user()->role === 'customer' ? Auth::user()->email : '' }}"
+                                                    required>
                                             </div>
 
                                         </div>
@@ -131,6 +126,7 @@
                                             <select class="form-control" name="no_pessenger" required>
                                                 <option value="">Please Select No. of Pessenger</option>
                                                 <option value="4">4</option>
+                                                <option value="5">5</option>
                                                 <option value="6">6</option>
                                             </select>
                                         </div>
@@ -514,17 +510,13 @@
     </section>
     <section class="section about_us clearfix">
         <div class="container">
-            <div class="row align-items-end">
+            <div class="row align-items-start">
                 <div class="col-md-6">
                     <h5 class="sub-heading">ABOUT US</h5>
-                    <h2 class="main_heading">What We Provide Is The Luxury
-                        Transport And Most Comfortable
-                        Experience</h2>
+                    <h2 class="main_heading">What We Provide Is the Luxury Transport and Most Comfortable Experience</h2>
                 </div>
                 <div class="col-md-6">
-                    <p>Lorem ipsum dolor sit amet consectetur. Amet leo amet urna amet senectus sem. Id porttitor a
-                        egestas cras commodo ullamcorper in lectus. Eu adipiscing sed duis lectus. Fermentum id
-                        facilisi neque.</p>
+                    <p>Offering luxurious transportation and ensuring the utmost comfort for our clients is our priority. Whether it's a chauffeured limousine service, a private jet charter, or a VIP travel experience, we go above and beyond to provide unparalleled luxury and convenience. Our vehicles are meticulously maintained, our staff is highly trained, and our services are tailored to exceed expectations. From the moment you book with us until you reach your destination, expect nothing less than a seamless, indulgent journey.</p>
                     <div class="call_to">
                         <a href="">
                             <img class="img-fluid" src="{{ asset('home/assets/images/head.png') }}" alt="">
@@ -605,36 +597,28 @@
                     <div class="dev_service">
                         <img src="{{ asset('home/assets/images/calender.png') }}" alt="">
                         <h3>Easy Online Booking</h3>
-                        <p>Lorem ipsum dolor sit amet,
-                            consectadipiscing elit. Aenean commodo
-                            ligula eget dolor.</p>
+                        <p>Absolutely! We understand the importance of convenience, which is why we offer easy online booking for all our services. Our user-friendly platform allows you to effortlessly reserve your luxury transportation with just a few clicks</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="dev_service">
                         <img src="{{ asset('home/assets/images/men.png') }}" alt="">
                         <h3>Professional Drivers</h3>
-                        <p>Lorem ipsum dolor sit amet,
-                            consectadipiscing elit. Aenean commodo
-                            ligula eget dolor.</p>
+                        <p>Our team of professional drivers is the cornerstone of our commitment to excellence in luxury transportation. Each driver undergoes rigorous training and screening to ensure they possess the highest level of skill, professionalism, and dedication to customer service.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="dev_service">
                         <img src="{{ asset('home/assets/images/car.png') }}" alt="">
                         <h3>Variety of Car Brands</h3>
-                        <p>Lorem ipsum dolor sit amet,
-                            consectadipiscing elit. Aenean commodo
-                            ligula eget dolor.</p>
+                        <p>We take pride in offering a diverse selection of car brands to cater to your specific preferences and needs. From luxury sedans to SUVs, exotic sports cars to executive vans, our fleet features top-of-the-line vehicles</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="dev_service">
                         <img src="{{ asset('home/assets/images/card.png') }}" alt="">
                         <h3>Online Payment</h3>
-                        <p>Lorem ipsum dolor sit amet,
-                            consectadipiscing elit. Aenean commodo
-                            ligula eget dolor.</p>
+                        <p>To streamline your booking experience further, we offer secure online payment options for your convenience and peace of mind. Our encrypted payment gateway ensures that your transactions are safe and protected</p>
                     </div>
                 </div>
             </div>
@@ -652,24 +636,16 @@
                 </div>
                 <div class="col-md-4">
                     <h5 class="city-to_city-rides">City to City rides</h5>
-                    <p>Tortor condimentum lacinia quis vel eros donec
-                        odio. Feugiat fermentum in posuere urna. Faucibus
-                        turpis in eun mi bibendum.</p>
+                    <p>Absolutely! We provide city-to-city rides to accommodate your travel needs seamlessly. Whether you're traveling for business meetings, leisurely sightseeing, or any other purpose</p>
                     <h5 class="city-to_city-rides">Airport transfers</h5>
-                    <p>Tortor condimentum lacinia quis vel eros donec
-                        odio. Feugiat fermentum in posuere urna. Faucibus
-                        turpis in eun mi bibendum.</p>
+                    <p>Our airport transfer service is designed to provide seamless and stress-free transportation to and from the airport. Whether you're arriving or departing, we understand the importance of timely and reliable transfers</p>
 
                 </div>
                 <div class="col-md-4">
                     <h5 class="city-to_city-rides">Chauffer Weekly/Monthly/Yearly services</h5>
-                    <p>Tortor condimentum lacinia quis vel eros donec
-                        odio. Feugiat fermentum in posuere urna. Faucibus
-                        turpis in eun mi bibendum.</p>
+                    <p>We offer flexible chauffeur services on a monthly, weekly, or yearly basis to cater to your long-term transportation needs. Whether you require consistent transportation for business meetings, special events, or personal errands, our chauffeur services</p>
                     <h5 class="city-to_city-rides">A Diverse Selection</h5>
-                    <p>Tortor condimentum lacinia quis vel eros donec
-                        odio. Feugiat fermentum in posuere urna. Faucibus
-                        turpis in eun mi bibendum.</p>
+                    <p>Certainly! Our airport transfer service offers a diverse selection of vehicles to cater to your preferences and requirements. Whether you prefer the elegance of a luxury sedan, the spaciousness of an SUV, or the prestige of a chauffeured Sprinter, we have the perfect vehicle to suit your needs.</p>
 
                 </div>
             </div>
@@ -685,8 +661,7 @@
                     <div class="right-counter_sec">
                         <h5 class="sub-heading">Only the best</h5>
                         <h2 class="main_heading">We Provide Best</h2>
-                        <p>Praesent elementum facilisis leo vel fringilla est. Vest bulum lectus a urise ultrices eros
-                            in cursus turpi uto.</p>
+                        <p>Absolutely, providing only the best is our top priority. From our meticulously maintained fleet of luxury vehicles to our professional chauffeurs and personalized service, we are dedicated to delivering excellence in every aspect of your experience. Our commitment to quality extends to every detail, ensuring that your journey is not just satisfactory, but truly exceptional.</p>
                         <div class="row">
                             <div class="col-md-6 col-sm-12">
                                 <div class="funfact_item text-left" data-aos="fade-up" data-aos-delay="100">
@@ -875,35 +850,64 @@
         document.addEventListener("DOMContentLoaded", function() {
             // Get the map icon element
             var pickupIcon = document.getElementById("pickupIcon");
-
             // Add click event listener to the map icon
             pickupIcon.addEventListener("click", function() {
+                console.log('hamza');
                 // Check if Geolocation is supported by the browser
                 if (navigator.geolocation) {
+                    console.log('ok1');
                     // Get the current position
                     navigator.geolocation.getCurrentPosition(function(position) {
-                        // Retrieve the latitude and longitude
                         var latitude = position.coords.latitude;
                         var longitude = position.coords.longitude;
-                        $('#input[name="pickup_latitude"]').val(latitude);
-                        $('#input[name="pickup_longitude"]').val("hamza");
 
-                        $('#pickup_latitude').val(latitude);
-                        $('#pickup_longitude').val(longitude);
+                        var geocoder = new google.maps.Geocoder();
+                        var latlng = {
+                            lat: latitude,
+                            lng: longitude
+                        };
+
+                        // Update the input fields with latitude and longitude
+                        document.getElementById('pickup_latitude').value = latitude;
+                        document.getElementById('pickup_longitude').value = longitude;
+
+                        geocoder.geocode({
+                            'location': latlng
+                        }, function(results, status) {
+                            if (status === 'OK') {
+                                if (results[0]) {
+                                    // Get the formatted address
+                                    var locationName = results[0].formatted_address;
+
+                                    // Update the input fields with latitude, longitude, and location name
+                                    $('#pickup_latitude').val(latitude);
+                                    $('#pickup_longitude').val(longitude);
+                                    $('#pickupautocomplete').val(locationName);
+
+                                    // Use the location name as needed
+                                    console.log("Location Name:", locationName);
+                                } else {
+                                    console.log('No results found');
+                                }
+                            } else {
+                                console.log('Geocoder failed due to: ' + status);
+                            }
+                        });
 
                         // Use the latitude and longitude as needed
                         console.log("Latitude:", latitude);
                         console.log("Longitude:", longitude);
+
+                    }, function(error) {
+                        alert('Error occurred: ' + error.message);
+
                     });
                 } else {
                     // Geolocation is not supported by this browser
-                    console.log("Geolocation is not supported");
+                    alert("Geolocation is not supported");
                 }
             });
         });
-
-
-
 
         // Get the input field
         var dateInput = document.getElementById('date');
