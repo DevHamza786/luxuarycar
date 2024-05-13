@@ -16,16 +16,16 @@ class UsersTableSeeder extends Seeder
         {
             // Create admin user
             $admin = User::create([
-                'name' => 'Admin User',
-                'email' => 'admin@example.com',
+                'name' => 'Admin',
+                'email' => 'admin@luxuarycar.com',
                 'password' => bcrypt('password'),
             ]);
             $admin->assignRole('admin');
 
             // Create driver user
             $driver = User::create([
-                'name' => 'Driver User',
-                'email' => 'driver@example.com',
+                'name' => 'Driver',
+                'email' => 'driver@luxuarycar.com',
                 'password' => bcrypt('password'),
                 'status' => 'incomplete'
             ]);

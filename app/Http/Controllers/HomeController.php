@@ -16,13 +16,13 @@ class HomeController extends Controller
 {
     public function store(Request $request)
     {
-        // dd($request->all());s
         $user = User::where('email', $request->email)->first();
 
         if ($user) {
             // User exists, create booking for existing user
             $booking = Booking::create([
                 'user_id' => $user->id,
+                'mode'=> $request->mode,
                 'time' => $request->time,
                 'date' => $request->date,
                 'car_category' => $request->car_category,
@@ -54,6 +54,7 @@ class HomeController extends Controller
             if ($user) {
                 $booking = Booking::create([
                     'user_id' => $user->id,
+                    'mode'=> $request->mode,
                     'time' => $request->time,
                     'date' => $request->date,
                     'car_category' => $request->car_category,

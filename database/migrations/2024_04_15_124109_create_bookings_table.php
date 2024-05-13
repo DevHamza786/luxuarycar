@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->nullable();
+            $table->string('mode')->nullable();
             $table->string('date')->nullable();
             $table->string('time')->nullable();
             $table->string('car_category')->nullable();

@@ -59,11 +59,11 @@
     </section>
     <section class="search_section clearfix">
         <ul class="button-group filters-button-group ul_li_center mb_30 clearfix" data-aos="fade-up" data-aos-delay="300">
-            <li><button class="button" data-filter=".sedan">Manhattan</button></li>
-            <li><button class="button" data-filter=".minhatten">Outside of Manhattan</button></li>
-            <li><button class="button" data-filter=".hourly">Hourly</button></li>
-            <li><button class="button" data-filter=".weekly">Weekly</button></li>
-            <li><button class="button" data-filter=".monthly">monthly/yearly services</button></li>
+            <li><button class="button getmode" data-filter=".sedan" data-set="Manhattan">Manhattan</button></li>
+            <li><button class="button getmode" data-filter=".sedan" data-set="Outsider">Outside of Manhattan</button></li>
+            <li><button class="button getmode" data-filter=".sedan" data-set="Hourly">Hourly</button></li>
+            <li><button class="button getmode" data-filter=".sedan" data-set="Weekly">Weekly</button></li>
+            <li><button class="button getmode" data-filter=".sedan" data-set="Monthly">monthly/yearly services</button></li>
         </ul>
         <div class="feature_vehicle_filter element-grid clearfix">
             <div class="element-item sedan" data-category="sedan">
@@ -71,6 +71,7 @@
                     <div class="advance_search_form2">
                         <form action="{{ route('booking.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" id="mode" name="mode" value="" />
                             <div class="row">
                                 <div class="row-wrap col-md-10">
                                     <div class="row">
@@ -96,7 +97,7 @@
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">First Name</h4>
                                                 <input type="text" name="fname" placeholder="Enter your name"
-                                                    value="{{ Auth::check() && Auth::user()->role === 'customer' ? Auth::user()->name : '' }}"
+                                                    value="{{ Auth::check() && Auth::user()->hasrole('customer') ? Auth::user()->name : '' }}"
                                                     required>
                                             </div>
                                         </div>
@@ -104,7 +105,7 @@
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">Email</h4>
                                                 <input type="email" name="email" placeholder="Enter your email"
-                                                    value="{{ Auth::check() && Auth::user()->role === 'customer' ? Auth::user()->email : '' }}"
+                                                    value="{{ Auth::check() && Auth::user()->hasrole('customer') ? Auth::user()->email : '' }}"
                                                     required>
                                             </div>
 
@@ -194,318 +195,6 @@
                     </div>
                 </div>
             </div>
-            {{-- <div style="position: absolute; left: 0px; top: 0px; display: none;" class="element-item minhatten "
-                data-category="minhatten">
-                <div class="container-fluid p-0" data-bg-color="#1E1E1E" data-aos="fade-up" data-aos-delay="100">
-                    <div class="advance_search_form2">
-                        <form action="{{ route('booking.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="row">
-                                <div class="row-wrap col-md-10">
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Pick Up Time</h4>
-                                                <div class="position-relative">
-                                                    <input type="time" name="time" placeholder="12:00am">
-                                                    <!-- <label for="location_two" class="input_icon"><i class="fas fa-map-marker-alt"></i></label> -->
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Pick Up Date</h4>
-                                                <input type="date" placeholder="20/Feb/2024" name="date">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">First Name</h4>
-                                                <input type="text" name="fname" placeholder="Micheal">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Last Name</h4>
-                                                <input type="text" name="lname" placeholder="Turner">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-md-4 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Email</h4>
-                                                <input type="email" name="email" placeholder="michealjohn@gmail.com">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Pick Up Address</h4>
-                                                <div class="position-relative">
-                                                    <input id="location_two" type="text" name="pick_location"
-                                                        placeholder="26817 Lodge Close">
-                                                    <!-- <label for="location_two" class="input_icon"><i class="fas fa-map-marker-alt"></i></label> -->
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Drop Off Address</h4>
-                                                <input type="text" id="location_two" name="drop_location"
-                                                    placeholder="1642 N Jackson Street">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 text-right">
-                                    <button type="submit" class="custom_btn bg_default_red text-uppercase">Reserve
-                                        Now <img src="{{ asset('home/assets/images/icons/icon_01.png') }}"
-                                            alt="icon_not_found"></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div style="position: absolute; left: 0px; top: 0px; display: none;" class="element-item hourly "
-                data-category="hourly">
-                <div class="container-fluid p-0" data-bg-color="#1E1E1E" data-aos="fade-up" data-aos-delay="100">
-                    <div class="advance_search_form2">
-                        <form action="{{ route('booking.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="row">
-                                <div class="row-wrap col-md-10">
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Pick Up Time</h4>
-                                                <div class="position-relative">
-                                                    <input type="time" name="time" placeholder="12:00am">
-                                                    <!-- <label for="location_two" class="input_icon"><i class="fas fa-map-marker-alt"></i></label> -->
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Pick Up Date</h4>
-                                                <input type="date" placeholder="20/Feb/2024" name="date">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">First Name</h4>
-                                                <input type="text" name="lname" placeholder="Micheal">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Last Name</h4>
-                                                <input type="text" name="fname" placeholder="Turner">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-md-4 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Email</h4>
-                                                <input type="email" name="email" placeholder="michealjohn@gmail.com">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Pick Up Address</h4>
-                                                <div class="position-relative">
-                                                    <input id="location_two" type="text" name="pick_location"
-                                                        placeholder="26817 Lodge Close">
-                                                    <!-- <label for="location_two" class="input_icon"><i class="fas fa-map-marker-alt"></i></label> -->
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Drop Off Address</h4>
-                                                <input type="text" id="location_two" name="drop_location"
-                                                    placeholder="1642 N Jackson Street">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 text-right">
-                                    <button type="submit" class="custom_btn bg_default_red text-uppercase">Reserve
-                                        Now <img src="{{ asset('home/assets/images/icons/icon_01.png') }}"
-                                            alt="icon_not_found"></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div style="position: absolute; left: 0px; top: 0px; display: none;" class="element-item weekly "
-                data-category="monthly">
-                <div class="container-fluid p-0" data-bg-color="#1E1E1E" data-aos="fade-up" data-aos-delay="100">
-                    <div class="advance_search_form2">
-                        <form action="{{ route('booking.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="row">
-                                <div class="row-wrap col-md-10">
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Pick Up Time</h4>
-                                                <div class="position-relative">
-                                                    <input type="time" name="time" placeholder="12:00am">
-                                                    <!-- <label for="location_two" class="input_icon"><i class="fas fa-map-marker-alt"></i></label> -->
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Pick Up Date</h4>
-                                                <input type="date" placeholder="20/Feb/2024" name="date">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">First Name</h4>
-                                                <input type="text" name="fname" placeholder="Micheal">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Last Name</h4>
-                                                <input type="text" name="lanme" placeholder="Turner">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-md-4 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Email</h4>
-                                                <input type="email" name="email" placeholder="michealjohn@gmail.com">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Pick Up Address</h4>
-                                                <div class="position-relative">
-                                                    <input id="location_two" type="text" name="pick_location"
-                                                        placeholder="26817 Lodge Close">
-                                                    <!-- <label for="location_two" class="input_icon"><i class="fas fa-map-marker-alt"></i></label> -->
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Drop Off Address</h4>
-                                                <input type="text" id="location_two" name="drop_location"
-                                                    placeholder="1642 N Jackson Street">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 text-right">
-                                    <button type="submit" class="custom_btn bg_default_red text-uppercase">Reserve
-                                        Now <img src="{{ asset('home/assets/images/icons/icon_01.png') }}"
-                                            alt="icon_not_found"></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div style="position: absolute; left: 0px; top: 0px; display: none;" class="element-item monthly "
-                data-category="monthly">
-                <div class="container-fluid p-0" data-bg-color="#1E1E1E" data-aos="fade-up" data-aos-delay="100">
-                    <div class="advance_search_form2">
-                        <form action="{{ route('booking.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="row">
-                                <div class="row-wrap col-md-10">
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Pick Up Time</h4>
-                                                <div class="position-relative">
-                                                    <input type="time" name="time" placeholder="12:00am">
-                                                    <!-- <label for="location_two" class="input_icon"><i class="fas fa-map-marker-alt"></i></label> -->
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Pick Up Date</h4>
-                                                <input type="date" placeholder="20/Feb/2024" name="date">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">First Name</h4>
-                                                <input type="text" name="lanme" placeholder="Micheal">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Last Name</h4>
-                                                <input type="text" name="fname" placeholder="Turner">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-md-4 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Email</h4>
-                                                <input type="email" name="email" placeholder="michealjohn@gmail.com">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Pick Up Address</h4>
-                                                <div class="position-relative">
-                                                    <input id="location_two" type="text" name="pick_location"
-                                                        placeholder="26817 Lodge Close">
-                                                    <!-- <label for="location_two" class="input_icon"><i class="fas fa-map-marker-alt"></i></label> -->
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4 col-sm-12 col-xs-12">
-                                            <div class="form_item">
-                                                <h4 class="input_title text-white">Drop Off Address</h4>
-                                                <input type="text" id="location_two" name="drop_location"
-                                                    placeholder="1642 N Jackson Street">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 text-right">
-                                    <button type="submit" class="custom_btn bg_default_red text-uppercase">Reserve
-                                        Now <img src="{{ asset('home/assets/images/icons/icon_01.png') }}"
-                                            alt="icon_not_found"></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div> --}}
         </div>
     </section>
     <section class="section about_us clearfix">
@@ -516,7 +205,12 @@
                     <h2 class="main_heading">What We Provide Is the Luxury Transport and Most Comfortable Experience</h2>
                 </div>
                 <div class="col-md-6">
-                    <p>Offering luxurious transportation and ensuring the utmost comfort for our clients is our priority. Whether it's a chauffeured limousine service, a private jet charter, or a VIP travel experience, we go above and beyond to provide unparalleled luxury and convenience. Our vehicles are meticulously maintained, our staff is highly trained, and our services are tailored to exceed expectations. From the moment you book with us until you reach your destination, expect nothing less than a seamless, indulgent journey.</p>
+                    <p>Offering luxurious transportation and ensuring the utmost comfort for our clients is our priority.
+                        Whether it's a chauffeured limousine service, a private jet charter, or a VIP travel experience, we
+                        go above and beyond to provide unparalleled luxury and convenience. Our vehicles are meticulously
+                        maintained, our staff is highly trained, and our services are tailored to exceed expectations. From
+                        the moment you book with us until you reach your destination, expect nothing less than a seamless,
+                        indulgent journey.</p>
                     <div class="call_to">
                         <a href="">
                             <img class="img-fluid" src="{{ asset('home/assets/images/head.png') }}" alt="">
@@ -597,28 +291,36 @@
                     <div class="dev_service">
                         <img src="{{ asset('home/assets/images/calender.png') }}" alt="">
                         <h3>Easy Online Booking</h3>
-                        <p>Absolutely! We understand the importance of convenience, which is why we offer easy online booking for all our services. Our user-friendly platform allows you to effortlessly reserve your luxury transportation with just a few clicks</p>
+                        <p>Absolutely! We understand the importance of convenience, which is why we offer easy online
+                            booking for all our services. Our user-friendly platform allows you to effortlessly reserve your
+                            luxury transportation with just a few clicks</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="dev_service">
                         <img src="{{ asset('home/assets/images/men.png') }}" alt="">
                         <h3>Professional Drivers</h3>
-                        <p>Our team of professional drivers is the cornerstone of our commitment to excellence in luxury transportation. Each driver undergoes rigorous training and screening to ensure they possess the highest level of skill, professionalism, and dedication to customer service.</p>
+                        <p>Our team of professional drivers is the cornerstone of our commitment to excellence in luxury
+                            transportation. Each driver undergoes rigorous training and screening to ensure they possess the
+                            highest level of skill, professionalism, and dedication to customer service.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="dev_service">
                         <img src="{{ asset('home/assets/images/car.png') }}" alt="">
                         <h3>Variety of Car Brands</h3>
-                        <p>We take pride in offering a diverse selection of car brands to cater to your specific preferences and needs. From luxury sedans to SUVs, exotic sports cars to executive vans, our fleet features top-of-the-line vehicles</p>
+                        <p>We take pride in offering a diverse selection of car brands to cater to your specific preferences
+                            and needs. From luxury sedans to SUVs, exotic sports cars to executive vans, our fleet features
+                            top-of-the-line vehicles</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="dev_service">
                         <img src="{{ asset('home/assets/images/card.png') }}" alt="">
                         <h3>Online Payment</h3>
-                        <p>To streamline your booking experience further, we offer secure online payment options for your convenience and peace of mind. Our encrypted payment gateway ensures that your transactions are safe and protected</p>
+                        <p>To streamline your booking experience further, we offer secure online payment options for your
+                            convenience and peace of mind. Our encrypted payment gateway ensures that your transactions are
+                            safe and protected</p>
                     </div>
                 </div>
             </div>
@@ -636,16 +338,24 @@
                 </div>
                 <div class="col-md-4">
                     <h5 class="city-to_city-rides">City to City rides</h5>
-                    <p>Absolutely! We provide city-to-city rides to accommodate your travel needs seamlessly. Whether you're traveling for business meetings, leisurely sightseeing, or any other purpose</p>
+                    <p>Absolutely! We provide city-to-city rides to accommodate your travel needs seamlessly. Whether you're
+                        traveling for business meetings, leisurely sightseeing, or any other purpose</p>
                     <h5 class="city-to_city-rides">Airport transfers</h5>
-                    <p>Our airport transfer service is designed to provide seamless and stress-free transportation to and from the airport. Whether you're arriving or departing, we understand the importance of timely and reliable transfers</p>
+                    <p>Our airport transfer service is designed to provide seamless and stress-free transportation to and
+                        from the airport. Whether you're arriving or departing, we understand the importance of timely and
+                        reliable transfers</p>
 
                 </div>
                 <div class="col-md-4">
                     <h5 class="city-to_city-rides">Chauffer Weekly/Monthly/Yearly services</h5>
-                    <p>We offer flexible chauffeur services on a monthly, weekly, or yearly basis to cater to your long-term transportation needs. Whether you require consistent transportation for business meetings, special events, or personal errands, our chauffeur services</p>
+                    <p>We offer flexible chauffeur services on a monthly, weekly, or yearly basis to cater to your long-term
+                        transportation needs. Whether you require consistent transportation for business meetings, special
+                        events, or personal errands, our chauffeur services</p>
                     <h5 class="city-to_city-rides">A Diverse Selection</h5>
-                    <p>Certainly! Our airport transfer service offers a diverse selection of vehicles to cater to your preferences and requirements. Whether you prefer the elegance of a luxury sedan, the spaciousness of an SUV, or the prestige of a chauffeured Sprinter, we have the perfect vehicle to suit your needs.</p>
+                    <p>Certainly! Our airport transfer service offers a diverse selection of vehicles to cater to your
+                        preferences and requirements. Whether you prefer the elegance of a luxury sedan, the spaciousness of
+                        an SUV, or the prestige of a chauffeured Sprinter, we have the perfect vehicle to suit your needs.
+                    </p>
 
                 </div>
             </div>
@@ -661,7 +371,10 @@
                     <div class="right-counter_sec">
                         <h5 class="sub-heading">Only the best</h5>
                         <h2 class="main_heading">We Provide Best</h2>
-                        <p>Absolutely, providing only the best is our top priority. From our meticulously maintained fleet of luxury vehicles to our professional chauffeurs and personalized service, we are dedicated to delivering excellence in every aspect of your experience. Our commitment to quality extends to every detail, ensuring that your journey is not just satisfactory, but truly exceptional.</p>
+                        <p>Absolutely, providing only the best is our top priority. From our meticulously maintained fleet
+                            of luxury vehicles to our professional chauffeurs and personalized service, we are dedicated to
+                            delivering excellence in every aspect of your experience. Our commitment to quality extends to
+                            every detail, ensuring that your journey is not just satisfactory, but truly exceptional.</p>
                         <div class="row">
                             <div class="col-md-6 col-sm-12">
                                 <div class="funfact_item text-left" data-aos="fade-up" data-aos-delay="100">
@@ -822,6 +535,22 @@
 
             $("#dropoff_latitudeArea").addClass("d-none");
             $("#dropoff_longtitudeArea").addClass("d-none");
+
+            $('button.getmode').click(function() {
+                // Get the data-set value of the clicked button
+                dataSetValue = $(this).data('set');
+                // Set the value of the hidden input field
+                $('#mode').val(dataSetValue);
+            });
+
+            function setModeValue() {
+                // Get the data-set value of the first button with class "getmode"
+                var dataSetValue = $('button.getmode:first').data('set');
+                // Set the value of the hidden input field
+                $('#mode').val(dataSetValue);
+            }
+
+            setModeValue();
         });
 
         google.maps.event.addDomListener(window, 'load', initialize);
