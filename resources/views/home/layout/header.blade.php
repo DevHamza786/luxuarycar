@@ -36,6 +36,12 @@
     <!-- custom - css include -->
     <link rel="stylesheet" type="text/css" href="{{ asset('home/assets/css/style.css') }}">
 
+    <style>
+        .main-p{
+            font-size: 14px;
+        }
+    </style>
+
 </head>
 
 

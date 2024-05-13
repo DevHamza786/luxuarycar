@@ -21,12 +21,26 @@
         <div class="row align-items-center">
             <div class="col-md-12">
                 <h2 class="main_heading">Refund Policy</h2>
-                <p>
-                    In the current climate, we understand the importance of taking additional safety measures. We have implemented thorough cleaning and sanitization protocols for our vehicles, following guidelines from health authorities. Our chauffeurs also adhere to strict hygiene practices, including wearing masks and regularly sanitizing their hands. Your safety is our utmost concern, and we strive to provide a hygienic and safe environment throughout your journey. <br> When you choose New York Limo, you can travel with confidence, knowing that your privacy and safety are our number one priorities.
+                <p class="main-p">
+                    If customers cancel their reservation 72 hours in advance then there is no cancellation fee and no refund.
                 </p>
-                <p>
-                    In the current climate, we understand the importance of taking additional safety measures. We have implemented thorough cleaning and sanitization protocols for our vehicles, following guidelines from health authorities. Our chauffeurs also adhere to strict hygiene practices, including wearing masks and regularly sanitizing their hands. Your safety is our utmost concern, and we strive to provide a hygienic and safe environment throughout your journey. <br> When you choose New York Limo, you can travel with confidence, knowing that your privacy and safety are our number one priorities.
+                <p class="main-p">
+                    We accept VISA/MASTERCARD/AMERICAN EXPRESS
                 </p>
+                <p class="main-p">
+                    You understand that information received from you may be used by  Luxury car Chauffeur Service for any or all of the reasons described herein.
+                </p>
+                <p class="main-p">
+                    Luxury car Chauffeur Service may also disclose your information:
+                    <ul style="font-size: 14px;">
+                        <li>If Luxury car Chauffeur Service determines a violation of the Terms has occurred.</li>
+                        <li>If Luxury car Chauffeur Service believes such disclosure is necessary to identify or bring legal action regarding injury or interference with the rights of  Luxury car Chauffeur Service or another user of the Website.</li>
+                        <li>To respond to legal process or as otherwise required by law and in fraud protection or investigation.</li>
+                    </ul>
+                </p>
+                <p class="main-p">
+                    None of the luxury car chauffeur service corporation  parties shall have any liability whatsoever for any data breach or unauthorized access to user content or other information on or submitted through the web site, regardless of the level of care used by luxury car chauffeur service corporation
+                <p>
             </div>
         </div>
     </div>
