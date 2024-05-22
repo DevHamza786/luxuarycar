@@ -50,7 +50,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/payment-store',[PaymentSettingController::class,'store'])->name('payment.store');
 
     // User
-    Route::get('/all-users', [UserController::class, 'index'])->name('all.users');
+    Route::get('/users', [UserController::class, 'index'])->name('users');
+    Route::post('/user-status', [UserController::class, 'userStatus'])->name('user.status');
+    Route::get('/user-delete/{id}', [UserController::class, 'softDelete'])->name('user.delete');
+
 
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

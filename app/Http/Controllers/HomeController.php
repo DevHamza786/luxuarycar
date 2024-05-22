@@ -47,6 +47,7 @@ class HomeController extends Controller
                 'name' => $request->fname,
                 'email' => $request->email,
                 'password' => Hash::make($request->email),
+                'status' => 'active'
             ]);
 
             $user->assignRole('customer');

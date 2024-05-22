@@ -82,12 +82,10 @@
                     {
                         data: 'name',
                         name: 'name',
-                        searchable: false
                     },
                     {
                         data: 'email',
                         name: 'email',
-                        searchable: false
                     },
                     {
                         data: 'car_category',

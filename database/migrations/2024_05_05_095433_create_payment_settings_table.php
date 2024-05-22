@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('payment_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('mode');
-            $table->string('car_category');
-            $table->string('no_pessenger');
-            $table->string('pricepermiles');
-            $table->string('pricepermin');
-            $table->string('priceperhour');
+            $table->string('mode')->nullable();
+            $table->string('car_category')->nullable();
+            $table->string('no_pessenger')->nullable();
+            $table->string('pricepermiles')->nullable();
+            $table->string('pricepermin')->nullable();
+            $table->string('priceperhour')->nullable();
             $table->timestamps();
         });
     }

@@ -49,6 +49,16 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        $user = Auth::user();
+
+        if ($user->hasrole('customer') && $user->status !== 'active') {
+            Auth::logout(); // Log the user out
+
+            throw ValidationException::withMessages([
+                'email' => 'Your account is not active or block by admin.',
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
 

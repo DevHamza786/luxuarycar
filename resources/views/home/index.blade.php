@@ -59,7 +59,7 @@
     </section>
     <section class="search_section clearfix">
         <ul class="button-group filters-button-group ul_li_center mb_30 clearfix" data-aos="fade-up" data-aos-delay="300">
-            <li><button class="button getmode" data-filter=".sedan" data-set="Manhattan">Manhattan</button></li>
+            <li><button class="button getmode" data-filter=".sedan" data-set="mr">Manhattan</button></li>
             <li><button class="button getmode" data-filter=".sedan" data-set="Outsider">Outside of Manhattan</button></li>
             <li><button class="button getmode" data-filter=".sedan" data-set="Hourly">Hourly</button></li>
             <li><button class="button getmode" data-filter=".sedan" data-set="Weekly">Weekly</button></li>

@@ -118,7 +118,7 @@
                                     </a>
                                 </div>
                                 <div class="menu-item">
-                                    <a class="menu-link {{ ($pagePrefix == 'users') ? 'active' : '' }}" href="{{ route('all.users') }}">
+                                    <a class="menu-link {{ ($pagePrefix == 'users') ? 'active' : '' }}" href="{{ route('users') }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                             <span class="svg-icon svg-icon-2">
@@ -177,7 +177,7 @@
                                             </span>
                                             <!--end::Svg Icon-->
                                         </span>
-                                        <span class="menu-title">Payment Setting</span>
+                                        <span class="menu-title">Fare Charges</span>
                                     </a>
                                 </div>
                             @else

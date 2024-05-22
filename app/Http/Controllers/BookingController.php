@@ -14,7 +14,6 @@ class BookingController extends Controller
 
     public function __construct()
     {
-
     }
 
     public function index()
@@ -24,7 +23,7 @@ class BookingController extends Controller
         return view('booking.index', compact('pagePrefix'));
     }
 
-    public function allbookings()
+    public function allbookings(Request $request)
     {
         $user = Auth::user();
 
@@ -39,6 +38,20 @@ class BookingController extends Controller
         } else {
             $booking = Booking::with('userData')
                 ->whereNull('deleted_at');
+        }
+
+        // Apply search filter if search query is provided
+        if ($request->has('search') && !empty($request->input('search')['value'])) {
+            $searchValue = $request->input('search')['value'];
+            $booking->where(function ($query) use ($searchValue) {
+                $query->where('car_category', 'like', '%' . $searchValue . '%')
+                    ->orWhere('pick_location', 'like', '%' . $searchValue . '%')
+                    ->orWhere('drop_location', 'like', '%' . $searchValue . '%')
+                    ->orWhereHas('userData', function ($subQuery) use ($searchValue) {
+                        $subQuery->where('name', 'like', '%' . $searchValue . '%')
+                                ->orwhere('email', 'like', '%' . $searchValue . '%');
+                    });
+            });
         }
 
         return DataTables::of($booking)
@@ -86,7 +99,7 @@ class BookingController extends Controller
                     </i>
                     </span>
                 </a>';
-                if(!Auth::user()->hasRole('customer')){
+                if (!Auth::user()->hasRole('customer')) {
                     $actionBtn .= '&nbsp;&nbsp;<a href="javascript:void(0)" class="delete btn btn-danger btn-sm">
                         <span class="svg-icon svg-icon-3" style="margin-right:0px;"><i class="fa fa-trash" aria-hidden="true" style="padding-right:0px !important;"></i>
                         </span>

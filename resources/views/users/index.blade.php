@@ -29,105 +29,21 @@
                                 <!--begin::Table container-->
                                 <div class="table-responsive">
                                     <!--begin::Table-->
-                                    <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                                    <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4" id="userTable">
                                         <!--begin::Table head-->
                                         <thead>
                                             <tr class="fw-bolder text-muted">
-                                                <th class="w-25px">
-                                                    <div
-                                                        class="form-check form-check-sm form-check-custom form-check-solid">
-                                                        <input class="form-check-input" type="checkbox" value="1"
-                                                            data-kt-check="true"
-                                                            data-kt-check-target=".widget-9-check" />
-                                                    </div>
-                                                </th>
                                                 <th class="min-w-150px">Name</th>
                                                 <th class="min-w-140px">Email</th>
                                                 <th class="min-w-120px">Phone</th>
-                                                <th class="min-w-120px">Total Booked Rides</th>
-                                                <th class="min-w-100px text-end">Actions</th>
+                                                <th class="min-w-120px"># Booked Rides</th>
+                                                <th class="min-w-120px">Status</th>
+                                                <th class="min-w-100px">Actions</th>
                                             </tr>
                                         </thead>
                                         <!--end::Table head-->
-                                        <!--begin::Table body-->
-                                        <tbody>
-                                            @if ($users->isEmpty())
-                                                <tr>
-                                                    <td colspan="5">
-                                                        <p
-                                                            class="text-hover-primary fs-7 text-center">
-                                                            No Data Found</p>
-                                                    </td>
-                                                    <!-- Add more columns if needed -->
-                                                </tr>
-                                            @else
-                                                @foreach ($users as $user)
-                                                    <tr>
-                                                        <td>
-                                                            <div
-                                                                class="form-check form-check-sm form-check-custom form-check-solid">
-                                                                <input class="form-check-input widget-9-check"
-                                                                    type="checkbox" value="1" />
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="d-flex justify-content-start flex-column">
-                                                                    <p
-                                                                        class="text-hover-primary fs-7">
-                                                                        {{ $user->name }}</p>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <p class="text-hover-primary fs-7">
-                                                                {{ $user->email }}</p>
-                                                        </td>
-                                                        <td>
-                                                            <p class="text-hover-primary fs-7">
-                                                                {{ $user->phone ?? 'N/A' }}</p>
-                                                        </td>
-                                                        <td>
-                                                            <p class="text-hover-primary fs-7">
-                                                                {{ $user->user_rides_count ?? 'N/A' }}</p>
-                                                        </td>
-                                                        <td>
-                                                            <div class="d-flex justify-content-end flex-shrink-0">
-                                                                <form
-                                                                    action="{{ route('users.softdelete', ['id' => $user->id]) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit"
-                                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
-                                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                                                        <span class="svg-icon svg-icon-3">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                width="24" height="24"
-                                                                                viewBox="0 0 24 24" fill="none">
-                                                                                <path
-                                                                                    d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z"
-                                                                                    fill="black" />
-                                                                                <path opacity="0.5"
-                                                                                    d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
-                                                                                    fill="black" />
-                                                                                <path opacity="0.5"
-                                                                                    d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
-                                                                                    fill="black" />
-                                                                            </svg>
-                                                                        </span>
-                                                                        <!--end::Svg Icon-->
-                                                                    </button>
-                                                                </form>
-                                                                <a href="#">
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
+                                        <tbody class="text-gray-600 fw-semibold">
                                         </tbody>
-                                        <!--end::Table body-->
                                     </table>
                                     <!--end::Table-->
                                 </div>
@@ -146,4 +62,96 @@
         <!--end::Post-->
     </div>
     <!--end::Content-->
+@endsection
+@section('script')
+    <script>
+        $(function() {
+            var table = $('#userTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('all.users') }}",
+                columns: [{
+                        data: 'name',
+                        name: 'name',
+                        searchable: true
+                    },
+                    {
+                        data: 'email',
+                        name: 'email',
+                        searchable: true
+                    },
+                    {
+                        data: 'phone',
+                        name: 'phone',
+                        searchable: true
+                    },
+                    {
+                        data: 'user_rides_count',
+                        name: 'user_rides_count',
+                        searchable: false
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
+                        searchable: true
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        searchable: false
+
+                    },
+                ],
+                columnDefs: [{
+                    targets: 4, // Target the 6th column (0-based index)
+                    render: function(data, type, full, meta) {
+                        // Define options for the status dropdown
+                        var options = ['inactive', 'active'];
+                        // Construct the dropdown with options
+                        var select = '<select class="form-control">';
+                        options.forEach(function(option) {
+                            console.log(option)
+                            var selected = (data === option) ? 'selected' : '';
+                            select += '<option value="' + option + '" ' + selected +
+                                '>' + option.toUpperCase() + '</option>';
+                        });
+                        select += '</select>';
+                        // Return the dropdown
+                        return select;
+                    }
+                }]
+            });
+
+            $(document).on('change', '#userTable select', function() {
+                var newValue = $(this).val();
+                var rowData = table.row($(this).closest('tr')).data();
+                var userID = rowData.id;
+                console.log(newValue);
+                console.log(userID);
+
+                // Send an AJAX request to update the status
+                $.ajax({
+                    url: "{{ route('user.status') }}",
+                    method: 'POST',
+                    data: {
+                        id: userID,
+                        status: newValue
+                    },
+                    success: function(response) {
+                        // Update the UI if necessary
+                        // For example, you can update the status column in the DataTables table
+                        table.cell({
+                            row: table.row($(this).closest('tr')).index(),
+                            column: 5
+                        }).data(newValue).draw();
+                        toastr.success(response.message);
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                        toastr.error(error);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
