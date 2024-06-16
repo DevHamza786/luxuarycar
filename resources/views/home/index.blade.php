@@ -103,6 +103,15 @@
                                         </div>
                                         <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="form_item">
+                                                <h4 class="input_title text-white">Last Name</h4>
+                                                <input type="text" name="lname" placeholder="Enter your name"
+                                                    value=""
+                                                    required>
+                                                    {{-- {{ Auth::check() && Auth::user()->hasrole('customer') ? Auth::user()->name : '' }} --}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12 col-xs-12">
+                                            <div class="form_item">
                                                 <h4 class="input_title text-white">Email</h4>
                                                 <input type="email" name="email" placeholder="Enter your email"
                                                     value="{{ Auth::check() && Auth::user()->hasrole('customer') ? Auth::user()->email : '' }}"
@@ -205,18 +214,12 @@
                     <h2 class="main_heading">What We Provide Is the Luxury Transport and Most Comfortable Experience</h2>
                 </div>
                 <div class="col-md-6">
-                    <p>Offering luxurious transportation and ensuring the utmost comfort for our clients is our priority.
+                    <p style="text-align: justify !important;">Offering luxurious transportation and ensuring the utmost comfort for our clients is our priority.
                         Whether it's a chauffeured limousine service, a private jet charter, or a VIP travel experience, we
                         go above and beyond to provide unparalleled luxury and convenience. Our vehicles are meticulously
                         maintained, our staff is highly trained, and our services are tailored to exceed expectations. From
                         the moment you book with us until you reach your destination, expect nothing less than a seamless,
                         indulgent journey.</p>
-                    <div class="call_to">
-                        <a href="">
-                            <img class="img-fluid" src="{{ asset('home/assets/images/head.png') }}" alt="">
-                            <span>Call center: +1234 5678 901</span>
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -231,10 +234,10 @@
                             <div class="col-md-12 col-sm-12 col-xs-12 p-0">
                                 <div class="form_item">
                                     <select class="form-select" aria-label="Default select example">
-                                        <option selected>Ultra Luxury</option>
-                                        <option value="1">Ultra Luxury 1</option>
-                                        <option value="2">Ultra Luxury 2</option>
-                                        <option value="3">Ultra Luxury 3 </option>
+                                        <option selected>Black Luxury</option>
+                                        <option value="1">Black Luxury 1</option>
+                                        <option value="2">Black Luxury 2</option>
+                                        <option value="3">Black Luxury 3 </option>
                                     </select>
                                 </div>
                             </div>
@@ -243,15 +246,15 @@
                 </div>
                 <div class="col-md-4">
                     <div class="car_box">
-                        <img src="{{ asset('home/assets/images/centercar.png') }}" alt="">
+                        <img src="{{ asset('home/assets/images/centercar-2.png') }}" alt="">
                         <form action="#">
                             <div class="col-md-12 col-sm-12 col-xs-12 p-0">
                                 <div class="form_item">
                                     <select class="form-select" aria-label="Default select example">
-                                        <option selected>Black Luxury</option>
-                                        <option value="1">Black Luxury 1</option>
-                                        <option value="2">Black Luxury 2</option>
-                                        <option value="3">Black Luxury 3 </option>
+                                        <option selected>Ultra Luxury</option>
+                                        <option value="1">Ultra Luxury 1</option>
+                                        <option value="2">Ultra Luxury 2</option>
+                                        <option value="3">Ultra Luxury 3 </option>
                                     </select>
                                 </div>
                             </div>
@@ -367,11 +370,11 @@
                 <div class="col-md-6">
                     <img class="img-fluid" src="{{ asset('home/assets/images/Section.png') }}" alt="">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="right-counter_sec">
                         <h5 class="sub-heading">Only the best</h5>
                         <h2 class="main_heading">We Provide Best</h2>
-                        <p>Absolutely, providing only the best is our top priority. From our meticulously maintained fleet
+                        <p style="text-align: justify !important;">Absolutely, providing only the best is our top priority. From our meticulously maintained fleet
                             of luxury vehicles to our professional chauffeurs and personalized service, we are dedicated to
                             delivering excellence in every aspect of your experience. Our commitment to quality extends to
                             every detail, ensuring that your journey is not just satisfactory, but truly exceptional.</p>
@@ -499,7 +502,7 @@
         <div class="container">
             <div class="row">
                 <h2 class="main_heading">
-                    22% off on Weekly use with minimum 30 Hours.
+                    25% off on Weekly use with minimum 30 Hours.
                 </h2>
             </div>
         </div>
@@ -512,7 +515,7 @@
                 </div>
                 <div class="col-md-7">
                     <h2 class="main_heading">COVID-19 Safety Measures</h2>
-                    <p>
+                    <p style="text-align: justify !important;">
                         In the current climate, we understand the importance of taking additional safety measures. We have
                         implemented thorough cleaning and sanitization protocols for our vehicles, following guidelines from
                         health authorities. Our chauffeurs also adhere to strict hygiene practices, including wearing masks
@@ -581,10 +584,8 @@
             var pickupIcon = document.getElementById("pickupIcon");
             // Add click event listener to the map icon
             pickupIcon.addEventListener("click", function() {
-                console.log('hamza');
                 // Check if Geolocation is supported by the browser
                 if (navigator.geolocation) {
-                    console.log('ok1');
                     // Get the current position
                     navigator.geolocation.getCurrentPosition(function(position) {
                         var latitude = position.coords.latitude;

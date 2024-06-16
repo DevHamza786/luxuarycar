@@ -24,8 +24,10 @@
                 <div id="map"></div>
                 <div id="info"></div>
                 <div id="directions-panel"></div>
-                <button id="startridebtn" class="btn btn-primary btn-sm mt-2">Accept</button>
-                <button id="star_tRide" class="btn btn-success btn-sm mt-2" style="display: none;">Ride Start</button>
+                @if(auth()->user()->hasrole('driver'))
+                    <button id="startridebtn" class="btn btn-primary btn-sm mt-2">Accept</button>
+                    <button id="star_tRide" class="btn btn-success btn-sm mt-2" style="display: none;">Ride Start</button>
+                @endif
             </div>
             <!--end::Container-->
         </div>

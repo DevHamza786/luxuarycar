@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-md-7">
                     <h2 class="main_heading">About Us</h2>
-                    <p>
+                    <p style="text-align: justify;">
                         At Luxury Car Chauffeur Services , we believe that every journey should be an extraordinary
                         experience. As a premier provider of luxury transportation services, we are committed to delivering
                         unparalleled comfort, convenience, and sophistication to our discerning clients.

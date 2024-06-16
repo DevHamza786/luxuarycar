@@ -194,7 +194,6 @@
                     <div class="links_box">
                         <img src="{{ asset('home/assets/images/fohead.png') }}" alt="">
                         <div class="right">
-                            <a href="">Phone: (862) 666-4329</a>
                             <a href="">Email: info@luxuryccs.com</a>
                         </div>
                     </div>
@@ -203,8 +202,7 @@
                     <div class="links_box">
                         <img src="{{ asset('home/assets/images/time.png') }}" alt="">
                         <div class="right">
-                            <p>Monday-Friday 9a.m. -5p.m.
-                                Saturday Sunday is closed.</p>
+                            <p>We’re open 24/7</p>
                         </div>
                     </div>
                 </div>
@@ -226,13 +224,11 @@
                                 </a>
                             </div>
                             <p class="mb_15">
-                                Cras sit amet mi non orci pretium consectetur. Donec iaculis ante ac sollicitudin
-                                luctus. Phasellus ut lacus lacus. Phasellus sagittis ex id tortor tincidunt luctus.
-                                Donec consectetur consequat bibendum
+                                Offering luxurious transportation and ensuring the utmost comfort for our clients is our priority. Whether it's a chauffeured limousine service, a private jet charter, or a VIP travel experience, we go above and beyond to provide unparalleled luxury and convenience
                             </p>
                             <div class="footer_useful_links mb_30">
                                 <ul class="ul_li_block clearfix">
-                                    <li><a href="#!" style="color: #BFA37C;">Call centar: (862) 666-4329</a></li>
+                                    <li><img src="{{ asset('home/assets/images/card-accepted.jpg') }}" width="200"/></li>
                                 </ul>
                             </div>
 
@@ -243,8 +239,8 @@
                         <div class="footer_useful_links" data-aos="fade-up" data-aos-delay="300">
                             <h3 class="footer_widget_title">Quick links</h3>
                             <ul class="ul_li_block clearfix">
-                                <li><a href="{{ url('/how-we-work') }}"> How we work</a></li>
                                 <li><a href="{{ url('/faq') }}"> Faq</a></li>
+                                <li><a href="{{ url('/how-we-work') }}"> How we work</a></li>
                                 <li><a href="{{ url('/services') }}"> Services</a></li>
                                 <li><a href="{{ url('/contact') }}"> Contact</a></li>
                                 <li><a href="{{ url('/privacy-policy') }}"> Privacy Policy</a></li>
@@ -268,7 +264,7 @@
             </div>
         </div>
 
-        <div class="footer_bottom text-white clearfix text-center" data-bg-color="#1E1E1E">
+        <div class="footer_bottom text-white clearfix text-center" data-bg-color="#1E1E1E" style="border-top:1px solid;">
             <div class="container">
                 <div class="row align-items-center justify-content-lg-between">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

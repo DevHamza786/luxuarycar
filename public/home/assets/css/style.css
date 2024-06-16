@@ -238,7 +238,7 @@ section.why_choose {}
 }
 /* feature services  */
 .section {
-  padding: 100px 0;
+  padding: 50px 0 !important;
 }
 
 .sub-heading {
@@ -932,7 +932,7 @@ label {
 }
 
 .sec_ptb_100 {
-  padding: 100px 0px;
+  padding: 50px 0px;
 }
 
 .mt__30 {
