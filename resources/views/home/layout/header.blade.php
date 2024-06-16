@@ -240,11 +240,11 @@
                             <h3 class="footer_widget_title">Quick links</h3>
                             <ul class="ul_li_block clearfix">
                                 <li><a href="{{ url('/faq') }}"> Faq</a></li>
-                                <li><a href="{{ url('/how-we-work') }}"> How we work</a></li>
-                                <li><a href="{{ url('/services') }}"> Services</a></li>
                                 <li><a href="{{ url('/contact') }}"> Contact</a></li>
-                                <li><a href="{{ url('/privacy-policy') }}"> Privacy Policy</a></li>
+                                <li><a href="{{ url('/services') }}"> Services</a></li>
+                                <li><a href="{{ url('/how-we-work') }}"> How we work</a></li>
                                 <li><a href="{{ url('/refund-policy') }}"> Refund Policy</a></li>
+                                <li><a href="{{ url('/privacy-policy') }}"> Privacy Policy</a></li>
                             </ul>
                         </div>
                     </div>
