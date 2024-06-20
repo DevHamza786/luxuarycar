@@ -8,22 +8,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use App\Models\LoginHistory;
+use App\Models\OTP;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendOTP;
 
 class LoginRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
-     */
     public function rules(): array
     {
         return [
@@ -32,11 +29,6 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    /**
-     * Attempt to authenticate the request's credentials.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
@@ -51,22 +43,46 @@ class LoginRequest extends FormRequest
 
         $user = Auth::user();
 
-        if ($user->hasrole('customer') && $user->status !== 'active') {
+        if ($user->hasRole('customer') && $user->status !== 'active') {
             Auth::logout(); // Log the user out
 
             throw ValidationException::withMessages([
-                'email' => 'Your account is not active or block by admin.',
+                'email' => 'Your account is not active or blocked by admin.',
             ]);
+        }
+
+        // Check if the login is from a different IP address or if there is no previous login history
+        $currentIp = $this->ip();
+        $previousLogin = LoginHistory::where('user_id', $user->id)->latest()->first();
+
+        if (!$previousLogin || $previousLogin->device_ip !== $currentIp) {
+            $otpCode = Str::random(6);
+            OTP::create([
+                'user_id' => $user->id,
+                'otp_code' => $otpCode,
+                'expiration_time' => Carbon::now()->addMinutes(10),
+                'is_used' => false,
+            ]);
+
+            // Send OTP to user's email
+            Mail::to($user->email)->send(new SendOTP($otpCode));
+
+            // Store user ID in session and log out the user
+            session(['otp_user_id' => $user->id]);
+            $Loginhistory = LoginHistory::create([
+                'user_id' => $user->id,
+                'device_ip' => $currentIp,
+            ]);
+            Auth::logout();
+
+            throw ValidationException::withMessages([
+                'email' => 'OTP sent to your email. Please verify to login.',
+            ])->redirectTo(route('verify-otp'));
         }
 
         RateLimiter::clear($this->throttleKey());
     }
 
-    /**
-     * Ensure the login request is not rate limited.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function ensureIsNotRateLimited(): void
     {
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
@@ -85,9 +101,6 @@ class LoginRequest extends FormRequest
         ]);
     }
 
-    /**
-     * Get the rate limiting throttle key for the request.
-     */
     public function throttleKey(): string
     {
         return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());

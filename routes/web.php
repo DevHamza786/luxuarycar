@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OTPController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DriverController;
@@ -23,8 +24,11 @@ Route::get('/refund-policy', function () { return view('home.refund-policy');});
 Route::get('/single-service', function () { return view('home.single-service');});
 Route::get('/vehicle', function () { return view('home.vehicle');});
 Route::get('/privacy-policy', function () { return view('home.privacy-policy');});
-
 Route::post('/booking', [HomeController::class, 'store'])->name('booking.store');
+
+
+Route::get('/verify-otp', [OTPController::class, 'showVerifyForm'])->name('verify-otp');
+Route::post('/verify-otp', [OTPController::class, 'verifyOTP'])->name('verify-otp');
 
 Route::middleware('auth')->group(function () {
     // check driver profile setup

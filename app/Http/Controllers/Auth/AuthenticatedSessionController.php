@@ -30,7 +30,7 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         // If authentication is successful, update the location
-        $this->updateUserLocation($request->ip());
+        $this->updateUserLocation($request);
 
         $request->session()->regenerate();
 
@@ -65,7 +65,7 @@ class AuthenticatedSessionController extends Controller
         }
     }
 
-    protected function updateUserLocation($ip)
+    protected function updateUserLocation($request)
     {
         // Make a request to the Google Maps Geolocation API to get the location based on the IP address
         $client = new Client();
@@ -77,7 +77,7 @@ class AuthenticatedSessionController extends Controller
         $location = json_decode($response->getBody(), true);
 
         // Assuming you have a User model
-        $user = User::find(Auth::user()->id);
+        $user = User::where('email',$request->email)->first();
         // Update the location of the user
         $user->latitude = $location['location']['lat'];
         $user->longitude = $location['location']['lng'];
