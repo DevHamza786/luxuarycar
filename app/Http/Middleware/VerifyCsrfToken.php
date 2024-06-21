@@ -16,6 +16,7 @@ class VerifyCsrfToken extends Middleware
         '/assgin-driver',
         '/updatepassword',
         '/driver-status',
-        '/user-status'
+        '/user-status',
+        '/booking-status',
     ];
 }

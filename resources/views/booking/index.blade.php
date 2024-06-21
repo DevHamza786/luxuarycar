@@ -124,37 +124,39 @@
                     .id; // Assuming 'id' is the column name for booking ID
                 console.log('Selected driver ID:', selectedDriverId);
                 console.log('Booking ID:', bookingId);
-                $.ajax({
-                    url: '{{ route('assgin-driver') }}',
-                    type: 'POST',
-                    data: {
-                        booking_id: bookingId,
-                        driver_id: selectedDriverId
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            toastr.success(response.message);
-                            // Reload the page after a short delay
-                            setTimeout(function() {
-                                location.reload();
-                            }, 2000); // 2 seconds delay
-                        } else {
-                            toastr.error(response.message);
+                if(selectedDriverId){
+                    $.ajax({
+                        url: '{{ route('assgin-driver') }}',
+                        type: 'POST',
+                        data: {
+                            booking_id: bookingId,
+                            driver_id: selectedDriverId
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                toastr.success(response.message);
+                                // Reload the page after a short delay
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 2000); // 2 seconds delay
+                            } else {
+                                toastr.error(response.message);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            if (response.success) {
+                                toastr.success(response.message);
+                                // Reload the page after a short delay
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 2000); // 2 seconds delay
+                            } else {
+                                toastr.error(response.message);
+                            }
+                            console.error(error);
                         }
-                    },
-                    error: function(xhr, status, error) {
-                        if (response.success) {
-                            toastr.success(response.message);
-                            // Reload the page after a short delay
-                            setTimeout(function() {
-                                location.reload();
-                            }, 2000); // 2 seconds delay
-                        } else {
-                            toastr.error(response.message);
-                        }
-                        console.error(error);
-                    }
-                });
+                    });
+                }
             });
         });
     </script>

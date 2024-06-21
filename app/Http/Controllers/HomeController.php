@@ -33,6 +33,8 @@ class HomeController extends Controller
                 'dropoff_latitude' => $request->dropoff_latitude,
                 'dropoff_longitude' => $request->dropoff_longitude,
                 'passenger' => $request->no_pessenger,
+                'fare_time' => $request->fare_time,
+                'distance' => $request->distance,
                 'status' => 'awaiting for driver',
             ]);
 
@@ -44,7 +46,7 @@ class HomeController extends Controller
         } else {
             // User does not exist, create new user and booking
             $user = User::create([
-                'name' => $request->fname,
+                'name' => $request->fname.' '.$request->lname,
                 'email' => $request->email,
                 'password' => Hash::make($request->email),
                 'status' => 'active'
@@ -66,6 +68,8 @@ class HomeController extends Controller
                     'dropoff_latitude' => $request->dropoff_latitude,
                     'dropoff_longitude' => $request->dropoff_longitude,
                     'passenger' => $request->no_pessenger,
+                    'fare_time' => $request->fare_time,
+                    'distance' => $request->distance,
                     'status' => 'awaiting for driver',
                 ]);
 

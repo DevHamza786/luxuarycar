@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     // Booking
     Route::get('/bookings', [BookingController::class, 'index'])->name('bookings')->middleware('check.driver.profile.setup');
     Route::get('/map/{id}', [BookingController::class, 'showMap'])->name('map.show')->middleware('check.driver.profile.setup');
+    Route::post('/booking-status', [BookingController::class, 'ridestatus'])->name('booking-status');
     Route::post('/assgin-driver', [BookingController::class, 'assginDriver'])->name('assgin-driver');
     Route::delete('/dashboard/booking/{id}', [BookingController::class, 'softDelete'])->name('booking.softdelete');
 

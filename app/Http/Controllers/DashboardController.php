@@ -15,7 +15,16 @@ class DashboardController extends Controller
         $pagePrefix = 'home';
         $user = Auth::user();
 
-        return view('dashboard', compact('pagePrefix'));
+        if ($user->hasRole('customer')) {
+            $booking = Booking::where('user_id',Auth::id())->get();
+        }elseif ($user->hasRole('driver')) {
+            $booking = Booking::where('driver',Auth::id())->get();
+        }
+        else{
+            $booking = Booking::get();
+        }
+
+        return view('dashboard', compact('pagePrefix','booking'));
     }
 
     public function dashboardBooking()

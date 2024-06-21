@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use GuzzleHttp\Client;
 use App\Models\Booking;
+use App\Models\PaymentSetting;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
@@ -63,28 +64,32 @@ class BookingController extends Controller
             })
             ->editColumn('driver', function ($row) {
                 if (Auth::user()->hasRole('admin')) {
-                    // Render dropdown list for admin to select driver
-                    $drivers = User::role('driver')
-                        ->whereHas('driverData', function ($query) use ($row) {
-                            // Filter by car category
-                            $query->where('category', $row->car_category)
-                                ->where('pessenger', $row->passenger);
-                        })
-                        ->where(function ($query) {
-                            // Filter by status (complete or active)
-                            $query->where('status', 'complete')
-                                ->orWhere('status', 'active');
-                        })
-                        ->pluck('name', 'id')
-                        ->toArray();
-                    $dropdown = '<select class="form-control fs-8 driver-select">';
-                    $dropdown .= '<option value="">Select Driver</option>';
-                    foreach ($drivers as $id => $name) {
-                        $selected = $row->driver == $id ? 'selected' : '';
-                        $dropdown .= '<option value="' . $id . '" ' . $selected . '>' . $name . '</option>';
+                    if($row->status != 'Ride Accepted' && $row->driver != null){
+                        // Render dropdown list for admin to select driver
+                        $drivers = User::role('driver')
+                            ->whereHas('driverData', function ($query) use ($row) {
+                                // Filter by car category
+                                $query->where('category', $row->car_category)
+                                    ->where('pessenger', $row->passenger);
+                            })
+                            ->where(function ($query) {
+                                // Filter by status (complete or active)
+                                $query->where('status', 'complete')
+                                    ->orWhere('status', 'active');
+                            })
+                            ->pluck('name', 'id')
+                            ->toArray();
+                        $dropdown = '<select class="form-control fs-8 driver-select">';
+                        $dropdown .= '<option value="">Select Driver</option>';
+                        foreach ($drivers as $id => $name) {
+                            $selected = $row->driver == $id ? 'selected' : '';
+                            $dropdown .= '<option value="' . $id . '" ' . $selected . '>' . $name . '</option>';
+                        }
+                        $dropdown .= '</select>';
+                        return $dropdown;
+                    }else{
+                        return isset($row->driver) ? $row->driverData->name : 'N/A';
                     }
-                    $dropdown .= '</select>';
-                    return $dropdown;
                 } else {
                     return isset($row->driver) ? $row->driverData->name : 'N/A';
                 }
@@ -125,14 +130,28 @@ class BookingController extends Controller
         }
     }
 
+    public function ridestatus(Request $request)
+    {
+        try {
+            $booking = Booking::findOrFail($request->booking_id);
+            $booking->status = $request->status;
+            $booking->save();
+
+            return response()->json(['success' => true, 'message' => 'Ride Accepted']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => false, 'message' => 'Failed to accepted ride']);
+        }
+    }
+
     public function showMap($id)
     {
         $pagePrefix = 'booking';
         $booking = Booking::find($id);
+        $estimatedPrice = PaymentSetting::where('mode',$booking->mode)->where('car_category', $booking->car_category)->where('no_pessenger' , $booking->passenger)->first();
         $pickupLocation = ['lat' => $booking->pickup_latitude, 'lng' => $booking->pickup_longitude];
         $dropoffLocation = ['lat' => $booking->dropoff_latitude, 'lng' => $booking->dropoff_longitude];
 
-        return view('booking.map', compact('pickupLocation', 'dropoffLocation', 'pagePrefix'));
+        return view('booking.map', compact('pickupLocation', 'dropoffLocation','booking','estimatedPrice','pagePrefix'));
     }
 
     public function softDelete($id)

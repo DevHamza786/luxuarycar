@@ -8,20 +8,42 @@
             <div id="kt_content_container" class="container-xxl">
                 <!--begin::Row-->
                 <div class="row g-5 g-xl-8">
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
+                        <!--begin: Statistics Widget 6-->
+                        <div class="card bg-dark card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body my-3">
+                                <a href="#" class="card-title fw-bold text-white fs-5 mb-3 d-block">
+                                    Total Bookings </a>
+
+                                <div class="py-1">
+                                    <span class="text-white fs-1 fw-bold me-2">{{ $booking->count() }}</span>
+                                </div>
+
+                                <div class="progress h-7px bg-white bg-opacity-50 mt-7">
+                                    <div class="progress-bar bg-white" role="progressbar" style="width: {{ ($booking->count()) }}%"
+                                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <!--end:: Body-->
+                        </div>
+                        <!--end: Statistics Widget 6-->
+                    </div>
+
+                    <div class="col-xl-3">
                         <!--begin: Statistics Widget 6-->
                         <div class="card bg-light-success card-xl-stretch mb-xl-8">
                             <!--begin::Body-->
                             <div class="card-body my-3">
                                 <a href="#" class="card-title fw-bold text-success fs-5 mb-3 d-block">
-                                    Complete Rides </a>
+                                    Complete Bookings </a>
 
                                 <div class="py-1">
-                                    <span class="text-gray-900 fs-1 fw-bold me-2">50%</span>
+                                    <span class="text-gray-900 fs-1 fw-bold me-2">{{ $booking->where('status','complete')->count() }}</span>
                                 </div>
 
                                 <div class="progress h-7px bg-success bg-opacity-50 mt-7">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 50%"
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ ($booking->where('status','complete')->count()/$booking->count())*100 }}%"
                                         aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
@@ -30,20 +52,20 @@
                         <!--end: Statistics Widget 6-->
                     </div>
 
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <!--begin: Statistics Widget 6-->
                         <div class="card bg-light-warning card-xl-stretch mb-xl-8">
                             <!--begin::Body-->
                             <div class="card-body my-3">
                                 <a href="#" class="card-title fw-bold text-warning fs-5 mb-3 d-block">
-                                    Pending Rides </a>
+                                    New Bookings </a>
 
                                 <div class="py-1">
-                                    <span class="text-gray-900 fs-1 fw-bold me-2">15%</span>
+                                    <span class="text-gray-900 fs-1 fw-bold me-2">{{ $booking->where('status','awaiting for driver')->count() }}</span>
                                 </div>
 
                                 <div class="progress h-7px bg-warning bg-opacity-50 mt-7">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 15%"
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{ ($booking->where('status','awaiting for driver')->count()/$booking->count())*100 }}%"
                                         aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
@@ -52,20 +74,20 @@
                         <!--end: Statistics Widget 6-->
                     </div>
 
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <!--begin: Statistics Widget 6-->
                         <div class="card bg-light-primary card-xl-stretch mb-5 mb-xl-8">
                             <!--begin::Body-->
                             <div class="card-body my-3">
                                 <a href="#" class="card-title fw-bold text-primary fs-5 mb-3 d-block">
-                                    New Rides </a>
+                                    Assigned Bookings </a>
 
                                 <div class="py-1">
-                                    <span class="text-gray-900 fs-1 fw-bold me-2">76%</span>
+                                    <span class="text-gray-900 fs-1 fw-bold me-2">{{ $booking->where('status','Driver Assigned')->count() }}</span>
                                 </div>
 
                                 <div class="progress h-7px bg-primary bg-opacity-50 mt-7">
-                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 76%"
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: {{ ($booking->where('status','Driver Assigned')->count()/$booking->count())*100 }}%"
                                         aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>

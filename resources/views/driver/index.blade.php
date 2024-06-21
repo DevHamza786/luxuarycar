@@ -144,18 +144,25 @@
                 columnDefs: [{
                     targets: 6, // Target the 6th column (0-based index)
                     render: function(data, type, full, meta) {
-                        // Define options for the status dropdown
-                        var options = ['Incomplete', 'Complete', 'Inactive', 'Active'];
-                        // Construct the dropdown with options
-                        var select = '<select class="form-control">';
-                        options.forEach(function(option) {
-                            var selected = (full.status === option) ? 'selected' : '';
-                            select += '<option value="' + option + '" ' + selected +
-                                '>' + option + '</option>';
-                        });
-                        select += '</select>';
-                        // Return the dropdown
-                        return select;
+                        // Check the bookingCount
+                        if (full.bookingCount > 0) {
+                            // Return simple status text if bookingCount is greater than 0
+                            return full.status;
+                        } else {
+                            // Define options for the status dropdown
+                            var options = ['Incomplete', 'Complete', 'Inactive', 'Active'];
+                            // Construct the dropdown with options
+                            var select = '<select class="form-control">';
+                            options.forEach(function(option) {
+                                var selected = (full.status === option) ? 'selected' :
+                                    '';
+                                select += '<option value="' + option + '" ' + selected +
+                                    '>' + option + '</option>';
+                            });
+                            select += '</select>';
+                            // Return the dropdown
+                            return select;
+                        }
                     }
                 }]
             });

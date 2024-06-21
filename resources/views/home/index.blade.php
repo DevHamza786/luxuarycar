@@ -74,9 +74,9 @@
                             <input type="hidden" id="mode" name="mode" value="" />
                             <div class="row">
                                 <div class="row-wrap col-md-10">
-                                    <div class="row">
+                                    <div class="row mb-4">
 
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="col-md-4 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">Date</h4>
                                                 <input type="date" placeholder="20/Feb/2024" name="date"
@@ -84,7 +84,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="col-md-4 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">Pick Up Time</h4>
                                                 <div class="position-relative">
@@ -93,7 +93,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="col-md-4 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">First Name</h4>
                                                 <input type="text" name="fname" placeholder="Enter your name"
@@ -101,28 +101,25 @@
                                                     required>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-md-4 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">Last Name</h4>
                                                 <input type="text" name="lname" placeholder="Enter your name"
-                                                    value=""
-                                                    required>
-                                                    {{-- {{ Auth::check() && Auth::user()->hasrole('customer') ? Auth::user()->name : '' }} --}}
+                                                    value="">
+                                                {{-- {{ Auth::check() && Auth::user()->hasrole('customer') ? Auth::user()->name : '' }} --}}
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="col-md-4 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">Email</h4>
                                                 <input type="email" name="email" placeholder="Enter your email"
                                                     value="{{ Auth::check() && Auth::user()->hasrole('customer') ? Auth::user()->email : '' }}"
                                                     required>
                                             </div>
-
                                         </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="col-md-4 col-sm-12 col-xs-12">
                                             <h4 class="input_title text-white">Car Category</h4>
                                             <select class="form-control" name="car_category" required>
                                                 <option value="">Please Select Car Category</option>
@@ -131,7 +128,9 @@
                                                 <option value="SUV Luxury">SUV Luxury</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12 col-xs-12">
                                             <h4 class="input_title text-white">No. of Pessenger</h4>
                                             <select class="form-control" name="no_pessenger" required>
                                                 <option value="">Please Select No. of Pessenger</option>
@@ -140,7 +139,7 @@
                                                 <option value="6">6</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="col-md-4 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">Pick Up Address</h4>
                                                 <div class="position-relative">
@@ -165,7 +164,7 @@
                                                 class="form-control" value="">
                                         </div>
 
-                                        <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="col-md-4 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">Drop Off Address</h4>
                                                 <div class="position-relative">
@@ -188,6 +187,8 @@
                                             <label>Longitude</label>
                                             <input type="text" name="dropoff_longitude" id="dropoff_longitude"
                                                 class="form-control" required>
+                                            <input type="hidden" name="fare_time" id="fare_time" />
+                                            <input type="hidden" name="distance" id="distance" />
                                         </div>
 
                                     </div>
@@ -195,7 +196,7 @@
 
 
                                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 text-right">
-                                    <button type="submit" class="custom_btn bg_default_red text-uppercase">Reserve
+                                    <button type="submit" id="reserve_now" class="custom_btn bg_default_red text-uppercase">Reserve
                                         Now <img src="{{ asset('home/assets/images/icons/icon_01.png') }}"
                                             alt="icon_not_found"></button>
                                 </div>
@@ -214,7 +215,8 @@
                     <h2 class="main_heading">What We Provide Is the Luxury Transport and Most Comfortable Experience</h2>
                 </div>
                 <div class="col-md-6">
-                    <p style="text-align: justify !important;">Offering luxurious transportation and ensuring the utmost comfort for our clients is our priority.
+                    <p style="text-align: justify !important;">Offering luxurious transportation and ensuring the utmost
+                        comfort for our clients is our priority.
                         Whether it's a chauffeured limousine service, a private jet charter, or a VIP travel experience, we
                         go above and beyond to provide unparalleled luxury and convenience. Our vehicles are meticulously
                         maintained, our staff is highly trained, and our services are tailored to exceed expectations. From
@@ -374,7 +376,8 @@
                     <div class="right-counter_sec">
                         <h5 class="sub-heading">Only the best</h5>
                         <h2 class="main_heading">We Provide Best</h2>
-                        <p style="text-align: justify !important;">Absolutely, providing only the best is our top priority. From our meticulously maintained fleet
+                        <p style="text-align: justify !important;">Absolutely, providing only the best is our top priority.
+                            From our meticulously maintained fleet
                             of luxury vehicles to our professional chauffeurs and personalized service, we are dedicated to
                             delivering excellence in every aspect of your experience. Our commitment to quality extends to
                             every detail, ensuring that your journey is not just satisfactory, but truly exceptional.</p>
@@ -575,6 +578,7 @@
                 var place = dropoffautocomplete.getPlace();
                 $('#dropoff_latitude').val(place.geometry['location'].lat());
                 $('#dropoff_longitude').val(place.geometry['location'].lng());
+                calculateDistanceAndTime();
             });
 
         }
@@ -638,6 +642,48 @@
                 }
             });
         });
+
+        function calculateDistanceAndTime() {
+            // console.log('hamza');
+            var pickupLat = parseFloat(document.getElementById('pickup_latitude').value);
+            var pickupLng = parseFloat(document.getElementById('pickup_longitude').value);
+            var dropoffLat = parseFloat(document.getElementById('dropoff_latitude').value);
+            var dropoffLng = parseFloat(document.getElementById('dropoff_longitude').value);
+
+            // console.log(pickupLat,pickupLng,dropoffLat,dropoffLng);
+            if (isNaN(pickupLat) || isNaN(pickupLng) || isNaN(dropoffLat) || isNaN(dropoffLng)) {
+                alert('Please select valid pickup and dropoff locations');
+                return;
+            }
+
+            var origin = new google.maps.LatLng(pickupLat, pickupLng);
+            var destination = new google.maps.LatLng(dropoffLat, dropoffLng);
+            // console.log(origin)
+            // console.log(destination)
+
+            var service = new google.maps.DistanceMatrixService();
+            service.getDistanceMatrix({
+                origins: [origin],
+                destinations: [destination],
+                travelMode: google.maps.TravelMode.DRIVING,
+                unitSystem: google.maps.UnitSystem.IMPERIAL, // for miles
+            }, function(response, status) {
+                // console.log(status);
+                // console.log(response);
+                if (status === 'OK') {
+                    var result = response.rows[0].elements[0];
+                    var distance = result.distance.text; // distance in miles
+                    var duration = result.duration.text; // duration in time
+
+                    // Update hidden input fields
+                    $('#distance').val(distance);
+                    $('#fare_time').val(duration);
+
+                } else {
+                    alert('Distance Matrix request failed due to ' + status);
+                }
+            });
+        }
 
         // Get the input field
         var dateInput = document.getElementById('date');
