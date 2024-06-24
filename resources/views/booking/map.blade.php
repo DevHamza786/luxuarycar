@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+    <meta name="fetch-latest-data-url" content="{{ route('fetchLatestData', ['id' => ':id']) }}">
     <style>
         /* Set the size of the map */
         #map {
@@ -35,6 +36,32 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
+        /* Loader CSS */
+        #loader {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 4px solid rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
     <!--begin::Content-->
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -42,6 +69,7 @@
         <div class="post d-flex flex-column-fluid" id="kt_post">
             <!--begin::Container-->
             <div id="kt_content_container" class="container-xxl">
+                <div id="loader" style="display: none;">Loading...</div>
                 <div id="map"></div>
                 <div id="info"></div>
                 <div class="status">
@@ -58,7 +86,7 @@
                         <span style="font-weight: bold;" class="text-success">Stauts: </span> {{ $booking->status }}
                     @endif
                 </div>
-                @if ($booking->status == 'Ride Accepted')
+                @if ($booking->status != 'awaiting for driver' || $booking->status != 'Driver Assigned')
                     <div id="driverinfo"></div>
                     <div class="driver_info">
                         @php
@@ -88,12 +116,14 @@
                         </div>
                     </div>
                 @endif
-                <div id="directions-panel"></div>
                 @if (auth()->user()->hasrole('driver'))
-                    @if ($booking->status != 'Ride Accepted')
+                    @if ($booking->status == 'awaiting for driver' || $booking->status == 'Driver Assigned')
                         <button id="startridebtn" class="btn btn-primary btn-sm mt-2">Accept</button>
                     @endif
-                    <button id="start_Ride" class="btn btn-success btn-sm mt-2" style="display: none;">Start</button>
+                    <button id="start_Ride" class="btn btn-success btn-sm mt-2" style="display: none;">Start Ride</button>
+                @endif
+                @if ($booking->status == 'Ride Start')
+                    <button id="end_Ride" class="btn btn-danger btn-sm mt-2">End Ride</button>
                 @endif
             </div>
             <!--end::Container-->
@@ -111,8 +141,6 @@
         var pointA;
         var markerA;
         var markerB;
-        var intervalId;
-        var userMarker;
         var driverMarker;
         var directionsDisplay;
         var previousDriverLocation;
@@ -159,7 +187,8 @@
 
             // Check booking status and decide to start navigation or display route
             if (bookingStatus === 'Ride Accepted') {
-                watchDriverLocation(pointA);
+                // watchDriverLocation(pointA);
+                startNavigation(pointA);
             } else {
                 // get route from A to B
                 calculateAndDisplayRoute(pointA, pointB);
@@ -174,6 +203,9 @@
                 var pathname = window.location.pathname;
                 var segments = pathname.split('/');
                 var id = segments[segments.length - 1];
+
+                $('#loader').show();
+
                 $.ajax({
                     url: '{{ route('booking-status') }}',
                     type: 'POST',
@@ -185,35 +217,70 @@
                         if (response.success) {
                             startNavigation(pointA);
                             toastr.success(response.message);
-                            // Reload the page after a short delay
-                            setTimeout(function() {
-                                location.reload();
-                            }, 2000); // 2 seconds delay
+                            $('#startridebtn').hide();
+                            $('#start_Ride').show();
+                            fetchLatestData();
                         } else {
                             toastr.error(response.message);
                         }
                     },
                     error: function(response) {
-                        if (response.error) {
-                            toastr.success(response.message);
-                            // Reload the page after a short delay
-                            setTimeout(function() {
-                                location.reload();
-                            }, 2000); // 2 seconds delay
-                        } else {
-                            toastr.error(response.message);
-                        }
-                        console.error(response.error);
+                        toastr.error(response.message);
+                    },
+                    complete: function() {
+                        // Hide the loader
+                        $('#loader').hide();
                     }
                 });
             });
+        }
+
+        function startNavigation(destination) {
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(function(position) {
+                    const driverLocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    // Create or update driver marker with arrow icon
+                    if (!driverMarker) {
+                        driverMarker = new google.maps.Marker({
+                            position: driverLocation,
+                            map: map,
+                            icon: {
+                                url: "{{ asset('assets/car.png') }}",
+                                scaledSize: new google.maps.Size(40, 40),
+                                rotation: getBearing(previousDriverLocation, driverLocation)
+                            }
+                        });
+                    } else {
+                        driverMarker.setPosition(driverLocation);
+                        driverMarker.setIcon({
+                            url: "{{ asset('assets/car.png') }}",
+                            scaledSize: new google.maps.Size(40, 40),
+                            rotation: getBearing(previousDriverLocation, driverLocation)
+                        });
+                    }
+
+                    // Calculate and display route
+                    calculateAndDisplayRoute(driverLocation, destination);
+
+                    // Update the previous location to the current location for the next iteration
+                    previousDriverLocation = driverLocation;
+                }, function(error) {
+                    console.log('Error getting driver location:', error);
+                });
+            } else {
+                console.log('Geolocation is not supported by this browser.');
+            }
         }
 
         function watchDriverLocation(destination) {
             if (navigator.geolocation) {
                 watchId = navigator.geolocation.watchPosition(function(position) {
                     var driverLocation = new google.maps.LatLng(position.coords.latitude, position.coords
-                    .longitude);
+                        .longitude);
 
                     // Create or update driver marker with car icon
                     if (!driverMarker) {
@@ -231,9 +298,8 @@
 
                     // Check if driver location and pickup location are close enough
                     var distance = google.maps.geometry.spherical.computeDistanceBetween(driverLocation,
-                    destination);
-                    console.log(distance);
-                    var thresholdDistance = 50; // Adjust as needed
+                        destination);
+                    var thresholdDistance = 5000;
                     if (distance <= thresholdDistance) {
                         document.getElementById('start_Ride').style.display = 'block';
                     } else {
@@ -243,41 +309,6 @@
                     // Update map center and bounds
                     map.setCenter(driverLocation);
                     map.panTo(driverLocation);
-
-                    // Update the previous location to the current location for the next iteration
-                    previousDriverLocation = driverLocation;
-                }, function(error) {
-                    console.log('Error getting driver location:', error);
-                });
-            } else {
-                console.log('Geolocation is not supported by this browser.');
-            }
-        }
-
-
-        function startNavigation(destination) {
-            if (navigator.geolocation) {
-                navigator.geolocation.watchPosition(function(position) {
-                    var driverLocation = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
-
-                    // Create or update driver marker with arrow icon
-                    if (!driverMarker) {
-                        driverMarker = new google.maps.Marker({
-                            position: driverLocation,
-                            map: map,
-                            icon: "{{ asset('assets/car.png') }}",
-                            scaledSize: new google.maps.Size(40, 40)
-                        });
-                    } else {
-                        driverMarker.setPosition(driverLocation);
-                    }
-
-                    // Calculate and display route
-                    calculateAndDisplayRoute(driverLocation, destination);
-                    updateMap(driverLocation, destination);
 
                     // Update the previous location to the current location for the next iteration
                     previousDriverLocation = driverLocation;
@@ -305,28 +336,9 @@
                 if (status == google.maps.DirectionsStatus.OK) {
                     directionsDisplay.setDirections(response);
                     updateInfo(response);
-                    // showRouteDetails(response);
                 } else {
                     alert('Directions request failed due to ' + status);
                 }
-            });
-        }
-
-        function updateMap(driverLocation, destination) {
-            var distance = google.maps.geometry.spherical.computeDistanceBetween(driverLocation, destination);
-            var thresholdDistance = 50;
-            if (distance <= thresholdDistance) {
-                directionsDisplay.setMap(null);
-                $('#start_Ride').show();
-            } else {
-                $('#start_Ride').hide();
-            }
-
-            var heading = google.maps.geometry.spherical.computeHeading(previousDriverLocation, driverLocation);
-            var tilt = calculateTilt(previousDriverLocation, driverLocation);
-            map.setOptions({
-                heading: heading,
-                tilt: tilt
             });
         }
 
@@ -356,48 +368,72 @@
             document.getElementById('info').innerHTML = infoContent;
         }
 
-        function calculateTilt(driverLocation, newDriverLocation) {
-            return 45; // Default tilt angle (degrees)
-        }
-
-
-        function showRouteDetails(directionsResult) {
-            var route = directionsResult.routes[0];
-            var summaryPanel = document.getElementById('directions-panel');
-            summaryPanel.innerHTML = '';
-
-            // For each step, display the instructions and distance
-            for (var i = 0; i < route.legs[0].steps.length; i++) {
-                var step = route.legs[0].steps[i];
-                summaryPanel.innerHTML += '<b>Step ' + (i + 1) + ':</b> ';
-                summaryPanel.innerHTML += step.instructions + '<br>';
-                summaryPanel.innerHTML += step.distance.text + '<br><br>';
-            }
-        }
-
-        function updateMapCenter(driverLocation) {
-
-            driverMarker.setPosition(driverLocation);
-
-            // Update map center to driver's location
-            map.setCenter(driverLocation);
-        }
-
-        // Function to start the ride
         function startRide() {
-            // Clear the watch position
-            if (watchId) {
-                navigator.geolocation.clearWatch(watchId);
-            }
+
+            // Define pickup and dropoff locations
+            var pickupLocation = new google.maps.LatLng({{ $pickupLocation['lat'] }}, {{ $pickupLocation['lng'] }});
+            var dropoffLocation = new google.maps.LatLng({{ $dropoffLocation['lat'] }}, {{ $dropoffLocation['lng'] }});
 
             // Start navigation from pickup to dropoff location
             calculateAndDisplayRoute(pickupLocation, dropoffLocation);
 
+            // Extract the booking ID from the URL
+            var pathname = window.location.pathname;
+            var segments = pathname.split('/');
+            var id = segments[segments.length - 1];
+
+            // Send AJAX request to update booking status
+            $.ajax({
+                url: '{{ route('booking-status') }}',
+                type: 'POST',
+                data: {
+                    booking_id: id,
+                    status: 'Ride Start'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Update driver marker position to the initial pointA
+                        var pointA = pickupLocation; // Assuming pointA is the same as pickupLocation
+                        if (driverMarker) {
+                            driverMarker.setPosition(pointA);
+                        } else {
+                            // Create a new marker if it doesn't exist
+                            driverMarker = new google.maps.Marker({
+                                position: pointA,
+                                map: map,
+                                title: 'Driver Location'
+                            });
+                        }
+                        $('#start_Ride').hide();
+                        $('#end_Ride').show();
+                        fetchLatestData();
+
+                        // Center the map on the initial driver location
+                        map.setCenter(pointA);
+                        map.panTo(pointA);
+
+                        startNavigation(pointA);
+                        toastr.success(response.message);
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function(response) {
+                    if (response.error) {
+                        toastr.success(response.message);
+                    } else {
+                        toastr.error(response.message);
+                    }
+                    console.log(response.error);
+                }
+            });
+
             // Update the driver's position as they move
             if (navigator.geolocation) {
-                navigator.geolocation.watchPosition(function(position) {
+                watchId = navigator.geolocation.watchPosition(function(position) {
                     var driverLocation = new google.maps.LatLng(position.coords.latitude, position.coords
                         .longitude);
+                    console.log(driverLocation);
 
                     // Update the driver marker position
                     if (driverMarker) {
@@ -416,13 +452,106 @@
             }
         }
 
-        // Function to end the ride
-        function endRide() {
-            // Calculate ride price
-            var price = calculateRidePrice();
-            // Display ride price
-            alert('Ride price: ' + price);
+        function getBearing(startLocation, endLocation) {
+            if (!startLocation || !endLocation) return 0;
+
+            const lat1 = startLocation.lat * Math.PI / 180;
+            const lng1 = startLocation.lng * Math.PI / 180;
+            const lat2 = endLocation.lat * Math.PI / 180;
+            const lng2 = endLocation.lng * Math.PI / 180;
+
+            const dLng = lng2 - lng1;
+
+            const y = Math.sin(dLng) * Math.cos(lat2);
+            const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLng);
+
+            const brng = Math.atan2(y, x) * 180 / Math.PI;
+
+            return (brng + 360) % 360;
         }
+
+        function fetchLatestData() {
+            var pathname = window.location.pathname;
+            var segments = pathname.split('/');
+            var id = segments[segments.length - 1];
+
+            // Get the URL from the meta tag
+            var urlTemplate = document.querySelector('meta[name="fetch-latest-data-url"]').getAttribute('content');
+            var url = urlTemplate.replace(':id', id);
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(response) {
+                    // Update the status and driver info with the latest data
+                    updateStatusAndDriverInfo(response);
+                },
+                error: function(error) {
+                    console.error('Error fetching latest data:', error);
+                }
+            });
+        }
+
+
+        function updateStatusAndDriverInfo(data) {
+            $('.status').html(`
+                <span style="font-weight: bold;" class="text-warning">Estimated Price: </span> $${data.price}
+                <span style="font-weight: bold;" class="text-success">Status: </span> ${data.status}
+            `);
+
+            if (data.status !== 'awaiting for driver' && data.status !== 'Driver Assigned') {
+                // Construct the full URL for the image using asset() function
+                var imageUrl = '{{ asset(':imagePath') }}';
+                imageUrl = imageUrl.replace(':imagePath', data.driver.car_image);
+
+                $('.driver_info').html(`
+            <div class="row">
+                <div class="col-sm-3">
+                    <span style="font-weight: bold;" class="text-primary">Car Image: </span><br>
+                    <img src="${imageUrl}" alt="Car Image" width="200" height="200" style="padding: 10px">
+                </div>
+                <div class="col-sm-3">
+                    <span style="font-weight: bold;" class="text-primary">Driver Name: </span><br>${data.driver.name}
+                </div>
+                <div class="col-sm-3">
+                    <span style="font-weight: bold;" class="text-primary">Driver Number: </span><br>${data.driver.phone}
+                </div>
+                <div class="col-sm-3">
+                    <span style="font-weight: bold;" class="text-primary">Car Number: </span><br>${data.driver.car_number}
+                </div>
+            </div>
+        `);
+            }
+        }
+
+        $('#end_Ride').on('click', function() {
+            var pathname = window.location.pathname;
+            var segments = pathname.split('/');
+            var id = segments[segments.length - 1];
+
+            $.ajax({
+                url: '{{ route('booking.end') }}', // Create this route in your web.php
+                type: 'POST',
+                data: {
+                    booking_id: id,
+                    status: 'Ride Ended'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Redirect to the payment page
+                        window.location.href = '{{ route('booking.payment') }}?booking_id=' +
+                        id; // Create this route in your web.php
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function(error) {
+                    toastr.error('Error ending ride.');
+                    console.log('Error ending ride:', error);
+                }
+            });
+        });
+
 
         initMap();
     </script>

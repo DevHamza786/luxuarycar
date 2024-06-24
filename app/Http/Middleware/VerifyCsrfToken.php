@@ -18,5 +18,6 @@ class VerifyCsrfToken extends Middleware
         '/driver-status',
         '/user-status',
         '/booking-status',
+        '/booking/end'
     ];
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Omnipay\Omnipay;
+use App\Models\Booking;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 
@@ -28,11 +29,19 @@ class PaymentController extends Controller
 
     public function charge(Request $request)
     {
+        $expiryYear = '';
+        $expiryMonth = '';
+
+        if($request->input('expiry_month')){
+            $expiryMonth = $request->input('expiry_month');
+            list($expiryYear, $expiryMonth) = explode('-', $expiryMonth);
+        }
+
         try {
             $creditCard = new \Omnipay\Common\CreditCard([
                 'number' => $request->input('cc_number'),
-                'expiryMonth' => $request->input('expiry_month'),
-                'expiryYear' => $request->input('expiry_year'),
+                'expiryMonth' => $expiryMonth,
+                'expiryYear' => $expiryYear,
                 'cvv' => $request->input('cvv'),
             ]);
 
@@ -67,19 +76,24 @@ class PaymentController extends Controller
                 {
                     $payment = new Payment;
                     $payment->transaction_id = $transaction_id;
+                    $payment->booking_id = $request->bookingID;
                     $payment->amount = $request->input('amount');
                     $payment->currency = 'USD';
                     $payment->payment_status = 'Captured';
                     $payment->save();
+
+                    $booking = Booking::findOrFail($request->bookingID);
+                    $booking->status = 'Paid';
+                    $booking->save();
                 }
 
-                return "Payment is successful. Your transaction id is: ". $transaction_id;
+                return redirect()->route('bookings')->with('success', 'Payment is successful. Your transaction id is: ' . $transaction_id);
             } else {
                 // not successful
-                return $response->getMessage();
+                return redirect()->back()->with('error', $response->getMessage());
             }
-        } catch(Exception $e) {
-            return $e->getMessage();
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 }

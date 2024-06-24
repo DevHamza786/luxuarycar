@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use GuzzleHttp\Client;
 use App\Models\Booking;
-use App\Models\PaymentSetting;
 use Illuminate\Http\Request;
+use App\Models\PaymentSetting;
+use App\Mail\BookingPaymentMail;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
@@ -50,7 +52,7 @@ class BookingController extends Controller
                     ->orWhere('drop_location', 'like', '%' . $searchValue . '%')
                     ->orWhereHas('userData', function ($subQuery) use ($searchValue) {
                         $subQuery->where('name', 'like', '%' . $searchValue . '%')
-                                ->orwhere('email', 'like', '%' . $searchValue . '%');
+                            ->orwhere('email', 'like', '%' . $searchValue . '%');
                     });
             });
         }
@@ -64,7 +66,7 @@ class BookingController extends Controller
             })
             ->editColumn('driver', function ($row) {
                 if (Auth::user()->hasRole('admin')) {
-                    if($row->status != 'Ride Accepted' && $row->driver != null){
+                    if ($row->status != 'Ride Accepted' && $row->driver != null) {
                         // Render dropdown list for admin to select driver
                         $drivers = User::role('driver')
                             ->whereHas('driverData', function ($query) use ($row) {
@@ -87,7 +89,7 @@ class BookingController extends Controller
                         }
                         $dropdown .= '</select>';
                         return $dropdown;
-                    }else{
+                    } else {
                         return isset($row->driver) ? $row->driverData->name : 'N/A';
                     }
                 } else {
@@ -137,7 +139,7 @@ class BookingController extends Controller
             $booking->status = $request->status;
             $booking->save();
 
-            return response()->json(['success' => true, 'message' => 'Ride Accepted']);
+            return response()->json(['success' => true, 'message' => 'Ride Status Update Successfully']);
         } catch (\Exception $e) {
             return response()->json(['error' => false, 'message' => 'Failed to accepted ride']);
         }
@@ -147,12 +149,102 @@ class BookingController extends Controller
     {
         $pagePrefix = 'booking';
         $booking = Booking::find($id);
-        $estimatedPrice = PaymentSetting::where('mode',$booking->mode)->where('car_category', $booking->car_category)->where('no_pessenger' , $booking->passenger)->first();
+        $estimatedPrice = PaymentSetting::where('mode', $booking->mode)->where('car_category', $booking->car_category)->where('no_pessenger', $booking->passenger)->first();
         $pickupLocation = ['lat' => $booking->pickup_latitude, 'lng' => $booking->pickup_longitude];
         $dropoffLocation = ['lat' => $booking->dropoff_latitude, 'lng' => $booking->dropoff_longitude];
 
-        return view('booking.map', compact('pickupLocation', 'dropoffLocation','booking','estimatedPrice','pagePrefix'));
+        return view('booking.map', compact('pickupLocation', 'dropoffLocation', 'booking', 'estimatedPrice', 'pagePrefix'));
     }
+
+    public function fetchLatestData($id)
+    {
+        $booking = Booking::find($id);
+
+        $estimatedPrice = PaymentSetting::where('mode', $booking->mode)->where('car_category', $booking->car_category)->where('no_pessenger', $booking->passenger)->first();
+
+
+        $driverDocs = collect(json_decode($booking->driverData->driverDoc, true));
+        $carDocs = $driverDocs->where('type', 'car');
+        $firstCarDoc = $carDocs->first();
+        $imagePath = str_replace('public', 'storage', $firstCarDoc['path']);
+
+        $distance = floatval(str_replace('mi', '', $booking->distance));
+        $price = $estimatedPrice->pricepermiles * $distance;
+
+        return response()->json([
+            'status' => $booking->status,
+            'distance' => $booking->distance,
+            'price' => $price,
+            'driver' => [
+                'name' => $booking->driverData->name,
+                'phone' => $booking->driverData->phone,
+                'car_number' => $booking->driverData->driverData->register_no,
+                'car_image' => $imagePath,
+            ]
+        ]);
+    }
+
+    public function endRide(Request $request)
+    {
+        $booking = Booking::findOrFail($request->booking_id);
+        $booking->status = $request->status;
+        $booking->save();
+
+        // Send email with payment link
+        $this->sendPaymentEmail($booking);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Ride ended successfully.',
+            'booking' => $booking,
+        ]);
+    }
+
+    public function showPaymentPage(Request $request)
+    {
+        $pagePrefix = 'booking';
+        $booking = Booking::findOrFail($request->booking_id);
+
+        // Calculate estimated price with fees
+        $distance = floatval(str_replace('mi', '', $booking->distance));
+        $estimatedPrice = PaymentSetting::where('mode', $booking->mode)->where('car_category', $booking->car_category)->where('no_pessenger', $booking->passenger)->first();
+        $price = $estimatedPrice->pricepermiles * $distance;
+        $totalPrice = $price + 3.50 + 3.75;
+
+        return view('booking.payment', compact('booking', 'totalPrice', 'price', 'pagePrefix'));
+    }
+
+    protected function sendPaymentEmail($booking)
+    {
+        $distance = floatval(str_replace('mi', '', $booking->distance));
+        $estimatedPrice = PaymentSetting::where('mode', $booking->mode)->where('car_category', $booking->car_category)->where('no_pessenger', $booking->passenger)->first();
+        $price = $estimatedPrice->pricepermiles * $distance;
+        $totalPrice = $price + 3.50 + 3.75;
+
+        // Send email with payment link
+        Mail::to($booking->userData->email)->send(new BookingPaymentMail($booking, $totalPrice));
+    }
+
+    public function processPayment(Request $request, $id)
+    {
+        $booking = Booking::findOrFail($id);
+        $totalPrice = $booking->estimated_price + 3.50 + 3.75;
+
+        // Apply coupon if provided
+        if ($request->has('coupon')) {
+            $coupon = $request->coupon;
+            // Validate and apply coupon logic here
+            // For example, let's say the coupon gives a 10% discount
+            $discount = $totalPrice * 0.10;
+            $totalPrice -= $discount;
+        }
+
+        // Process payment logic here (e.g., integrate with Stripe or PayPal)
+
+        // Redirect to bookings page after successful payment
+        return redirect()->route('bookings.index')->with('success', 'Payment successful.');
+    }
+
 
     public function softDelete($id)
     {

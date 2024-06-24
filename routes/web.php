@@ -36,11 +36,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dashboard/users/{id}', [DashboardController::class, 'softDelete'])->name('users.softdelete');
 
     // Booking
+    Route::post('/booking/end', [BookingController::class, 'endRide'])->name('booking.end');
+    Route::post('/assgin-driver', [BookingController::class, 'assginDriver'])->name('assgin-driver');
+    Route::post('/booking-status', [BookingController::class, 'ridestatus'])->name('booking-status');
+    Route::get('/booking/payment', [BookingController::class, 'showPaymentPage'])->name('booking.payment');
+    Route::get('/fetch-latest-data/{id}', [BookingController::class, 'fetchLatestData'])->name('fetchLatestData');
+    Route::delete('/dashboard/booking/{id}', [BookingController::class, 'softDelete'])->name('booking.softdelete');
     Route::get('/bookings', [BookingController::class, 'index'])->name('bookings')->middleware('check.driver.profile.setup');
     Route::get('/map/{id}', [BookingController::class, 'showMap'])->name('map.show')->middleware('check.driver.profile.setup');
-    Route::post('/booking-status', [BookingController::class, 'ridestatus'])->name('booking-status');
-    Route::post('/assgin-driver', [BookingController::class, 'assginDriver'])->name('assgin-driver');
-    Route::delete('/dashboard/booking/{id}', [BookingController::class, 'softDelete'])->name('booking.softdelete');
+    Route::post('/booking/{id}/process-payment', [BookingController::class, 'processPayment'])->name('booking.processPayment');
+
 
     // Driver
     Route::get('/drivers', [DriverController::class, 'index'])->name('drivers');
