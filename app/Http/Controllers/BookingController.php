@@ -66,7 +66,7 @@ class BookingController extends Controller
             })
             ->editColumn('driver', function ($row) {
                 if (Auth::user()->hasRole('admin')) {
-                    if ($row->status != 'Ride Accepted' && $row->driver != null) {
+                    if ($row->status != 'Ride Accepted') {
                         // Render dropdown list for admin to select driver
                         $drivers = User::role('driver')
                             ->whereHas('driverData', function ($query) use ($row) {
