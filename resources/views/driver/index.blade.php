@@ -207,41 +207,53 @@
                 url: "{{ route('driver.data', ['id' => ':driverId']) }}".replace(':driverId', driverId),
                 type: 'GET',
                 success: function(response) {
+                    console.log(response);
                     var html = '';
 
-                    if (response.avatar) {
-                        html += '<img src="{{ asset('storage/') }}' + '/' + response.avatar +
+                    if (response.driver.avatar) {
+                        html += '<img src="{{ asset('storage/') }}' + '/' + response.driver.avatar +
                             '" alt="Avatar" height="200">';
                     }
 
-                    html += '<p><strong>Name:</strong> ' + response.name + '</p>';
-                    html += '<p><strong>Email:</strong> ' + response.email + '</p>';
-                    html += '<p><strong>Phone:</strong> ' + response.phone + '</p>';
-                    html += '<p><strong>Status:</strong> ' + response.status + '</p>';
+                    html += '<p><strong>Name:</strong> ' + response.driver.name + '</p>';
+                    html += '<p><strong>Email:</strong> ' + response.driver.email + '</p>';
+                    html += '<p><strong>Phone:</strong> ' + response.driver.phone + '</p>';
+                    html += '<p><strong>Status:</strong> ' + response.driver.status + '</p>';
 
-                    if (response.driver_data) {
-                        html += '<p><strong>City:</strong> ' + response.driver_data.city + '</p>';
-                        html += '<p><strong>Model:</strong> ' + response.driver_data.model + '</p>';
-                        html += '<p><strong>Register No:</strong> ' + response.driver_data.register_no +
+                    if (response.driver.driver_data) {
+                        html += '<p><strong>City:</strong> ' + response.driver.driver_data.city + '</p>';
+                        html += '<p><strong>Model:</strong> ' + response.driver.driver_data.model + '</p>';
+                        html += '<p><strong>Register No:</strong> ' + response.driver.driver_data.register_no +
                             '</p>';
-                        html += '<p><strong>Category:</strong> ' + response.driver_data.category +
+                        html += '<p><strong>Category:</strong> ' + response.driver.driver_data.category +
                             '</p>';
-                        html += '<p><strong>Passenger:</strong> ' + response.driver_data.passenger +
+                        html += '<p><strong>Passenger:</strong> ' + response.driver.driver_data.pessenger +
                             '</p>';
-                        html += '<p><strong>Active:</strong> ' + response.driver_data.active + '</p>';
+                        html += '<p><strong>Active:</strong> ' + response.driver.driver_data.active + '</p>';
+
+                        html += '<p><strong>Account Type:</strong> ' + response.bank_account.account_type + '</p>';
+                        html += '<p><strong>Routing Number:</strong> ' + response.bank_account.routing_number + '</p>';
+                        html += '<p><strong>Bank Account:</strong> ' + response.bank_account.account_number + '</p>';
+                        html += '<p><strong>Account Name:</strong> ' + response.bank_account.name_on_account + '</p>';
                     }
 
-                    if (response.driver_doc && response.driver_doc.length > 0) {
+                    if (response.driver.driver_doc && response.driver.driver_doc.length > 0) {
                         // Separate files based on type
                         var licenseDocs = [];
                         var carDocs = [];
+                        var registerCardDocs = [];
+                        var insuranceCardDocs = [];
 
 
-                        response.driver_doc.forEach(function(doc) {
+                        response.driver.driver_doc.forEach(function(doc) {
                             if (doc.type === 'license') {
                                 licenseDocs.push(doc);
-                            } else {
+                            } else if(doc.type === 'car') {
                                 carDocs.push(doc);
+                            } else if (doc.type === 'registration_card'){
+                                registerCardDocs.push(doc);
+                            }else if(doc.type === 'insurance_card'){
+                                insuranceCardDocs.push(doc);
                             }
                         });
 
@@ -254,7 +266,7 @@
                                 if (doc.path) {
                                     var imagePath = doc.path.replace('public/', '');
                                     html += '<img src="{{ asset('storage/') }}' + '/' +
-                                        imagePath + '" alt="' + doc.name + '" height="200">';
+                                        imagePath + '" alt="' + doc.name + '" height="200" width="200">';
                                 }
                                 // Add more details as needed
                             });
@@ -269,7 +281,37 @@
                                 if (doc.path) {
                                     var imagePath = doc.path.replace('public/', '');
                                     html += '<img src="{{ asset('storage/') }}' + '/' +
-                                        imagePath + '" alt="' + doc.name + '" height="200">';
+                                        imagePath + '" alt="' + doc.name + '" height="200" width="200">';
+                                }
+                                // Add more details as needed
+                            });
+                        }
+
+                        // Append register card documents
+                        if (registerCardDocs.length > 0) {
+                            html += '<h4>Register Card</h4>';
+                            registerCardDocs.forEach(function(doc) {
+                                html += '<p><strong>Name:</strong> ' + doc.name + '</p>';
+                                // Append image if available
+                                if (doc.path) {
+                                    var imagePath = doc.path.replace('public/', '');
+                                    html += '<img src="{{ asset('storage/') }}' + '/' +
+                                        imagePath + '" alt="' + doc.name + '" height="200" width="200">';
+                                }
+                                // Add more details as needed
+                            });
+                        }
+
+                        // Append insurance card documents
+                        if (insuranceCardDocs.length > 0) {
+                            html += '<h4>Insurance Card</h4>';
+                            insuranceCardDocs.forEach(function(doc) {
+                                html += '<p><strong>Name:</strong> ' + doc.name + '</p>';
+                                // Append image if available
+                                if (doc.path) {
+                                    var imagePath = doc.path.replace('public/', '');
+                                    html += '<img src="{{ asset('storage/') }}' + '/' +
+                                        imagePath + '" alt="' + doc.name + '" height="200" width="200">';
                                 }
                                 // Add more details as needed
                             });

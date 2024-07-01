@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Driver;
 use App\Models\DriveDoc;
+use App\Models\DriverBankDetail;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
@@ -100,9 +101,16 @@ class DriverController extends Controller
 
     public function getdriverData($id)
     {
+        $driverBankAccount = '';
         $driver = User::with('driverData', 'driverDoc')->findOrFail($id);
-        // dd($driver);
-        return response()->json($driver);
+        if($driver->driverData){
+            $driverID = $driver->driverData->first()->id;
+            $driverBankAccount = DriverBankDetail::where('driver_id', $driverID)->first();
+        }
+        return response()->json([
+            'driver' => $driver,
+            'bank_account' => $driverBankAccount,
+        ]);
     }
 
     public function profileSetup()
@@ -114,14 +122,14 @@ class DriverController extends Controller
         $phoneNumber = !empty($user->phone);
         $driver = Driver::where('user_id', $user->id)->first();
         $driverDoc = DriveDoc::where('user_id', $user->id)->get();
+        $driverBankAccount = DriverBankDetail::where('driver_id', $driver->id)->first();
         $profileCompletionScore = $this->calculateProfileCompletion($userStatus, $phoneNumber);
 
-        return view('driver.profile', compact('user', 'driver', 'driverDoc', 'profileCompletionScore', 'pagePrefix'));
+        return view('driver.profile', compact('user', 'driver', 'driverDoc', 'profileCompletionScore', 'pagePrefix' , 'driverBankAccount'));
     }
 
     public function profileUpdate(Request $request)
     {
-        // dd($request->toArray());
         $user = User::find($request->userid);
         $path = null;
         if ($request->hasFile('profile')) {
@@ -147,11 +155,24 @@ class DriverController extends Controller
                 'category'    => $request->get("car_category"),
                 'city'   => $request->get('Town'),
                 'pessenger'   => $request->get('pessenger'),
+                'brand'   => $request->get('brand'),
                 'active'       => 'online',
             ],
         );
 
         if ($driveMeta) {
+
+            $driverBankAccount = DriverBankDetail::updateOrCreate(
+                [
+                    'driver_id'   => $driveMeta->id,
+                ],
+                [
+                    'account_type'     => $request->get('account_type'),
+                    'routing_number' => $request->get('routing_number'),
+                    'account_number'    => $request->get("account_number"),
+                    'name_on_account'   => $request->get('name_on_account'),
+                ],
+            );
 
             if ($request->hasFile('license')) {
 
@@ -199,6 +220,54 @@ class DriverController extends Controller
                 }
             }
 
+            if ($request->hasFile('registration_card')) {
+
+                $type = 'registration_card';
+
+                DriveDoc::where('user_id', $request->userid)
+                    ->where('type', $type)
+                    ->forceDelete();
+
+                foreach ($request->registration_card as $registration_card) {
+                    $fileName = $registration_card->getClientOriginalName();
+
+                    // Store the file in the storage directory
+                    $filePath = $registration_card->storeAs('public/' . $type . 's', $fileName);
+
+
+                    DriveDoc::create([
+                        'user_id' => $request->userid,
+                        'type' => $type,
+                        'path' => $filePath,
+                        'name' => $fileName,
+                    ]);
+                }
+            }
+
+            if ($request->hasFile('insurance_card')) {
+
+                $type = 'insurance_card';
+
+                DriveDoc::where('user_id', $request->userid)
+                    ->where('type', $type)
+                    ->forceDelete();
+
+                foreach ($request->insurance_card as $insurance_card) {
+                    $fileName = $insurance_card->getClientOriginalName();
+
+                    // Store the file in the storage directory
+                    $filePath = $insurance_card->storeAs('public/' . $type . 's', $fileName);
+
+
+                    DriveDoc::create([
+                        'user_id' => $request->userid,
+                        'type' => $type,
+                        'path' => $filePath,
+                        'name' => $fileName,
+                    ]);
+                }
+            }
+
             $hasCarDoc = DriveDoc::where('user_id', $request->userid)
                 ->where('type', 'car')
                 ->exists();
@@ -207,7 +276,15 @@ class DriverController extends Controller
                 ->where('type', 'license')
                 ->exists();
 
-            if ($hasCarDoc && $hasLicenseDoc) {
+            $hasregistrationCard = DriveDoc::where('user_id', $request->userid)
+            ->where('type', 'registration_card')
+            ->exists();
+
+            $hasinsuranceCard = DriveDoc::where('user_id', $request->userid)
+            ->where('type', 'insurance_card')
+            ->exists();
+
+            if ($hasCarDoc && $hasLicenseDoc && $hasregistrationCard && $hasinsuranceCard) {
                 $user->status = 'complete';
                 $user->save();
             }

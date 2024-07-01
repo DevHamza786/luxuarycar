@@ -77,7 +77,7 @@
                                                     </span>
                                                     <!--end::Svg Icon-->
                                                     <div class="fs-2 fw-bolder" data-kt-countup="true"
-                                                        data-kt-countup-value="4500" data-kt-countup-prefix="$">0</div>
+                                                        data-kt-countup-value="0" data-kt-countup-prefix="$">0</div>
                                                 </div>
                                                 <!--end::Number-->
                                                 <!--begin::Label-->
@@ -103,7 +103,7 @@
                                                     </span>
                                                     <!--end::Svg Icon-->
                                                     <div class="fs-2 fw-bolder" data-kt-countup="true"
-                                                        data-kt-countup-value="75">0</div>
+                                                        data-kt-countup-value="0">0</div>
                                                 </div>
                                                 <!--end::Number-->
                                                 <!--begin::Label-->
@@ -269,15 +269,18 @@
                                         <select class="form-control form-control-lg" name="car_category" required>
                                             <option value="">Please Select Car Category</option>
                                             <option value="Black Luxury"
-                                                {{ isset($driver->category) && $driver->category == 'Black Luxury' ? 'selected' : '' }}>Black
+                                                {{ isset($driver->category) && $driver->category == 'Black Luxury' ? 'selected' : '' }}>
+                                                Black
                                                 Luxury
                                             </option>
                                             <option value="Ultra Luxury"
-                                                {{ isset($driver->category) && $driver->category  == 'Ultra Luxury' ? 'selected' : '' }}>Ultra
+                                                {{ isset($driver->category) && $driver->category == 'Ultra Luxury' ? 'selected' : '' }}>
+                                                Ultra
                                                 Luxury
                                             </option>
                                             <option value="SUV Luxury"
-                                                {{ isset($driver->category) && $driver->category == 'SUV Luxury' ? 'selected' : '' }}>SUV Luxury
+                                                {{ isset($driver->category) && $driver->category == 'SUV Luxury' ? 'selected' : '' }}>
+                                                SUV Luxury
                                             </option>
                                         </select>
                                     </div>
@@ -317,24 +320,26 @@
                                 <div class="row mb-6">
                                     <!--begin::Label-->
                                     <label class="col-lg-2 col-form-label fw-bold fs-6">
-                                        <span class="required">Car Register No.</span>
+                                        <span class="required">No of passengers</span>
                                     </label>
                                     <!--end::Label-->
                                     <!--begin::Col-->
-                                    <div class="col-lg-10 fv-row">
-                                        <select class="form-control form-control-lg" name="pessenger" required>
-                                            <option value="" class="muted-text">Please Select No of Pessenger
-                                            </option>
-                                            <option value="4"
-                                                {{ isset($driver->category) == '4' ? 'selected' : '' }}>4
-                                            </option>
-                                            <option value="5"
-                                                {{ isset($driver->category) == '5' ? 'selected' : '' }}>5
-                                            </option>
-                                            <option value="6"
-                                                {{ isset($driver->category) == '6' ? 'selected' : '' }}>6
-                                            </option>
-                                        </select>
+                                    <div class="col-lg-4 fv-row">
+                                        <input type="text" name="pessenger" class="form-control form-control-lg"
+                                            placeholder="Enter no of pessenger" min="4" max="22"
+                                            value="{{ isset($driver->pessenger) ? $driver->pessenger : '' }}" required />
+                                    </div>
+                                    <!--end::Col-->
+                                    <!--begin::Label-->
+                                    <label class="col-lg-2 col-form-label fw-bold fs-6">
+                                        <span class="required">Car Brand</span>
+                                    </label>
+                                    <!--end::Label-->
+                                    <!--begin::Col-->
+                                    <div class="col-lg-4 fv-row">
+                                        <input type="text" name="brand" class="form-control form-control-lg"
+                                            placeholder="Enter your car brand"
+                                            value="{{ isset($driver->brand) ? $driver->brand : '' }}" required />
                                     </div>
                                     <!--end::Col-->
                                 </div>
@@ -342,11 +347,73 @@
                                 <!--begin::Input group-->
                                 <div class="row mb-6">
                                     <!--begin::Label-->
+                                    <label class="col-lg-2 col-form-label fw-bold fs-6">
+                                        <span class="required">Account Type</span>
+                                    </label>
+                                    <!--end::Label-->
+                                    <!--begin::Col-->
+                                    <div class="col-lg-4 fv-row">
+                                        <input type="text" name="account_type" class="form-control form-control-lg"
+                                            placeholder="Enter account type"
+                                            value="{{ isset($driverBankAccount->account_type) ? $driverBankAccount->account_type : '' }}"
+                                            required />
+                                    </div>
+                                    <!--end::Col-->
+                                    <!--begin::Label-->
+                                    <label class="col-lg-2 col-form-label fw-bold fs-6">
+                                        <span class="required">Routing Number</span>
+                                    </label>
+                                    <!--end::Label-->
+                                    <!--begin::Col-->
+                                    <div class="col-lg-4 fv-row">
+                                        <input type="text" name="routing_number" class="form-control form-control-lg"
+                                            placeholder="Enter routing number"
+                                            value="{{ isset($driverBankAccount->routing_number) ? $driverBankAccount->routing_number : '' }}"
+                                            required />
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+                                <!--end::Input group-->
+
+                                <!--begin::Input group-->
+                                <div class="row mb-6">
+                                    <!--begin::Label-->
+                                    <label class="col-lg-2 col-form-label fw-bold fs-6">
+                                        <span class="required">Account Number</span>
+                                    </label>
+                                    <!--end::Label-->
+                                    <!--begin::Col-->
+                                    <div class="col-lg-4 fv-row">
+                                        <input type="text" name="account_number" class="form-control form-control-lg"
+                                            placeholder="Enter account number"
+                                            value="{{ isset($driverBankAccount->account_number) ? $driverBankAccount->account_number : '' }}"
+                                            required />
+                                    </div>
+                                    <!--end::Col-->
+                                    <!--begin::Label-->
+                                    <label class="col-lg-2 col-form-label fw-bold fs-6">
+                                        <span class="required">Name on Account</span>
+                                    </label>
+                                    <!--end::Label-->
+                                    <!--begin::Col-->
+                                    <div class="col-lg-4 fv-row">
+                                        <input type="text" name="name_on_account" class="form-control form-control-lg"
+                                            placeholder="Enter name on account"
+                                            value="{{ isset($driverBankAccount->name_on_account) ? $driverBankAccount->name_on_account : '' }}"
+                                            required />
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+                                <!--end::Input group-->
+
+                                <!--begin::Input group-->
+                                <div class="row mb-6">
+                                    <!--begin::Label-->
                                     <label class="col-lg-2 col-form-label text-lg-right">Driving License</label>
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-10">
-                                        <input class="form-control" type="file" name="license[]" required multiple />
+                                        <input class="form-control" type="file" name="license[]" multiple />
                                     </div>
                                     <!--end::Col-->
                                 </div>
@@ -358,7 +425,33 @@
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-10">
-                                        <input class="form-control" type="file" name="car[]" required multiple />
+                                        <input class="form-control" type="file" name="car[]" multiple />
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+                                <!--end::Input group-->
+
+                                <!--begin::Input group-->
+                                <div class="row mb-6">
+                                    <!--begin::Label-->
+                                    <label class="col-lg-2 col-form-label text-lg-right">Car Registration card</label>
+                                    <!--end::Label-->
+                                    <!--begin::Col-->
+                                    <div class="col-lg-10">
+                                        <input class="form-control" type="file" name="registration_card[]" multiple />
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+                                <!--end::Input group-->
+
+                                <!--begin::Input group-->
+                                <div class="row mb-6">
+                                    <!--begin::Label-->
+                                    <label class="col-lg-2 col-form-label text-lg-right">Car Insurance card</label>
+                                    <!--end::Label-->
+                                    <!--begin::Col-->
+                                    <div class="col-lg-10">
+                                        <input class="form-control" type="file" name="insurance_card[]" multiple />
                                     </div>
                                     <!--end::Col-->
                                 </div>
@@ -367,19 +460,126 @@
                                 <!--begin::Display Picture-->
                                 <div class="row mb-6">
                                     <!--begin::Label-->
-                                    <label class="col-lg-2 col-form-label text-lg-right">Driving License</label>
+                                    <label class="col-lg-2 col-form-label text-lg-right">Driver Documents</label>
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-10">
-                                        @if(!$driverDoc->isempty())
+
+                                        @php
+                                            $hasLicense = false;
+                                            $hasCar = false;
+                                            $hasRegistrationCard = false;
+                                            $hasInsuranceCard = false;
+                                        @endphp
+
+                                        @if (!$driverDoc->isEmpty())
                                             @foreach ($driverDoc as $data)
-                                                <img class="border border-dark rounded"
-                                                        src="{{ asset('storage/'.str_replace('public/', '', $data->path)) }}"
-                                                        alt="{{ $data->name }}" height="200">
+                                                @if ($data->type == 'license')
+                                                    @php $hasLicense = true; @endphp
+                                                @elseif($data->type == 'car')
+                                                    @php $hasCar = true; @endphp
+                                                @elseif($data->type == 'registration_card')
+                                                    @php $hasRegistrationCard = true; @endphp
+                                                @elseif($data->type == 'insurance_card')
+                                                    @php $hasInsuranceCard = true; @endphp
+                                                @endif
                                             @endforeach
+
+                                            <div class="row">
+                                                @if ($hasLicense)
+                                                    <div class="col-12">
+                                                        <h3 class="col-lg-12 pt-8 pb-4 text-lg-right">License
+                                                            Documents</h3>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        @foreach ($driverDoc as $data)
+                                                            @if ($data->type == 'license')
+                                                                <img class="border border-dark rounded"
+                                                                    src="{{ asset('storage/' . str_replace('public/', '', $data->path)) }}"
+                                                                    alt="{{ $data->name }}" height="200"
+                                                                    width="200">
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                @else
+                                                    <div class="col-12">
+                                                        <h3 class="pt-8 pb-4 text-lg-center">No Driver Documents
+                                                            Available</h3>
+                                                    </div>
+                                                @endif
+
+                                                @if ($hasCar)
+                                                    <div class="col-12">
+                                                        <h3 class="col-lg-12 pt-8 pb-4 text-lg-right">Car
+                                                            Pictures</h3>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        @foreach ($driverDoc as $data)
+                                                            @if ($data->type == 'car')
+                                                                <img class="border border-dark rounded"
+                                                                    src="{{ asset('storage/' . str_replace('public/', '', $data->path)) }}"
+                                                                    alt="{{ $data->name }}" height="200"
+                                                                    width="200">
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                @else
+                                                    <div class="col-12">
+                                                        <h3 class="pt-8 pb-4 text-lg-center">No Car Pictures
+                                                            Available</h3>
+                                                    </div>
+                                                @endif
+
+                                                @if ($hasRegistrationCard)
+                                                    <div class="col-12">
+                                                        <h3 class="col-lg-12 pt-8 pb-4 text-lg-right">Car
+                                                            Registration Card</h3>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        @foreach ($driverDoc as $data)
+                                                            @if ($data->type == 'registration_card')
+                                                                <img class="border border-dark rounded"
+                                                                    src="{{ asset('storage/' . str_replace('public/', '', $data->path)) }}"
+                                                                    alt="{{ $data->name }}" height="200"
+                                                                    width="200">
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                @else
+                                                    <div class="col-12">
+                                                        <h3 class="pt-8 pb-4 text-lg-center">No Car Registration
+                                                            Card Available</h3>
+                                                    </div>
+                                                @endif
+
+                                                @if ($hasInsuranceCard)
+                                                    <div class="col-12">
+                                                        <h3 class="col-lg-12 pt-8 pb-4 text-lg-right">Car Insurance
+                                                            Card</h3>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        @foreach ($driverDoc as $data)
+                                                            @if ($data->type == 'insurance_card')
+                                                                <img class="border border-dark rounded"
+                                                                    src="{{ asset('storage/' . str_replace('public/', '', $data->path)) }}"
+                                                                    alt="{{ $data->name }}" height="200"
+                                                                    width="200">
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                @else
+                                                    <div class="col-12">
+                                                        <h3 class="pt-8 pb-4 text-lg-center">No Car Insurance Card
+                                                            Available</h3>
+                                                    </div>
+                                                @endif
+                                            </div>
                                         @else
-                                            <label class="col-form-label text-lg-center">No Document Uploaded</label>
+                                            <h3 class="pt-8 pb-4 text-lg-center">No Document Uploaded</h3>
                                         @endif
+
+
+
                                     </div>
                                     <!--end::Col-->
                                 </div>

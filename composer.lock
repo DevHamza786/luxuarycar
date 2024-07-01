@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0780b11778295f3e1e74e3f607c5aec5",
+    "content-hash": "958b2b1783f7fe4280b6a92f4aea0383",
     "packages": [
         {
             "name": "academe/authorizenet-objects",
@@ -129,6 +129,49 @@
                 "source": "https://github.com/academe/omnipay-authorizenetapi/tree/3.1.2"
             },
             "time": "2019-08-20T22:09:44+00:00"
+        },
+        {
+            "name": "authorizenet/authorizenet",
+            "version": "2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AuthorizeNet/sdk-php.git",
+                "reference": "e1acf55c9cb22bef1852b1e494502973ade11cce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AuthorizeNet/sdk-php/zipball/e1acf55c9cb22bef1852b1e494502973ade11cce",
+                "reference": "e1acf55c9cb22bef1852b1e494502973ade11cce",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Official PHP SDK for Authorize.Net",
+            "homepage": "http://developer.authorize.net",
+            "keywords": [
+                "authorize.net",
+                "authorizenet",
+                "ecommerce",
+                "payment"
+            ],
+            "support": {
+                "issues": "https://github.com/AuthorizeNet/sdk-php/issues",
+                "source": "https://github.com/AuthorizeNet/sdk-php/tree/2.0.3"
+            },
+            "time": "2024-05-29T17:33:13+00:00"
         },
         {
             "name": "brick/math",
