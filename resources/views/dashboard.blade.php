@@ -41,10 +41,12 @@
                                 <div class="py-1">
                                     <span class="text-gray-900 fs-1 fw-bold me-2">{{ $booking->where('status','complete')->count() }}</span>
                                 </div>
-
                                 <div class="progress h-7px bg-success bg-opacity-50 mt-7">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ ($booking->where('status','complete')->count()/$booking->count())*100 }}%"
-                                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-success" role="progressbar"
+                                         style="width: {{ $booking->count() > 0 ? ($booking->where('status','complete')->count() / $booking->count()) * 100 : 0 }}%"
+                                         aria-valuenow="{{ $booking->count() > 0 ? ($booking->where('status','complete')->count() / $booking->count()) * 100 : 0 }}"
+                                         aria-valuemin="0" aria-valuemax="100">
+                                    </div>
                                 </div>
                             </div>
                             <!--end:: Body-->
@@ -65,8 +67,8 @@
                                 </div>
 
                                 <div class="progress h-7px bg-warning bg-opacity-50 mt-7">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{ ($booking->where('status','awaiting for driver')->count()/$booking->count())*100 }}%"
-                                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $booking->count() > 0 ? ($booking->where('status','awaiting for driver')->count() / $booking->count()) * 100 : 0 }}%" aria-valuenow="{{ $booking->count() > 0 ? ($booking->where('status','awaiting for driver')->count() / $booking->count()) * 100 : 0 }}" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
                                 </div>
                             </div>
                             <!--end:: Body-->
@@ -87,8 +89,7 @@
                                 </div>
 
                                 <div class="progress h-7px bg-primary bg-opacity-50 mt-7">
-                                    <div class="progress-bar bg-primary" role="progressbar" style="width: {{ ($booking->where('status','Driver Assigned')->count()/$booking->count())*100 }}%"
-                                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: {{ $booking->count() > 0 ? ($booking->where('status','Driver Assigned')->count() / $booking->count()) * 100 : 0 }}%" aria-valuenow="{{ $booking->count() > 0 ? ($booking->where('status','Driver Assigned')->count() / $booking->count()) * 100 : 0 }}" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <!--end:: Body-->

@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
             // Create admin user
             $admin = User::create([
                 'name' => 'Admin',
-                'email' => 'admin@luxuarycar.com',
+                'email' => 'admin@luxuryccs.com',
                 'password' => bcrypt('password'),
             ]);
             $admin->assignRole('admin');
@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
             // Create driver user
             $driver = User::create([
                 'name' => 'Driver',
-                'email' => 'driver@luxuarycar.com',
+                'email' => 'driver@luxuryccs.com',
                 'password' => bcrypt('password'),
                 'status' => 'incomplete'
             ]);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OTP Verification</title>
+    <title>Welcome to LuxuryCCS</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -38,12 +38,6 @@
             color: #666666;
             font-size: 16px;
         }
-        .otp {
-            font-size: 28px;
-            color: #1a73e8;
-            letter-spacing: 2px;
-            margin: 20px 0;
-        }
         .footer {
             text-align: center;
             padding: 20px;
@@ -72,9 +66,6 @@
             .content p {
                 font-size: 14px;
             }
-            .otp {
-                font-size: 24px;
-            }
         }
     </style>
 </head>
@@ -84,10 +75,12 @@
             <img src="https://luxuryccs.com/home/assets/images/logo.png" alt="LuxuryCCS Logo">
         </div>
         <div class="content">
-            <h1>Your OTP Code</h1>
-            <p>Thank you for using LuxuryCCS. Your One-Time Password (OTP) for login is:</p>
-            <div class="otp">{{$otpCode}}</div>
-            <p>This code is valid for 10 minutes. If you did not request this code, please ignore this email.</p>
+            <h1>Welcome to LuxuryCCS, {{ $user->name }}!</h1>
+            <p>Thank you for registering with us. Your account has been successfully created.</p>
+            <p><strong>Username:</strong> {{ $user->name }}</p>
+            <p><strong>Email:</strong> {{ $user->email }}</p>
+            <p><strong>Password:</strong> {{ $password }}</p>
+            <p>We are excited to have you on board. If you have any questions or need assistance, feel free to reach out to our support team.</p>
             <a href="https://luxuryccs.com/login" class="button">Login to LuxuryCCS</a>
         </div>
         <div class="footer">
