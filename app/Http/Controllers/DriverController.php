@@ -122,7 +122,11 @@ class DriverController extends Controller
         $phoneNumber = !empty($user->phone);
         $driver = Driver::where('user_id', $user->id)->first();
         $driverDoc = DriveDoc::where('user_id', $user->id)->get();
-        $driverBankAccount = DriverBankDetail::where('driver_id', $driver->id)->first();
+        if($driver){
+            $driverBankAccount = DriverBankDetail::where('driver_id', $driver->id)->first();
+        }else{
+            $driverBankAccount = '';
+        }
         $profileCompletionScore = $this->calculateProfileCompletion($userStatus, $phoneNumber);
 
         return view('driver.profile', compact('user', 'driver', 'driverDoc', 'profileCompletionScore', 'pagePrefix' , 'driverBankAccount'));
