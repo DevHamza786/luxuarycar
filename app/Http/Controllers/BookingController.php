@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use GuzzleHttp\Client;
 use App\Models\Booking;
+use App\Mail\DriverAssgined;
 use Illuminate\Http\Request;
 use App\Models\PaymentSetting;
+use App\Mail\AdminNotification;
 use App\Mail\BookingPaymentMail;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\RideStatusUpdatedUserNotification;
+use App\Mail\RideStatusUpdatedAdminNotification;
+use App\Models\Payment;
 
 class BookingController extends Controller
 {
@@ -118,7 +123,7 @@ class BookingController extends Controller
             ->make(true);
     }
 
-    public function assginDriver(Request $request)
+    public function assignDriver(Request $request)
     {
         try {
             $booking = Booking::findOrFail($request->booking_id);
@@ -126,9 +131,20 @@ class BookingController extends Controller
             $booking->status = 'Driver Assigned';
             $booking->save();
 
+            // Send email to driver
+            $driver = User::findOrFail($request->driver_id);
+            $driverEmail = $driver->email;
+
+            $bookingUrl = route('map.show', ['id' => $booking->id]); // Adjust the route name as per your setup
+
+            Mail::to($driverEmail)->send(new DriverAssgined($booking, $bookingUrl));
+
+            // Notify admin
+            Mail::to(config('mail.admin_email'))->send(new AdminNotification($booking, $driver, $bookingUrl));
+
             return response()->json(['success' => true, 'message' => 'Driver assigned successfully']);
         } catch (\Exception $e) {
-            return response()->json(['error' => false, 'message' => 'Failed to assign driver']);
+            return response()->json(['error' => true, 'message' => 'Failed to assign driver']);
         }
     }
 
@@ -139,11 +155,19 @@ class BookingController extends Controller
             $booking->status = $request->status;
             $booking->save();
 
-            return response()->json(['success' => true, 'message' => 'Ride Status Update Successfully']);
+            // Notify user
+            $user = $booking->userData; // Assuming the relationship is defined
+            Mail::to($user->email)->send(new RideStatusUpdatedUserNotification($booking));
+
+            // Notify admin
+            Mail::to(config('mail.admin_email'))->send(new RideStatusUpdatedAdminNotification($booking));
+
+            return response()->json(['success' => true, 'message' => 'Ride Status Updated Successfully']);
         } catch (\Exception $e) {
-            return response()->json(['error' => false, 'message' => 'Failed to accepted ride']);
+            return response()->json(['error' => true, 'message' => 'Failed to update ride status']);
         }
     }
+
 
     public function showMap($id)
     {
@@ -162,7 +186,6 @@ class BookingController extends Controller
 
         $estimatedPrice = PaymentSetting::where('mode', $booking->mode)->where('car_category', $booking->car_category)->where('no_pessenger', $booking->passenger)->first();
 
-
         $driverDocs = collect(json_decode($booking->driverData->driverDoc, true));
         $carDocs = $driverDocs->where('type', 'car');
         $firstCarDoc = $carDocs->first();
@@ -170,7 +193,6 @@ class BookingController extends Controller
 
         $distance = floatval(str_replace('mi', '', $booking->distance));
         $price = $estimatedPrice->pricepermiles * $distance;
-
         return response()->json([
             'status' => $booking->status,
             'distance' => $booking->distance,
@@ -203,13 +225,68 @@ class BookingController extends Controller
     public function showPaymentPage(Request $request)
     {
         $pagePrefix = 'booking';
+        $paymentCheck = Payment::where('booking_id', $request->booking_id)->first();
+        if ($paymentCheck) {
+            if(auth()->user()->hasrole('customer')){
+                return redirect()->route('bookings')->with([
+                    'success' => 'Thanks for using luxuryccs, Your ride is complete',
+                    'pagePrefix' => $pagePrefix
+                ]);
+            }else{
+                return redirect()->route('bookings')->with([
+                    'success' => 'Ride is complete and payment is paid by client',
+                    'pagePrefix' => $pagePrefix
+                ]);
+            }
+        }
         $booking = Booking::findOrFail($request->booking_id);
 
-        // Calculate estimated price with fees
         $distance = floatval(str_replace('mi', '', $booking->distance));
-        $estimatedPrice = PaymentSetting::where('mode', $booking->mode)->where('car_category', $booking->car_category)->where('no_pessenger', $booking->passenger)->first();
-        $price = $estimatedPrice->pricepermiles * $distance;
-        $totalPrice = $price + 3.50 + 3.75;
+
+            // Parse the duration
+            $durationString = $booking->duration;
+            $duration = 0;
+
+            // Check for hours and minutes
+            if (strpos($durationString, 'hours') !== false) {
+                preg_match('/(\d+)\s*hours?/', $durationString, $hoursMatch);
+                $duration += intval($hoursMatch[1]) * 60; // Convert hours to minutes
+            }
+
+            if (strpos($durationString, 'mins') !== false) {
+                preg_match('/(\d+)\s*mins?/', $durationString, $minutesMatch);
+                $duration += intval($minutesMatch[1]); // Add minutes
+            }
+
+            $no_pessenger = $booking->no_pessenger;
+
+            if ($no_pessenger > 6) {
+                $no_pessenger = 6;
+            } elseif ($no_pessenger < 2) {
+                $no_pessenger = 4;
+            }
+
+            $estimatedPrice = PaymentSetting::where('mode', $booking->mode)
+                ->where('car_category', $booking->car_category)
+                ->where('no_pessenger', $no_pessenger)
+                ->first();
+            if ($booking->mode == 'mrh') {
+                if ($duration < 60) {
+                    $price = $estimatedPrice->priceperhour;
+                } else {
+                    $price = $estimatedPrice->priceperhour + ($estimatedPrice->pricepermiles * $distance);
+                }
+            } else if($booking->mode == 'mor') {
+                if($distance < 60){
+                    $price = $estimatedPrice->pricepermiles + $estimatedPrice->priceperhour;
+                }else{
+                    $price = ($estimatedPrice->pricepermiles + $estimatedPrice->priceperhour) + ($estimatedPrice->pricepermin * $duration) + ($estimatedPrice->pricepermiles * $distance);
+                }
+            }else{
+                $price = $estimatedPrice->pricepermiles * $distance;
+            }
+
+            $totalPrice = $price + 3.50 + 3.75;
 
         return view('booking.payment', compact('booking', 'totalPrice', 'price', 'pagePrefix'));
     }
@@ -239,10 +316,19 @@ class BookingController extends Controller
             $totalPrice -= $discount;
         }
 
-        // Process payment logic here (e.g., integrate with Stripe or PayPal)
-
         // Redirect to bookings page after successful payment
         return redirect()->route('bookings.index')->with('success', 'Payment successful.');
+    }
+
+    public function getBookingStatus($bookingId)
+    {
+        $booking = Booking::find($bookingId);
+
+        if ($booking) {
+            return response()->json(['status' => $booking->status]);
+        } else {
+            return response()->json(['error' => 'Booking not found'], 404);
+        }
     }
 
 

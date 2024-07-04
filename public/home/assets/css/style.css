@@ -31,12 +31,12 @@
 }
 
 ::placeholder {
-    color: red !important;
+    /* color: red !important; */
     opacity: 1; /* Firefox */
   }
 
   ::-ms-input-placeholder { /* Edge 12-18 */
-    color: red !important;
+    /* color: red !important; */
   }
 
 header.header_section.secondary_header .logi_btn {
@@ -3486,3 +3486,11 @@ section.top_footer_links .links_box img{width:50px;height:45px;object-fit:contai
 /* ====================================================================================================
 9 - media screen and (max-width: 320px) - end
 ==================================================================================================== */
+
+.table-sm th {
+    font-size: 16px !important;
+}
+
+.table-sm td{
+    font-size: 14px !important;
+}

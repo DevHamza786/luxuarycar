@@ -87,7 +87,7 @@
                                                 <!--begin::Section-->
                                                 <div class="mw-300px">
                                                     <!--begin::Item-->
-                                                    <div class="d-flex flex-stack mb-3">
+                                                    {{-- <div class="d-flex flex-stack mb-3">
                                                         <!--begin::Accountname-->
                                                         <div class="fw-semibold pe-10 text-gray-600 fs-7">
                                                             <div class="form-group">
@@ -104,7 +104,7 @@
                                                                 class="btn btn-primary btn-sm">Apply</button>
                                                         </div>
                                                         <!--end::Label-->
-                                                    </div>
+                                                    </div> --}}
 
                                                     <div class="d-flex flex-stack">
                                                         <!--begin::Code-->
@@ -134,44 +134,46 @@
                                                         {{ session('success') }}
                                                     </div>
                                                 @endif
-                                                <form action="{{ url('charge') }}" method="post">
-                                                    @csrf
-                                                    <div class="row">
-                                                        <div class="col-sm-4">
-                                                            <input type="hidden" name="email"
-                                                                value="{{ $booking->userData->email }}" />
-                                                            <input type="hidden" name="amount"
-                                                                value="{{ $totalPrice }}" />
-                                                            <input type="hidden" name="bookingID"
-                                                                value="{{ $booking->id }}" />
-                                                            <!--begin::Input group-->
-                                                            <div class="input-group mb-5">
-                                                                <input type="number" min="1" class="form-control"
-                                                                    placeholder="Card Number" name="cc_number"
-                                                                    id="cc_number" required />
+                                                @if(auth()->user()->hasrole('customer'))
+                                                    <form action="{{ url('charge') }}" method="post">
+                                                        @csrf
+                                                        <div class="row">
+                                                            <div class="col-sm-4">
+                                                                <input type="hidden" name="email"
+                                                                    value="{{ $booking->userData->email }}" />
+                                                                <input type="hidden" name="amount"
+                                                                    value="{{ $totalPrice }}" />
+                                                                <input type="hidden" name="bookingID"
+                                                                    value="{{ $booking->id }}" />
+                                                                <!--begin::Input group-->
+                                                                <div class="input-group mb-5">
+                                                                    <input type="number" min="1" class="form-control"
+                                                                        placeholder="Card Number" name="cc_number"
+                                                                        id="cc_number" required />
+                                                                </div>
+                                                                <!--end::Input group-->
                                                             </div>
-                                                            <!--end::Input group-->
-                                                        </div>
-                                                        <div class="col-sm-6">
+                                                            <div class="col-sm-6">
 
-                                                            <!--begin::Input group-->
-                                                            <div class="input-group mb-5">
-                                                                <input type="month" class="form-control"
-                                                                    name="expiry_month" placeholder="Expiry Month"
-                                                                    required />
-                                                                <input type="number" class="form-control" name="cvv"
-                                                                    placeholder="CVV" required />
+                                                                <!--begin::Input group-->
+                                                                <div class="input-group mb-5">
+                                                                    <input type="month" class="form-control"
+                                                                        name="expiry_month" placeholder="Expiry Month"
+                                                                        required />
+                                                                    <input type="number" class="form-control" name="cvv"
+                                                                        placeholder="CVV" required />
+                                                                </div>
+                                                                <!--end::Input group-->
                                                             </div>
-                                                            <!--end::Input group-->
+                                                            <div class="col-sm-2 text-end">
+                                                                <button type="submit" id="pay_button"
+                                                                    class="btn btn-primary">Pay
+                                                                    {{ $totalPrice }}</button>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-sm-2 text-end">
-                                                            <button type="submit" id="pay_button"
-                                                                class="btn btn-primary">Pay
-                                                                {{ $totalPrice }}</button>
-                                                        </div>
-                                                    </div>
 
-                                                </form>
+                                                    </form>
+                                                @endif
                                             </div>
                                             <!--end::Container-->
                                         </div>

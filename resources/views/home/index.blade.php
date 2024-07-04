@@ -60,16 +60,16 @@
     <section class="search_section clearfix">
         <ul class="button-group filters-button-group ul_li_center mb_30 clearfix" data-aos="fade-up" data-aos-delay="300">
             <li><button class="button getmode" data-filter=".sedan" data-set="mr">Manhattan</button></li>
-            <li><button class="button getmode" data-filter=".sedan" data-set="Outsider">Outside of Manhattan</button></li>
-            <li><button class="button getmode" data-filter=".sedan" data-set="Hourly">Hourly</button></li>
-            <li><button class="button getmode" data-filter=".sedan" data-set="Weekly">Weekly</button></li>
-            <li><button class="button getmode" data-filter=".sedan" data-set="Monthly">monthly/yearly services</button></li>
+            <li><button class="button getmode" data-filter=".sedan" data-set="mor">Outside of Manhattan</button></li>
+            <li><button class="button getmode" data-filter=".sedan" data-set="mrh">Hourly</button></li>
+            <li><button class="button getmode" data-filter=".sedan" data-set="mrh">Weekly</button></li>
+            <li><button class="button getmode" data-filter=".sedan" data-set="mrh">monthly/yearly services</button></li>
         </ul>
         <div class="feature_vehicle_filter element-grid clearfix">
             <div class="element-item sedan" data-category="sedan">
                 <div class="container-fluid p-0" data-bg-color="#1E1E1E" data-aos="fade-up" data-aos-delay="100">
                     <div class="advance_search_form2">
-                        <form action="{{ route('booking.store') }}" method="POST" enctype="multipart/form-data">
+                        <form id="bookingForm" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" id="mode" name="mode" value="" />
                             <div class="row">
@@ -114,14 +114,15 @@
                                         <div class="col-md-4 col-sm-12 col-xs-12">
                                             <div class="form_item">
                                                 <h4 class="input_title text-white">Email</h4>
-                                                <input type="email" name="email" placeholder="Enter your email"
+                                                <input type="email" id="customeremail" name="email"
+                                                    placeholder="Enter your email"
                                                     value="{{ Auth::check() && Auth::user()->hasrole('customer') ? Auth::user()->email : '' }}"
                                                     required>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12 col-xs-12">
                                             <h4 class="input_title text-white">Car Category</h4>
-                                            <select class="form-control" name="car_category" required>
+                                            <select class="form-control" name="car_category" id="car_category" required>
                                                 <option value="">Please Select Car Category</option>
                                                 <option value="Black Luxury">Black Luxury</option>
                                                 <option value="Ultra Luxury">Ultra Luxury</option>
@@ -131,13 +132,12 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4 col-sm-12 col-xs-12">
-                                            <h4 class="input_title text-white">No. of Pessenger</h4>
-                                            <select class="form-control" name="no_pessenger" required>
-                                                <option value="">Please Select No. of Pessenger</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                            </select>
+                                            <div class="form_item">
+                                                <h4 class="input_title text-white">No. of Pessenger</h4>
+                                                <input type="number" name="no_pessenger" id="no_pessenger"
+                                                    placeholder="Enter no of passenger" max="22" min="4"
+                                                    required>
+                                            </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12 col-xs-12">
                                             <div class="form_item">
@@ -196,11 +196,13 @@
 
 
                                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 text-right">
-                                    <button type="submit" id="reserve_now" class="custom_btn bg_default_red text-uppercase">Reserve
+                                    <button type="submit" id="reserve_now"
+                                        class="custom_btn bg_default_red text-uppercase">Reserve
                                         Now <img src="{{ asset('home/assets/images/icons/icon_01.png') }}"
                                             alt="icon_not_found"></button>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -530,8 +532,144 @@
             </div>
         </div>
     </section>
+    {{-- Price Modal  --}}
+    <div id="pricePopup" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Booking Price</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Price details to display to the user -->
+                    <!--begin::Content-->
+                    <div class="flex-grow-1">
+                        <!--begin::Table-->
+                        <div class="table table-borderless table-sm border p-2 rounded">
+                            <table class="table mb-3">
+                                <thead>
+                                    <tr class="border-bottom fs-6 fw-bold text-muted">
+                                        <th class="min-w-175px pb-2">Description</th>
+                                        <th class="min-w-100px text-end pb-2">Amount</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr class="fw-bold text-gray-700 fs-5 text-end">
+                                        <td class="d-flex align-items-center pt-6">
+                                            Booking Fee
+                                        </td>
+                                        <td class="pt-6 text-gray-900 fw-bolder">$3.50</td>
+                                    </tr>
+
+                                    <tr class="fw-bold text-gray-700 fs-5 text-end">
+                                        <td class="d-flex align-items-center">
+                                            Credit Card Fee
+                                        </td>
+                                        <td class="fs-5 text-gray-900 fw-bolder">$3.75</td>
+                                    </tr>
+
+                                    <tr class="fw-bold text-gray-700 fs-5 text-end">
+                                        <td class="d-flex align-items-center">
+                                            Booking Fare
+                                        </td>
+                                        <td class="fs-5 text-gray-900 fw-bolder" id="estimatedPrice"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--end::Table-->
+
+                        <!--begin::Container-->
+                        <div class="d-flex justify-content-end mb-3">
+                            <!--begin::Section-->
+                            <div class="mw-300px">
+                                <!--begin::Item-->
+                                {{-- <div class="d-flex flex-stack mb-3">
+                                    <!--begin::Accountname-->
+                                    <div class="fw-semibold pe-10 text-gray-600 fs-7">
+                                        <div class="form-group form-group mx-2">
+                                            <input type="text" name="coupon" id="coupon"
+                                                class="form-control form-control-sm" placeholder="Coupon Code">
+                                        </div>
+                                    </div>
+                                    <!--end::Accountname-->
+
+                                    <!--begin::Label-->
+                                    <div class="text-end fw-bold fs-6 text-gray-800">
+                                        <button type="button" id="couponBtn"
+                                            class="btn btn-primary btn-sm">Apply</button>
+                                    </div>
+                                    <!--end::Label-->
+                                </div> --}}
+
+                                <div class="d-flex flex-stack mx-2">
+                                    <!--begin::Code-->
+                                    <h6>Total <span id="totalPrice"></span></h6>
+                                    <!--end::Code-->
+                                </div>
+                                <!--end::Item-->
+                            </div>
+                            <!--end::Section-->
+                        </div>
+                        <!--end::Container-->
+
+                        <!--begin::Container-->
+                        <div class="">
+                            @if (session('error'))
+                                <div class="alert alert-danger">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
+                            @if (session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+                            <form method="post">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="hidden" name="amount" id="paymentAmount" value="" />
+                                        <input type="hidden" name="bookingID" value="" />
+                                        <!--begin::Input group-->
+                                        <div class="input-group mb-5">
+                                            <input type="number" min="1" class="form-control"
+                                                placeholder="Card Number" name="cc_number" id="cc_number" required />
+                                        </div>
+                                        <!--end::Input group-->
+                                    </div>
+                                    <div class="col-sm-6">
+
+                                        <!--begin::Input group-->
+                                        <div class="input-group mb-5">
+                                            <input type="month" class="form-control" name="expiry_month"
+                                                id="expiry_month" placeholder="Expiry Month" required />
+                                            <input type="number" class="form-control" id="cvv" name="cvv"
+                                                placeholder="CVV" required />
+                                        </div>
+                                        <!--end::Input group-->
+                                    </div>
+                                </div>
+                                <div class="modal-footer text-end">
+                                    <button type="submit" id="pay_button" class="btn btn-primary">Pay $</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!--end::Container-->
+                    </div>
+                    <!--end::Content-->
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript"
         src="https://maps.google.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&libraries=places"></script>
     <script>
@@ -619,7 +757,7 @@
                                     $('#pickupautocomplete').val(locationName);
 
                                     // Use the location name as needed
-                                    console.log("Location Name:", locationName);
+                                    // console.log("Location Name:", locationName);
                                 } else {
                                     console.log('No results found');
                                 }
@@ -629,8 +767,8 @@
                         });
 
                         // Use the latitude and longitude as needed
-                        console.log("Latitude:", latitude);
-                        console.log("Longitude:", longitude);
+                        // console.log("Latitude:", latitude);
+                        // console.log("Longitude:", longitude);
 
                     }, function(error) {
                         alert('Error occurred: ' + error.message);
@@ -697,5 +835,100 @@
 
         // Set the minimum date
         dateInput.setAttribute('min', today);
+
+
+        // Function to handle booking form submission
+        document.getElementById('bookingForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var distance = $('#distance').val();
+            var duration = $('#fare_time').val();
+            var car_category = $('#car_category').val();
+            var no_pessenger = $('#no_pessenger').val();
+            var mode = $('#mode').val();
+            // console.log(distance, duration, mode, car_category, no_pessenger);
+
+            // To Get Price of fare
+            $.ajax({
+                url: '{{ route('booking.price') }}',
+                type: 'GET',
+                data: {
+                    mode: mode,
+                    distance: distance,
+                    duration: duration,
+                    car_category: car_category,
+                    no_pessenger: no_pessenger,
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // console.log(response)
+
+                        $('#estimatedPrice').text('$' + response.data.estimatedPrice.toFixed(2));
+                        $('#totalPrice').text('$' + response.data.totalPrice.toFixed(2));
+                        $('#pay_button').text('Pay $' + response.data.totalPrice.toFixed(2));
+
+                        // Update hidden input values for payment
+                        $('#paymentAmount').val(response.data.totalPrice.toFixed(2));
+
+                        // Show the price popup modal
+                        $('#pricePopup').modal('show');
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function(response) {
+                    if (response.error) {
+                        toastr.error(response.message);
+                    }
+                }
+            });
+
+            // Get booking form data
+            const formData = new FormData(document.getElementById('bookingForm'));
+            // console.log(formData);
+
+            $('#pay_button').on('click', function(event) {
+                event.preventDefault();
+                // Prevent the default form submission
+
+                $('#pay_button').prop('disabled', true).text('Processing...');
+
+                const formData = new FormData(document.getElementById('bookingForm'));
+
+                // Include payment information
+                formData.append('amount', $('#paymentAmount').val());
+                formData.append('cc_number', $('#cc_number').val());
+                formData.append('expiry_month', $('#expiry_month').val());
+                formData.append('cvv', $('#cvv').val());
+
+                $.ajax({
+                    url: '{{ route('booking.store') }}',
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            $('#pricePopup').modal('hide');
+                            toastr.success('Booking and payment were successful.');
+                            window.location.href = '{{ route("dashboard") }}';
+                        } else {
+                            toastr.error('Booking failed: ' + response.message);
+                            $('#pay_button').prop('disabled', false).text('Pay $' + parseFloat(
+                                $('#paymentAmount').val()));
+                        }
+                    },
+                    error: function(response) {
+                        toastr.error('An error occurred while saving the booking.');
+                        $('#pay_button').prop('disabled', false).text('Pay $' + parseFloat($(
+                            '#paymentAmount').val()));
+                    }
+                });
+
+            });
+        });
     </script>
 @endsection

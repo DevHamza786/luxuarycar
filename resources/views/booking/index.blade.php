@@ -36,6 +36,7 @@
                                             <th class="min-w-120px">Name</th>
                                             <th class="min-w-120px">Email</th>
                                             <th class="min-w-120px">Car Category</th>
+                                            <th class="min-w-120px">Passenger</th>
                                             <th class="min-w-120px">Pickup Location</th>
                                             <th class="min-w-120px">Drop Location</th>
                                             <th class="min-w-120px">Driver</th>
@@ -92,6 +93,10 @@
                         name: 'car_category'
                     },
                     {
+                        data: 'passenger',
+                        name: 'passenger'
+                    },
+                    {
                         data: 'pick_location',
                         name: 'pick_location'
                     },
@@ -107,10 +112,6 @@
                         data: 'status',
                         name: 'status'
                     },
-                    // {
-                    //     data: 'created_at',
-                    //     name: 'created_at'
-                    // },
                     {
                         data: 'action',
                         name: 'action'

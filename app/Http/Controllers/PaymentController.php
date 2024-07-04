@@ -32,39 +32,42 @@ class PaymentController extends Controller
         $expiryYear = '';
         $expiryMonth = '';
 
-        if($request->input('expiry_month')){
-            $expiryMonth = $request->input('expiry_month');
+        if ($request->expiry_month) {
+            $expiryMonth = $request->expiry_month;
             list($expiryYear, $expiryMonth) = explode('-', $expiryMonth);
         }
 
         try {
             $creditCard = new \Omnipay\Common\CreditCard([
-                'number' => $request->input('cc_number'),
+                'number' => $request->cc_number,
                 'expiryMonth' => $expiryMonth,
                 'expiryYear' => $expiryYear,
-                'cvv' => $request->input('cvv'),
+                'cvv' => $request->cvv,
             ]);
 
             // Generate a unique merchant site transaction ID.
             $transactionId = rand(100000000, 999999999);
 
+            // Convert the amount to cents
+            $amountInCents = intval($request->amount * 100);
+
             $response = $this->gateway->authorize([
-                'amount' => $request->input('amount'),
+                'amount' => $amountInCents,
                 'currency' => 'USD',
                 'transactionId' => $transactionId,
                 'card' => $creditCard,
             ])->send();
 
-            if($response->isSuccessful()) {
+            if ($response->isSuccessful()) {
 
                 // Captured from the authorization response.
                 $transactionReference = $response->getTransactionReference();
 
                 $response = $this->gateway->capture([
-                    'amount' => $request->input('amount'),
+                    'amount' => $amountInCents,
                     'currency' => 'USD',
                     'transactionReference' => $transactionReference,
-                    ])->send();
+                ])->send();
 
                 $transaction_id = $response->getTransactionReference();
                 $amount = $request->input('amount');
@@ -72,28 +75,24 @@ class PaymentController extends Controller
                 // Insert transaction data into the database
                 $isPaymentExist = Payment::where('transaction_id', $transaction_id)->first();
 
-                if(!$isPaymentExist)
-                {
+                if (!$isPaymentExist) {
                     $payment = new Payment;
                     $payment->transaction_id = $transaction_id;
                     $payment->booking_id = $request->bookingID;
-                    $payment->amount = $request->input('amount');
+                    $payment->amount = $request->amount; // store the original amount in dollars
                     $payment->currency = 'USD';
                     $payment->payment_status = 'Captured';
                     $payment->save();
-
-                    $booking = Booking::findOrFail($request->bookingID);
-                    $booking->status = 'Paid';
-                    $booking->save();
                 }
 
-                return redirect()->route('bookings')->with('success', 'Payment is successful. Your transaction id is: ' . $transaction_id);
+                return response()->json(['success' => true, 'message' => 'Payment is successful. Your transaction id is: ' . $transaction_id]);
             } else {
                 // not successful
-                return redirect()->back()->with('error', $response->getMessage());
+                return response()->json(['success' => false, 'message' => $response->getMessage()]);
             }
         } catch (Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return response()->json(['error' => false, 'message' => $e->getMessage()]);
         }
     }
+
 }
